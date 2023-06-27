@@ -9,6 +9,7 @@ class Home extends CI_Controller {
     function __construct(){
         parent::__construct();
 		$this->load->model('M_main', 'm_main');
+		$this->load->model('M_akses', 'm_akses');
 		$this->load->model('M_auth', 'm_auth');
     }
 
@@ -34,6 +35,8 @@ class Home extends CI_Controller {
 						$data = [
 							'id_account' => $account['id_account'],
 							'id_posisi' => $account['id_posisi'],
+							'id_office' => $account['id_office'],
+							'id_cabang' => $account['id_cabang'],
 							'nama' => $account['nama'],
 							'email' => $account['email'],
 							'login' => true,
@@ -67,6 +70,8 @@ class Home extends CI_Controller {
 		$data = [
 			'id_account',
 			'id_posisi',
+			'id_office',
+			'id_cabang',
 			'nama',
 			'email',
 			'login',
