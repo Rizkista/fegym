@@ -63,18 +63,31 @@ class Menu extends CI_Controller {
 		}
     }
 
-	public function users(){
+	public function anggota(){
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
-			$data['title'] = 'Users';
+			$data['title'] = 'Anggota';
 			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
 			$data['cekmenu'] = $this->DataLevel();
 			$this->load->view('layout/header', $data);
-			$this->load->view('users/users');
+			$this->load->view('users/anggota');
 			$this->load->view('layout/footer');
 		}else{
 			redirect('logout');
 		}
     }
 
+	public function account(){
+		if(EMAIL){
+			$data['vrs'] = U_VERSI; 
+			$data['title'] = 'Account';
+			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['cekmenu'] = $this->DataLevel();
+			$this->load->view('layout/header', $data);
+			$this->load->view('developer/account');
+			$this->load->view('layout/footer');
+		}else{
+			redirect('logout');
+		}
+    }
 }

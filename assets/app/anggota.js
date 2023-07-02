@@ -1,7 +1,7 @@
 (function ($) {
-    var table_user = $("#datatable-user").DataTable({
+    var table_anggota = $("#datatable-anggota").DataTable({
         ajax: {
-            url: "users/read_user",
+            url: "users/read_anggota",
             type: "GET",
         },
         order: [],
@@ -34,7 +34,7 @@
         ],
         language: {
             search: "_INPUT_",
-            emptyTable: "Belum ada daftar user!",
+            emptyTable: "Belum ada daftar anggota!",
             infoEmpty: "Tidak ada data untuk ditampilkan!",
             info: "_START_ to _END_ of _TOTAL_ entries",
             infoFiltered: ""
@@ -43,9 +43,9 @@
         buttons: [
             {
                 className: "btn btn-warning wid-max-select text-white",
-                text: '<i class="fas fa-plus mr-2"></i> Tambah User',
+                text: '<i class="fas fa-plus mr-2"></i> Tambah Anggota',
                 attr:  {
-                    id: 'tambah_user'
+                    id: 'tambah_anggota'
                 }
             },
             {
@@ -65,24 +65,24 @@
                 exportOptions: {
                     columns: [0,1,2,3,4,5,6],
                 },
-                filename: 'Data User Gim '+$('#filter-cabang option:selected').text(),
+                filename: 'Data Anggota Gim '+$('#filter-cabang option:selected').text(),
                 title: ''
             },
             {
                 className: "btn btn-secondary wid-max-select text-white",
                 text: '<i class="fas fa-sync-alt mr-2"></i> Refresh',
                 action: function (e, dt, node, config) {
-                    table_user.ajax.reload();
+                    table_anggota.ajax.reload();
                 },
             },
         ],
         columns: [
             { data: "No" },
-            { data: "nama_user" },
-            { data: "gender_user" },
-            { data: "telp_user" },
-            { data: "email_user" },
-            { data: "alamat_user" },
+            { data: "nama_anggota" },
+            { data: "gender_anggota" },
+            { data: "telp_anggota" },
+            { data: "email_anggota" },
+            { data: "alamat_anggota" },
             { data: "status_member" },
             { data: "Aksi" , render : function ( data, type, row, meta ) {
                 return type === 'display'  ?
@@ -91,10 +91,10 @@
                     +'Action'
                 +'</button>'
                 +'<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">'
-                    +'<a class="dropdown-item pointer user-edit" data-id="'+data+'" id="user-edit"> <i class="fas fa-pen"></i> Edit</a>'
-                    +'<a class="dropdown-item pointer user-restore" data-id="'+data+'" id="user-restore"> <i class="fas fa-undo-alt"></i> Restore</a>'
-                    +'<a class="dropdown-item pointer user-remove" data-id="'+data+'" id="user-remove"> <i class="fas fa-trash"></i> Remove</a>'
-                    +'<a class="dropdown-item pointer user-delete" data-id="'+data+'" id="user-delete"> <i class="fas fa-trash-alt"></i> Delete</a>'
+                    +'<a class="dropdown-item pointer anggota-edit" data-id="'+data+'" id="anggota-edit"> <i class="fas fa-pen"></i> Edit</a>'
+                    +'<a class="dropdown-item pointer anggota-restore" data-id="'+data+'" id="anggota-restore"> <i class="fas fa-undo-alt"></i> Restore</a>'
+                    +'<a class="dropdown-item pointer anggota-remove" data-id="'+data+'" id="anggota-remove"> <i class="fas fa-trash"></i> Remove</a>'
+                    +'<a class="dropdown-item pointer anggota-delete" data-id="'+data+'" id="anggota-delete"> <i class="fas fa-trash-alt"></i> Delete</a>'
                 +'</div>'
                 +'</div>':
                 data;
@@ -104,41 +104,41 @@
         ],
         fnDrawCallback:function(){
             $.ajax({
-                url: 'users/level_user',
+                url: 'users/level_anggota',
                 type: 'GET',
                 dataType: "json",
                 success: function (json) {
                     if(json.tambah){
-                        $("#tambah_user").removeClass("gone");
+                        $("#tambah_anggota").removeClass("gone");
                     }else{
-                        $("#tambah_user").addClass("gone");
+                        $("#tambah_anggota").addClass("gone");
                     }
                     
                     if(json.ubah){
-                        $(".user-edit").removeClass("gone");
+                        $(".anggota-edit").removeClass("gone");
                     }else{
-                        $(".user-edit").addClass("gone");
+                        $(".anggota-edit").addClass("gone");
                     }
                     
                     if(json.hapus){
-                        $(".user-remove").removeClass("gone");
+                        $(".anggota-remove").removeClass("gone");
                     }else{
-                        $(".user-remove").addClass("gone");
+                        $(".anggota-remove").addClass("gone");
                     }
                 }
             });
             var sta = $('select[name="filter-status"]').val().toLowerCase();
             let style = 'display:none;';
             if(sta == 'aktif-'){
-                $('.user-edit').attr('style','');
-                $('.user-restore').attr('style',style);
-                $('.user-remove').attr('style','');
-                $('.user-delete').attr('style',style);
+                $('.anggota-edit').attr('style','');
+                $('.anggota-restore').attr('style',style);
+                $('.anggota-remove').attr('style','');
+                $('.anggota-delete').attr('style',style);
             }else if(sta == 'hapus-'){
-                $('.user-edit').attr('style',style);
-                $('.user-restore').attr('style','');
-                $('.user-remove').attr('style',style);
-                $('.user-delete').attr('style',style);
+                $('.anggota-edit').attr('style',style);
+                $('.anggota-restore').attr('style','');
+                $('.anggota-remove').attr('style',style);
+                $('.anggota-delete').attr('style',style);
             }
         },
     });
@@ -179,7 +179,7 @@
                 
             return false;
         })
-        table_user.draw(); 
+        table_anggota.draw(); 
         $.fn.dataTable.ext.search.pop();
     }
 
@@ -189,13 +189,13 @@
         var cbg = $('select[name="filter-cabang"]').val().toLowerCase();
         
         if(src != undefined){
-            $('#datatable-user').DataTable().search(src).draw();
+            $('#datatable-anggota').DataTable().search(src).draw();
         }
         if(cbg != undefined){
-            $('#datatable-user').DataTable().search(cbg).draw();
+            $('#datatable-anggota').DataTable().search(cbg).draw();
         }
         if(sta != undefined){
-            $('#datatable-user').DataTable().search(sta).draw();
+            $('#datatable-anggota').DataTable().search(sta).draw();
         }
     }
 
@@ -206,26 +206,26 @@
         alias: "tt.mm.jjjj"
     }).mask('.tgl');
 
-    $("#tambah_user").on("click", function () {
-        $("#modal-user").modal();
-        document.getElementById("text-user").innerHTML = "Tambah User";
-		$('#nama_user').val('');
-        $('#gender_user').val('');
-		$('#telp_user').val('');
-		$('#email_user').val('');
-		$('#alamat_user').val('');
-        $('input[name="edit_user"]').attr("type", "hidden");
-        $('input[name="add_user"]').attr("type", "submit");
+    $("#tambah_anggota").on("click", function () {
+        $("#modal-anggota").modal();
+        document.getElementById("text-anggota").innerHTML = "Tambah Anggota";
+		$('#nama_anggota').val('');
+        $('#gender_anggota').val('');
+		$('#telp_anggota').val('');
+		$('#email_anggota').val('');
+		$('#alamat_anggota').val('');
+        $('input[name="edit_anggota"]').attr("type", "hidden");
+        $('input[name="add_anggota"]').attr("type", "submit");
     });
     
-    $("input#add_user").on("click", function (e) {
+    $("input#add_anggota").on("click", function (e) {
         e.preventDefault();
-        let validasi = document.getElementById("form-user").reportValidity();
+        let validasi = document.getElementById("form-anggota").reportValidity();
         if (validasi) {
-            $("#add_user").prop('disabled', true);
-            var formData = new FormData(document.querySelector("#form-user"));
+            $("#add_anggota").prop('disabled', true);
+            var formData = new FormData(document.querySelector("#form-anggota"));
             $.ajax({
-                url: "users/add_user",
+                url: "users/add_anggota",
                 method: "POST",
                 data: formData,
                 dataType: "json",
@@ -235,36 +235,36 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-user").modal('hide');
-                    $("#add_user").prop('disabled', false);
+                    $("#modal-anggota").modal('hide');
+                    $("#add_anggota").prop('disabled', false);
                 },
             });
         }
     });
     
-    $('body').on('click','#user-edit', function(){
-        $("#modal-user").modal();
-        let id_user = $(this).data('id');
-        document.getElementById("text-user").innerHTML = "Ubah User";
-		var data = table_user.row($(this).parents("tr")).data();
-		$('#nama_user').val(data["nama_user"]);
-        $('#gender_user').val(data["gender_user"]);
-		$('#telp_user').val(data["telp_user"]);
-		$('#email_user').val(data["email_user"]);
-		$('#alamat_user').val(data["alamat_user"]);
-		$('input[name="id_user"]').val(id_user);
-        $('input[name="edit_user"]').attr("type", "submit");
-        $('input[name="add_user"]').attr("type", "hidden");
+    $('body').on('click','#anggota-edit', function(){
+        $("#modal-anggota").modal();
+        let id_anggota = $(this).data('id');
+        document.getElementById("text-anggota").innerHTML = "Ubah Anggota";
+		var data = table_anggota.row($(this).parents("tr")).data();
+		$('#nama_anggota').val(data["nama_anggota"]);
+        $('#gender_anggota').val(data["gender_anggota"]);
+		$('#telp_anggota').val(data["telp_anggota"]);
+		$('#email_anggota').val(data["email_anggota"]);
+		$('#alamat_anggota').val(data["alamat_anggota"]);
+		$('input[name="id_anggota"]').val(id_anggota);
+        $('input[name="edit_anggota"]').attr("type", "submit");
+        $('input[name="add_anggota"]').attr("type", "hidden");
     });
     
-    $("input#edit_user").on("click", function (e) {
+    $("input#edit_anggota").on("click", function (e) {
         e.preventDefault();
-        let validasi = document.getElementById("form-user").reportValidity();
+        let validasi = document.getElementById("form-anggota").reportValidity();
         if (validasi) {
-            $("#edit_user").prop('disabled', true);
-            var formData = new FormData(document.querySelector("#form-user"));
+            $("#edit_anggota").prop('disabled', true);
+            var formData = new FormData(document.querySelector("#form-anggota"));
             $.ajax({
-                url: "users/edit_user",
+                url: "users/edit_anggota",
                 method: "POST",
                 data: formData,
                 dataType: "json",
@@ -274,29 +274,29 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-user").modal('hide');
-                    $("#edit_user").prop('disabled', false);
+                    $("#modal-anggota").modal('hide');
+                    $("#edit_anggota").prop('disabled', false);
                 },
             });
         }
     });
 
-    $('body').on('click','#user-restore', function(){
-        let id_user = $(this).data('id');
-        action('restore_user',id_user,'User akan dikembalikan ke daftar data aktif!');
+    $('body').on('click','#anggota-restore', function(){
+        let id_anggota = $(this).data('id');
+        action('restore_anggota',id_anggota,'Anggota akan dikembalikan ke daftar data aktif!');
     });
 
-    $('body').on('click','#user-remove', function(){
-        let id_user = $(this).data('id');
-        action('remove_user',id_user,'User akan dihapus dari daftar data aktif!');
+    $('body').on('click','#anggota-remove', function(){
+        let id_anggota = $(this).data('id');
+        action('remove_anggota',id_anggota,'Anggota akan dihapus dari daftar data aktif!');
     });
 
-    $('body').on('click','#user-delete', function(){
-        let id_user = $(this).data('id');
-        action('delete_user',id_user,'Data yang di hapus tidak dapat dikembalikan lagi!');
+    $('body').on('click','#anggota-delete', function(){
+        let id_anggota = $(this).data('id');
+        action('delete_anggota',id_anggota,'Data yang di hapus tidak dapat dikembalikan lagi!');
     });
 
-    function action(urlfunc,id_user,text){
+    function action(urlfunc,id_anggota,text){
         swal({
             title: "Apakah anda yakin?",
             text: text,
@@ -319,7 +319,7 @@
                     method: "POST",
                     dataType: "json",
                     data: {
-                        id_user: id_user
+                        id_anggota: id_anggota
                     },
                     success: function (json) {
                         let result = json.result;
@@ -343,7 +343,7 @@
                     },
                 },
             });
-            table_user.ajax.reload();
+            table_anggota.ajax.reload();
             if(reload == 1){
                 setTimeout(() => {
                     window.location.reload();

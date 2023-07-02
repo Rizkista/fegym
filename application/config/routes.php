@@ -12,5 +12,8 @@ $route['newpassword'] = 'home/newpassword';
 
 $route['dashboard'] = 'menu/dashboard';
 
-$route['users'] = 'menu/users';
+$route['anggota'] = 'menu/anggota';
 $route['konfigurasi'] = 'menu/konfigurasi';
+
+
+$route['account'] = 'menu/account';
