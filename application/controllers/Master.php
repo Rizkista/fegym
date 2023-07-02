@@ -196,7 +196,7 @@ class Master extends CI_Controller {
 			$output['message'] = "Data paket gym berhasil ditambah!";
 			$output['result'] = "success";
 		}else{
-			$output['message'] = "Tgl paket gym tidak boleh kosong!";
+			$output['message'] = "Nama paket gym tidak boleh kosong!";
 			$output['result'] = "error";
 		}
         echo json_encode($output);
