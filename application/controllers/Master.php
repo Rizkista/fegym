@@ -19,7 +19,7 @@ class Master extends CI_Controller {
 
 	//================= CABANG
 	public function read_cabang(){
-		$cabang = $this->m_auth->getDataCabang();
+		$cabang = $this->m_auth->getDataCabang(ID_OFFICE);
 		$data = [];
 		$no = 0;
 		foreach ($cabang as $list) {

@@ -91,6 +91,7 @@ class Menu extends CI_Controller {
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Produk';
 			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['data_katproduk'] = $this->m_main->getResultData('db_kat_produk','status = 1 AND id_office = '.ID_OFFICE,'nama_kat_produk asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('pos/produk');
 			$this->load->view('layout/footer');

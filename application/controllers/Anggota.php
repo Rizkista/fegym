@@ -19,7 +19,7 @@ class Anggota extends CI_Controller {
 
 	//================= Anggota
 	public function read_anggota(){
-		$anggota = $this->m_auth->GetAllAnggota();
+		$anggota = $this->m_auth->GetAllAnggota(ID_OFFICE);
 		$data = [];
 		$no = 0;
 		foreach ($anggota as $list) {
