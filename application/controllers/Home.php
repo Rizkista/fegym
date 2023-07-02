@@ -9,7 +9,6 @@ class Home extends CI_Controller {
     function __construct(){
         parent::__construct();
 		$this->load->model('M_main', 'm_main');
-		$this->load->model('M_akses', 'm_akses');
 		$this->load->model('M_auth', 'm_auth');
     }
 

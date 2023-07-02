@@ -37,7 +37,7 @@
                 );
             ?> 
             <ul class="nav">
-                <li <?= $uri_path == 'dashboard' ? 'class="nav-item active"' : 'class="nav-item" ' ?>>
+                <li class="nav-item <?= $uri_path == 'dashboard' ? 'active' : '' ?>">
                     <a href="<?= base_url('dashboard') ?>">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
@@ -49,7 +49,7 @@
                     </span>
                     <h4 class="text-section">Menu</h4>
                 </li>
-                <li class="nav-item <?= !$cekmenu['anggota'] ? 'gone' : '' ?><?= $uri_path == 'anggota' ? 'active' : '' ?>">
+                <li class="nav-item <?= $uri_path == 'anggota' ? 'active' : '' ?>">
                     <a href="<?= base_url('anggota') ?>">
                         <i class="fas fa-users"></i>
                         <p>Anggota</p>

@@ -94,7 +94,6 @@
                     +'<a class="dropdown-item pointer anggota-edit" data-id="'+data+'" id="anggota-edit"> <i class="fas fa-pen"></i> Edit</a>'
                     +'<a class="dropdown-item pointer anggota-restore" data-id="'+data+'" id="anggota-restore"> <i class="fas fa-undo-alt"></i> Restore</a>'
                     +'<a class="dropdown-item pointer anggota-remove" data-id="'+data+'" id="anggota-remove"> <i class="fas fa-trash"></i> Remove</a>'
-                    +'<a class="dropdown-item pointer anggota-delete" data-id="'+data+'" id="anggota-delete"> <i class="fas fa-trash-alt"></i> Delete</a>'
                 +'</div>'
                 +'</div>':
                 data;
@@ -103,42 +102,16 @@
             { data: "IDcabang" },
         ],
         fnDrawCallback:function(){
-            $.ajax({
-                url: 'anggota/level_anggota',
-                type: 'GET',
-                dataType: "json",
-                success: function (json) {
-                    if(json.tambah){
-                        $("#tambah_anggota").removeClass("gone");
-                    }else{
-                        $("#tambah_anggota").addClass("gone");
-                    }
-                    
-                    if(json.ubah){
-                        $(".anggota-edit").removeClass("gone");
-                    }else{
-                        $(".anggota-edit").addClass("gone");
-                    }
-                    
-                    if(json.hapus){
-                        $(".anggota-remove").removeClass("gone");
-                    }else{
-                        $(".anggota-remove").addClass("gone");
-                    }
-                }
-            });
             var sta = $('select[name="filter-status"]').val().toLowerCase();
             let style = 'display:none;';
             if(sta == 'aktif-'){
                 $('.anggota-edit').attr('style','');
                 $('.anggota-restore').attr('style',style);
                 $('.anggota-remove').attr('style','');
-                $('.anggota-delete').attr('style',style);
             }else if(sta == 'hapus-'){
                 $('.anggota-edit').attr('style',style);
                 $('.anggota-restore').attr('style','');
                 $('.anggota-remove').attr('style',style);
-                $('.anggota-delete').attr('style',style);
             }
         },
     });
@@ -289,11 +262,6 @@
     $('body').on('click','#anggota-remove', function(){
         let id_anggota = $(this).data('id');
         action('remove_anggota',id_anggota,'Anggota akan dihapus dari daftar data aktif!');
-    });
-
-    $('body').on('click','#anggota-delete', function(){
-        let id_anggota = $(this).data('id');
-        action('delete_anggota',id_anggota,'Data yang di hapus tidak dapat dikembalikan lagi!');
     });
 
     function action(urlfunc,id_anggota,text){

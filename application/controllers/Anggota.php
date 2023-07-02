@@ -9,7 +9,6 @@ class Anggota extends CI_Controller {
     function __construct(){
         parent::__construct();
 		$this->load->model('M_main', 'm_main');
-		$this->load->model('M_akses', 'm_akses');
 		$this->load->model('M_auth', 'm_auth');
 		define('EMAIL',$this->session->userdata('email'));
 		define('ID_ACCOUNT',$this->session->userdata('id_account'));
@@ -130,26 +129,6 @@ class Anggota extends CI_Controller {
 		}
         echo json_encode($output);
         exit();
-	}
-	
-	public function delete_anggota(){
-		if(!empty($_POST['id_anggota'])){
-			$this->m_main->deleteIN('db_anggota','id_anggota',$_POST['id_anggota']);
-			$output['message'] = "Anggota berhasil di hapus permanen!";
-			$output['result'] = "success";
-		}else{
-			$output['message'] = "Data id anggota tidak tersedia!";
-			$output['result'] = "error";
-		}
-        echo json_encode($output);
-        exit();
-	}
-
-	public function level_anggota(){
-		$output['tambah'] = $this->m_akses->cekAksi(ID_JABATAN,'anggota',2);
-		$output['ubah'] = $this->m_akses->cekAksi(ID_JABATAN,'anggota',3);
-		$output['hapus'] = $this->m_akses->cekAksi(ID_JABATAN,'anggota',4);
-		echo json_encode($output);
 	}
     
 }
