@@ -21,7 +21,7 @@
                     'kategori-produk',
                     'stok-masuk',
                     'stok-keluar',
-                    'opname-stok',
+                    'stok-opname',
                 );
                 $master = array(
                     'paket-gym',
@@ -104,9 +104,9 @@
                                     <span class="sub-item">Stok Keluar</span>
                                 </a>
                             </li>
-                            <li class="<?= $uri_path == "opname-stok"? 'active' : '' ?>">
-                                <a href="<?= base_url('opname-stok') ?>">
-                                    <span class="sub-item">Opname Stok</span>
+                            <li class="<?= $uri_path == "stok-opname"? 'active' : '' ?>">
+                                <a href="<?= base_url('stok-opname') ?>">
+                                    <span class="sub-item">Stok Opname</span>
                                 </a>
                             </li>
                         </ul>
@@ -175,7 +175,13 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-section">
+                <li class="nav-item">
+                    <a href="#">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <p>Log Out</p>
+                    </a>
+                </li>
+                <!-- <li class="nav-section">
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
                     </span>
@@ -186,7 +192,7 @@
                         <i class="fas fa-users-cog"></i>
                         <p>Account</p>
                     </a>
-                </li>
+                </li> -->
             </ul>
 
         </div>

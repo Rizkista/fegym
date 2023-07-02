@@ -11,5 +11,14 @@ class M_auth extends CI_Model {
         ")->result();
         return $query;
     }
-
+    
+    public function getDataCabang(){
+        $query = $this->db->query("
+            SELECT a.status, a.nama_cabang, a.alamat_cabang, a.id_cabang, b.id_account, b.nama, b.email, b.telp, b.pass_view
+            FROM db_cabang a
+            JOIN db_account b ON a.id_account = b.id_account
+            GROUP BY a.tgl_edit desc
+        ")->result();
+        return $query;
+    }
 }

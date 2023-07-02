@@ -1,7 +1,7 @@
 (function ($) {
     var table_anggota = $("#datatable-anggota").DataTable({
         ajax: {
-            url: "users/read_anggota",
+            url: "anggota/read_anggota",
             type: "GET",
         },
         order: [],
@@ -104,7 +104,7 @@
         ],
         fnDrawCallback:function(){
             $.ajax({
-                url: 'users/level_anggota',
+                url: 'anggota/level_anggota',
                 type: 'GET',
                 dataType: "json",
                 success: function (json) {
@@ -225,7 +225,7 @@
             $("#add_anggota").prop('disabled', true);
             var formData = new FormData(document.querySelector("#form-anggota"));
             $.ajax({
-                url: "users/add_anggota",
+                url: "anggota/add_anggota",
                 method: "POST",
                 data: formData,
                 dataType: "json",
@@ -264,7 +264,7 @@
             $("#edit_anggota").prop('disabled', true);
             var formData = new FormData(document.querySelector("#form-anggota"));
             $.ajax({
-                url: "users/edit_anggota",
+                url: "anggota/edit_anggota",
                 method: "POST",
                 data: formData,
                 dataType: "json",
@@ -315,7 +315,7 @@
         }).then((Delete) => {
             if (Delete) {
                 $.ajax({
-                    url: "users/"+urlfunc,
+                    url: "anggota/"+urlfunc,
                     method: "POST",
                     dataType: "json",
                     data: {

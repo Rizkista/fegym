@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class Users extends CI_Controller {
+class Anggota extends CI_Controller {
 
     function __construct(){
         parent::__construct();
