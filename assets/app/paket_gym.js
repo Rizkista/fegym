@@ -1,7 +1,7 @@
 (function ($) {
-    var table_anggota = $("#datatable-anggota").DataTable({
+    var table_paket = $("#datatable-paket").DataTable({
         ajax: {
-            url: "anggota/read_anggota",
+            url: "master/read_paket",
             type: "GET",
         },
         order: [],
@@ -16,12 +16,8 @@
         ],
         columnDefs: [
             {
-                "targets": [0,1,2,3,4,5,6,7],
+                "targets": [6],
                 "orderable": false,
-                "visible": true
-            },
-            { 
-                "targets": '_all', 
                 "visible": false
             },
             {
@@ -34,7 +30,7 @@
         ],
         language: {
             search: "_INPUT_",
-            emptyTable: "Belum ada daftar anggota!",
+            emptyTable: "Belum ada daftar paket gym!",
             infoEmpty: "Tidak ada data untuk ditampilkan!",
             info: "_START_ to _END_ of _TOTAL_ entries",
             infoFiltered: ""
@@ -45,7 +41,7 @@
                 className: "btn btn-warning wid-max-select text-white",
                 text: '<i class="fas fa-plus mr-2"></i> Tambah',
                 attr:  {
-                    id: 'tambah_anggota'
+                    id: 'tambah_paket'
                 }
             },
             {
@@ -59,59 +55,53 @@
                 }
             },
             {
-                extend: "excel",
-                className: "btn btn-secondary wid-max-select text-white",
-                text: '<i class="fas fa-file-excel mr-2"></i> Excel',
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6],
-                },
-                filename: 'Data Anggota Gim '+$('#filter-cabang option:selected').text(),
-                title: ''
-            },
-            {
                 className: "btn btn-secondary wid-max-select text-white",
                 text: '<i class="fas fa-sync-alt mr-2"></i> Refresh',
                 action: function (e, dt, node, config) {
-                    table_anggota.ajax.reload();
+                    table_paket.ajax.reload();
                 },
             },
         ],
         columns: [
-            { data: "No" },
-            { data: "nama_anggota" },
-            { data: "gender_anggota" },
-            { data: "telp_anggota" },
-            { data: "email_anggota" },
-            { data: "alamat_anggota" },
-            { data: "status_member" },
-            { data: "Aksi" , render : function ( data, type, row, meta ) {
+            { data: "no" },
+            { data: "nama_paket" },
+            { data: "harga_paket" , render: function(data, type, row, meta) {
+                return '<sup><font color="#FF0000">Rp</font></sup> '+FormatCurrency(data);
+            }},
+            { data: "durasi" , render : function ( data, type, row, meta ) {
+                const durasi = [null, 'MINUTE', 'DAY', 'WEEK', 'MONTH', 'YEAR'];
+                return row['lama_durasi']+' '+'<sup><font color="#FF0000">'+durasi[row['durasi_paket']]+'</font></sup>';
+            }},
+            { data: "status_member" , render : function ( data, type, row, meta ) {
+                return data == 1 ? 'YA' : 'TIDAK';
+            }},
+            { data: "aksi" , render : function ( data, type, row, meta ) {
                 return type === 'display'  ?
                 '<div class="btn-group" role="group">'
                 +'<button id="btnGroupDrop1" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
                     +'Action'
                 +'</button>'
                 +'<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">'
-                    +'<a class="dropdown-item pointer anggota-edit" data-id="'+data+'" id="anggota-edit"> <i class="fas fa-pen"></i> Edit</a>'
-                    +'<a class="dropdown-item pointer anggota-restore" data-id="'+data+'" id="anggota-restore"> <i class="fas fa-undo-alt"></i> Restore</a>'
-                    +'<a class="dropdown-item pointer anggota-remove" data-id="'+data+'" id="anggota-remove"> <i class="fas fa-trash"></i> Remove</a>'
+                    +'<a class="dropdown-item pointer paket-edit" data-id="'+data+'" id="paket-edit"> <i class="fas fa-pen"></i> Edit</a>'
+                    +'<a class="dropdown-item pointer paket-remove" data-id="'+data+'" id="paket-remove"> <i class="fas fa-trash"></i> Remove</a>'
+                    +'<a class="dropdown-item pointer paket-restore" data-id="'+data+'" id="paket-restore"> <i class="fas fa-undo-alt"></i> Restore</a>'
                 +'</div>'
                 +'</div>':
                 data;
             }},
             { data: "status" },
-            { data: "IDcabang" },
         ],
         fnDrawCallback:function(){
             var sta = $('select[name="filter-status"]').val().toLowerCase();
             let style = 'display:none;';
             if(sta == 'aktif-'){
-                $('.anggota-edit').attr('style','');
-                $('.anggota-restore').attr('style',style);
-                $('.anggota-remove').attr('style','');
+                $('.paket-edit').attr('style','');
+                $('.paket-restore').attr('style',style);
+                $('.paket-remove').attr('style','');
             }else if(sta == 'hapus-'){
-                $('.anggota-edit').attr('style',style);
-                $('.anggota-restore').attr('style','');
-                $('.anggota-remove').attr('style',style);
+                $('.paket-edit').attr('style',style);
+                $('.paket-restore').attr('style','');
+                $('.paket-remove').attr('style',style);
             }
         },
     });
@@ -127,48 +117,34 @@
         filter();
     });
 
-    $('select[name="filter-cabang"]').change(function() {
-        saveKey();
-        filter();
-    });
-
     function filter(){
         var src = $('input[name="filter-search"]').val().toLowerCase();
         var sta = $('select[name="filter-status"]').val().toLowerCase();
-        var cbg = $('select[name="filter-cabang"]').val().toLowerCase();
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
             if (~data[1].toLowerCase().indexOf(src) && 
-                ~data[9].toLowerCase().indexOf(cbg) &&
-                ~data[8].toLowerCase().indexOf(sta))
+                ~data[6].toLowerCase().indexOf(sta))
                 return true;
-            if (~data[4].toLowerCase().indexOf(src) && 
-                ~data[9].toLowerCase().indexOf(cbg) &&
-                ~data[8].toLowerCase().indexOf(sta))
+            if (~data[2].toLowerCase().indexOf(src) && 
+                ~data[6].toLowerCase().indexOf(sta))
                 return true;
-            if (~data[5].toLowerCase().indexOf(src) && 
-                ~data[9].toLowerCase().indexOf(cbg) &&
-                ~data[8].toLowerCase().indexOf(sta))
+            if (~data[3].toLowerCase().indexOf(src) && 
+                ~data[6].toLowerCase().indexOf(sta))
                 return true;
-                
             return false;
         })
-        table_anggota.draw(); 
+        table_paket.draw(); 
         $.fn.dataTable.ext.search.pop();
     }
 
     function saveKey(){
         var src = $('input[name="filter-search"]').val().toLowerCase();
         var sta = $('select[name="filter-status"]').val().toLowerCase();
-        var cbg = $('select[name="filter-cabang"]').val().toLowerCase();
         
         if(src != undefined){
-            $('#datatable-anggota').DataTable().search(src).draw();
-        }
-        if(cbg != undefined){
-            $('#datatable-anggota').DataTable().search(cbg).draw();
+            $('#datatable-paket').DataTable().search(src).draw();
         }
         if(sta != undefined){
-            $('#datatable-anggota').DataTable().search(sta).draw();
+            $('#datatable-paket').DataTable().search(sta).draw();
         }
     }
 
@@ -179,26 +155,26 @@
         alias: "tt.mm.jjjj"
     }).mask('.tgl');
 
-    $("#tambah_anggota").on("click", function () {
-        $("#modal-anggota").modal();
-        document.getElementById("text-anggota").innerHTML = "Tambah Anggota";
-		$('#nama_anggota').val('');
-        $('#gender_anggota').val('');
-		$('#telp_anggota').val('');
-		$('#email_anggota').val('');
-		$('#alamat_anggota').val('');
-        $('input[name="edit_anggota"]').attr("type", "hidden");
-        $('input[name="add_anggota"]').attr("type", "submit");
+    $("#tambah_paket").on("click", function () {
+        $("#modal-paket").modal();
+        document.getElementById("text-paket").innerHTML = "Tambah Paket Gym";
+		$('#nama_paket').val('');
+		$('#harga_paket').val('');
+		$('#durasi_paket').val('');
+		$('#lama_durasi').val('');
+		$('#status_member').val('');
+        $('input[name="edit_paket"]').attr("type", "hidden");
+        $('input[name="add_paket"]').attr("type", "submit");
     });
-    
-    $("input#add_anggota").on("click", function (e) {
+
+    $("input#add_paket").on("click", function (e) {
         e.preventDefault();
-        let validasi = document.getElementById("form-anggota").reportValidity();
+        let validasi = document.getElementById("form-paket").reportValidity();
         if (validasi) {
-            $("#add_anggota").prop('disabled', true);
-            var formData = new FormData(document.querySelector("#form-anggota"));
+            $("#add_paket").prop('disabled', true);
+            var formData = new FormData(document.querySelector("#form-paket"));
             $.ajax({
-                url: "anggota/add_anggota",
+                url: "master/add_paket",
                 method: "POST",
                 data: formData,
                 dataType: "json",
@@ -208,36 +184,36 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-anggota").modal('hide');
-                    $("#add_anggota").prop('disabled', false);
+                    $("#modal-paket").modal('hide');
+                    $("#add_paket").prop('disabled', false);
                 },
             });
         }
     });
     
-    $('body').on('click','#anggota-edit', function(){
-        $("#modal-anggota").modal();
-        let id_anggota = $(this).data('id');
-        document.getElementById("text-anggota").innerHTML = "Ubah Anggota";
-		var data = table_anggota.row($(this).parents("tr")).data();
-		$('#nama_anggota').val(data["nama_anggota"]);
-        $('#gender_anggota').val(data["gender_anggota"]);
-		$('#telp_anggota').val(data["telp_anggota"]);
-		$('#email_anggota').val(data["email_anggota"]);
-		$('#alamat_anggota').val(data["alamat_anggota"]);
-		$('input[name="id_anggota"]').val(id_anggota);
-        $('input[name="edit_anggota"]').attr("type", "submit");
-        $('input[name="add_anggota"]').attr("type", "hidden");
+    $('body').on('click','#paket-edit', function(){
+        $("#modal-paket").modal();
+        let id_paket = $(this).data('id');
+        document.getElementById("text-paket").innerHTML = "Ubah Paket Gym";
+		var data = table_paket.row($(this).parents("tr")).data();
+		$('#nama_paket').val(data["nama_paket"]);
+		$('#harga_paket').val(FormatCurrency(data["harga_paket"]));
+		$('#durasi_paket').val(data["durasi_paket"]);
+		$('#lama_durasi').val(data["lama_durasi"]);
+		$('#status_member').val(data["status_member"]);
+		$('input[name="id_paket"]').val(id_paket);
+        $('input[name="edit_paket"]').attr("type", "submit");
+        $('input[name="add_paket"]').attr("type", "hidden");
     });
     
-    $("input#edit_anggota").on("click", function (e) {
+    $("input#edit_paket").on("click", function (e) {
         e.preventDefault();
-        let validasi = document.getElementById("form-anggota").reportValidity();
+        let validasi = document.getElementById("form-paket").reportValidity();
         if (validasi) {
-            $("#edit_anggota").prop('disabled', true);
-            var formData = new FormData(document.querySelector("#form-anggota"));
+            $("#edit_paket").prop('disabled', true);
+            var formData = new FormData(document.querySelector("#form-paket"));
             $.ajax({
-                url: "anggota/edit_anggota",
+                url: "master/edit_paket",
                 method: "POST",
                 data: formData,
                 dataType: "json",
@@ -247,24 +223,24 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-anggota").modal('hide');
-                    $("#edit_anggota").prop('disabled', false);
+                    $("#modal-paket").modal('hide');
+                    $("#edit_paket").prop('disabled', false);
                 },
             });
         }
     });
 
-    $('body').on('click','#anggota-restore', function(){
-        let id_anggota = $(this).data('id');
-        action('restore_anggota',id_anggota,'Anggota akan dikembalikan ke daftar data aktif!');
+    $('body').on('click','#paket-restore', function(){
+        let id_paket = $(this).data('id');
+        action('restore_paket',id_paket,'Data paket akan dikembalikan ke daftar paket aktif!');
     });
 
-    $('body').on('click','#anggota-remove', function(){
-        let id_anggota = $(this).data('id');
-        action('remove_anggota',id_anggota,'Anggota akan dihapus dari daftar data aktif!');
+    $('body').on('click','#paket-remove', function(){
+        let id_paket = $(this).data('id');
+        action('remove_paket',id_paket,'Data paket akan dihapus dari daftar paket aktif');
     });
 
-    function action(urlfunc,id_anggota,text){
+    function action(urlfunc,id_paket,text){
         swal({
             title: "Apakah anda yakin?",
             text: text,
@@ -283,11 +259,11 @@
         }).then((Delete) => {
             if (Delete) {
                 $.ajax({
-                    url: "anggota/"+urlfunc,
+                    url: "master/"+urlfunc,
                     method: "POST",
                     dataType: "json",
                     data: {
-                        id_anggota: id_anggota
+                        id_paket: id_paket
                     },
                     success: function (json) {
                         let result = json.result;
@@ -301,6 +277,18 @@
         });
     }
 
+    function FormatCurrency(angka,rp=false){
+        var rev = parseInt(angka, 10).toString().split('').reverse().join('');
+        var rev2 = '';
+        for (var i = 0; i < rev.length; i++) {
+            rev2 += rev[i];
+            if ((i + 1) % 3 === 0 && i !== (rev.length - 1)) {
+                rev2 += '.';
+            }
+        }
+        return (rp?'Rp ':'') + rev2.split('').reverse().join('') + '';
+    }
+
     function notif(result, message, reload = null) {
         if (result == "success") {
             swal("Success", message, {
@@ -311,12 +299,13 @@
                     },
                 },
             });
-            table_anggota.ajax.reload();
+            table_paket.ajax.reload();
             if(reload == 1){
                 setTimeout(() => {
                     window.location.reload();
                 }, 1000);
             }
+            
         } else {
             swal("Faild", message, {
                 icon: "error",

@@ -175,8 +175,8 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a href="#">
+                <li class="nav-item pointer">
+                    <a id="log_out_click">
                         <i class="fas fa-sign-out-alt"></i>
                         <p>Log Out</p>
                     </a>

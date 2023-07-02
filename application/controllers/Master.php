@@ -156,4 +156,105 @@ class Master extends CI_Controller {
         exit();
 	}
 
+    //================= PAKET
+	public function read_paket(){
+		$paket = $this->m_main->getResultData('db_paket_gym','id_office = '.ID_OFFICE,'tgl_edit desc');
+		$data = [];
+		$no = 0;
+		foreach ($paket as $list) {
+			$no++;
+			$row = [];
+			$row['no'] = $no;
+			$row['nama_paket'] = $list->nama_paket;
+			$row['durasi_paket'] = $list->durasi_paket;
+			$row['lama_durasi'] = $list->lama_durasi;
+			$row['harga_paket'] = $list->harga_paket;
+			$row['status_member'] = $list->status_member;
+			$row['durasi'] = null;
+			$row['aksi'] = $list->id_paket_gym;
+			$row['status'] = $list->status == 1 ? 'aktif-' : 'hapus-';
+			$data[] = $row; 
+		}
+		$output = [ "data" => $data ];
+		echo json_encode($output);
+	}
+
+	public function add_paket(){
+		if(!empty($_POST['nama_paket'])){
+			$data = [
+				'id_office' => ID_OFFICE,
+				'nama_paket' => $_POST['nama_paket'],
+				'durasi_paket' => $_POST['durasi_paket'],
+				'lama_durasi' => $_POST['lama_durasi'],
+				'harga_paket' => str_replace(".","",$_POST['harga_paket']),
+				'status_member' => $_POST['status_member'],
+				'tgl_input' => date("Y-m-d H:i:s"),
+				'tgl_edit' => date("Y-m-d H:i:s"),
+				'status' => 1,
+			];
+			$this->m_main->createIN('db_paket_gym',$data);
+			$output['message'] = "Data paket gym berhasil ditambah!";
+			$output['result'] = "success";
+		}else{
+			$output['message'] = "Tgl paket gym tidak boleh kosong!";
+			$output['result'] = "error";
+		}
+        echo json_encode($output);
+        exit();
+	}
+
+	public function edit_paket(){
+		if(!empty($_POST['nama_paket'])){
+			$data = [
+				'nama_paket' => $_POST['nama_paket'],
+				'durasi_paket' => $_POST['durasi_paket'],
+				'lama_durasi' => $_POST['lama_durasi'],
+				'harga_paket' => str_replace(".","",$_POST['harga_paket']),
+				'status_member' => $_POST['status_member'],
+				'tgl_edit' => date("Y-m-d H:i:s"),
+			];
+			$this->m_main->updateIN('db_paket_gym','id_paket_gym',$_POST['id_paket'],$data);
+			$output['message'] = "Data paket gym berhasil di ubah!";
+			$output['result'] = "success";
+		}else{
+			$output['message'] = "Data id paket gym tidak tersedia!";
+			$output['result'] = "error";
+		}
+        echo json_encode($output);
+        exit();
+	}
+	
+	public function remove_kegiatan(){
+		if(!empty($_POST['id_paket'])){
+			$data = [
+				'status' => 0,
+				'tgl_edit' => date("Y-m-d H:i:s"),
+			];
+			$this->m_main->updateIN('db_paket_gym','id_paket_gym',$_POST['id_paket'],$data);
+			$output['message'] = "Paket gym berhasil di hapus!";
+			$output['result'] = "success";
+		}else{
+			$output['message'] = "Data id paket gym tidak tersedia!";
+			$output['result'] = "error";
+		}
+        echo json_encode($output);
+        exit();
+	}
+	
+	public function restore_kegiatan(){
+		if(!empty($_POST['id_paket'])){
+			$data = [
+				'status' => 1,
+				'tgl_edit' => date("Y-m-d H:i:s"),
+			];
+			$this->m_main->updateIN('db_paket_gym','id_paket_gym',$_POST['id_paket'],$data);
+			$output['message'] = "Paket gym berhasil di pulihkan!";
+			$output['result'] = "success";
+		}else{
+			$output['message'] = "Data id paket gym tidak tersedia!";
+			$output['result'] = "error";
+		}
+        echo json_encode($output);
+        exit();
+	}
 }

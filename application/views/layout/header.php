@@ -14,7 +14,7 @@
 
 	<!-- Fonts and icons -->
 	<script src="<?= base_url() ?>assets/js/plugin/webfont/webfont.min.js"></script>
-	<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/family.css" media="all"> -->
+	<link rel="stylesheet" href="<?= base_url() ?>assets/css/family.css" media="all">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/fonts.css" media="all">
 
 	<!-- CSS Files -->
@@ -111,7 +111,7 @@
 										<div class="user-box">
 											<div class="avatar-lg"><img src="<?= base_url() ?>assets/img/photo/<?= $photo; ?>" alt="image profile" class="avatar-img rounded"></div>
 											<div class="u-text">
-												<h4><?= strlen($account['nama']) > 18 ?  substr($account['nama'],0,18).'..' : $account['nama'] ?></h4>
+												<h4><?= strlen($account['nama']) > 18 ? substr($account['nama'],0,18).'..' : $account['nama'] ?></h4>
 												<p class="text-muted"><?= strlen($account['email']) > 20 ?  substr($account['email'],0,20).'..' : $account['email'] ?></p>
 												<a href="<?= base_url('logout') ?>" class="btn btn-xs btn-danger btn-sm mb-0">Logout</a>
 											</div>
