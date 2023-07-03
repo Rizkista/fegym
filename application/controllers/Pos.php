@@ -151,10 +151,24 @@ class Pos extends CI_Controller {
 
 	public function add_produk(){
 		if(!empty($_POST['nama_produk'])){
+			$new_kategori = $_POST['new_id_kat_produk'];
+			if($new_kategori){
+				$kate = [
+					'id_office' => ID_OFFICE,
+					'id_lokasi' => $_POST['id_lokasi'] ? $_POST['id_lokasi'] : (ID_LOKASI != '' ? ID_LOKASI : 1),
+					'nama_kat_produk' => $new_kategori,
+					'tgl_input' => date("Y-m-d H:i:s"),
+					'tgl_edit' => date("Y-m-d H:i:s"),
+					'status' => 1,
+				];
+				$id_kat_produk = $this->m_main->createIN('db_kat_produk',$kate)['result'];
+			}else{
+				$id_kat_produk = $_POST['id_kat_produk'];
+			}
 			$data = [
 				'id_office' => ID_OFFICE,
+				'id_kat_produk' => $id_kat_produk,
 				'id_lokasi' => $_POST['id_lokasi'] ? $_POST['id_lokasi'] : (ID_LOKASI != '' ? ID_LOKASI : 1),
-				'id_kat_produk' => $_POST['id_kat_produk'],
 				'barcode_produk' => $_POST['barcode_produk'],
 				'nama_produk' => $_POST['nama_produk'],
 				'harga_beli' => str_replace(".","",$_POST['harga_beli']),
@@ -178,8 +192,22 @@ class Pos extends CI_Controller {
 
 	public function edit_produk(){
 		if(!empty($_POST['id_produk'])){
+			$new_kategori = $_POST['new_id_kat_produk'];
+			if($new_kategori){
+				$kate = [
+					'id_office' => ID_OFFICE,
+					'id_lokasi' => $_POST['id_lokasi'] ? $_POST['id_lokasi'] : (ID_LOKASI != '' ? ID_LOKASI : 1),
+					'nama_kat_produk' => $new_kategori,
+					'tgl_input' => date("Y-m-d H:i:s"),
+					'tgl_edit' => date("Y-m-d H:i:s"),
+					'status' => 1,
+				];
+				$id_kat_produk = $this->m_main->createIN('db_kat_produk',$kate)['result'];
+			}else{
+				$id_kat_produk = $_POST['id_kat_produk'];
+			}
 			$data = [
-				'id_kat_produk' => $_POST['id_kat_produk'],
+				'id_kat_produk' => $id_kat_produk,
 				'barcode_produk' => $_POST['barcode_produk'],
 				'nama_produk' => $_POST['nama_produk'],
 				'harga_beli' => str_replace(".","",$_POST['harga_beli']),

@@ -169,6 +169,24 @@
         leapday: "-02-29",
         alias: "tt.mm.jjjj"
     }).mask('.tgl');
+    
+    $("#new_kat").on("click", function () {
+        $(".kat-select").addClass('gone');
+        $(".kat-select").removeAttr('required');
+        $(".kat-new").removeClass('gone');
+        $(".kat-new").attr('required', '');
+        $("#new_kat").addClass('gone');
+        $("#select_kat").removeClass('gone');
+    });
+
+    $("#select_kat").on("click", function () {
+        $(".kat-new").addClass('gone');
+        $(".kat-new").removeAttr('required');
+        $(".kat-select").removeClass('gone');
+        $(".kat-select").attr('required', '');
+        $("#select_kat").addClass('gone');
+        $("#new_kat").removeClass('gone');
+    });
 
     $("#tambah_produk").on("click", function () {
         $("#modal-produk").modal();
@@ -193,7 +211,6 @@
                 }
             });
         }
-        
         document.getElementById("text-produk").innerHTML = "Tambah Produk";
 		$('#barcode_produk').val('');
 		$('#nama_produk').val('');
@@ -204,6 +221,7 @@
 		$('#nama_kat_produk').val('');
 		$('#id_kat_produk').val('');
 		$('#id_lokasi').val('');
+		$('#new_id_kat_produk').val('');
         $('input[name="edit_produk"]').attr("type", "hidden");
         $('input[name="add_produk"]').attr("type", "submit");
     });
@@ -253,6 +271,7 @@
 		$('#nama_kat_produk').val(data["nama_kat_produk"]);
 		$('#id_kat_produk').val(data["id_kat_produk"]);
 		$('#id_lokasi').val(data["id_lokasi"]);
+		$('#new_id_kat_produk').val('');
 		$('input[name="id_produk"]').val(id_produk);
         $('input[name="edit_produk"]').attr("type", "submit");
         $('input[name="add_produk"]').attr("type", "hidden");

@@ -132,11 +132,15 @@
                                                         <td>Kategori Produk <span class="text-danger">*</span></td>
                                                         <td>&nbsp;:&nbsp;</td>
                                                         <td>
-                                                            <select class="form-control form-rm select-katpro" name="id_kat_produk" id="id_kat_produk" required disabled style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
+                                                            <select class="form-control form-rm select-katpro kat-select" name="id_kat_produk" id="id_kat_produk" required disabled style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
                                                                 <option value="">Pilih Kategori</option>
                                                             </select>
+                                                            <input type="text" class="form-control form-rm kat-new gone" name="new_id_kat_produk" id="new_id_kat_produk" placeholder="Tambah Kategori Baru">
                                                         </td>
-                                                        <td width="2%"><input class="btn form-rm select-katpro" type="button" id="new_kat" value="new" disabled style="background: #72a6d9;color: #fff;" readonly></td>
+                                                        <td width="2%">
+                                                            <input class="btn form-rm select-katpro" type="button" id="new_kat" value="new" disabled style="background: #72a6d9;color: #fff;" readonly>
+                                                            <input class="btn form-rm select-katpro gone" type="button" id="select_kat" value="select" disabled style="background: #72a6d9;color: #fff;" readonly>
+                                                        </td>
                                                     </tr>
                                             </table>
                                         </div>
