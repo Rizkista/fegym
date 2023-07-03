@@ -16,7 +16,7 @@
         ],
         columnDefs: [
             {
-                "targets": [9,10],
+                "targets": [10,11],
                 "orderable": false,
                 "visible": false
             },
@@ -75,6 +75,7 @@
             { data: "qty_produk" },
             { data: "satuan_produk" },
             { data: "nama_kat_produk" },
+            { data: "nama_lokasi" },
             { data: "aksi" , render : function ( data, type, row, meta ) {
                 return type === 'display'  ?
                 '<div class="btn-group" role="group">'
@@ -90,7 +91,7 @@
                 data;
             }},
             { data: "status" },
-            { data: "id_kat_produk" },
+            { data: "id_lokasi_filter" },
         ],
         fnDrawCallback:function(){
             var sta = $('select[name="filter-status"]').val().toLowerCase();
@@ -118,7 +119,7 @@
         filter();
     });
 
-    $('select[name="filter-kategori"]').change(function() {
+    $('select[name="filter-lokasi"]').change(function() {
         saveKey();
         filter();
     });
@@ -126,19 +127,19 @@
     function filter(){
         var src = $('input[name="filter-search"]').val().toLowerCase();
         var sta = $('select[name="filter-status"]').val().toLowerCase();
-        var kat = $('select[name="filter-kategori"]').val().toLowerCase();
+        var lok = $('select[name="filter-lokasi"]').val().toLowerCase();
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
             if (~data[1].toLowerCase().indexOf(src) && 
-                ~data[9].toLowerCase().indexOf(sta) && 
-                ~data[10].toLowerCase().indexOf(kat))
+                ~data[10].toLowerCase().indexOf(sta) && 
+                ~data[11].toLowerCase().indexOf(lok))
                 return true;
             if (~data[2].toLowerCase().indexOf(src) && 
-                ~data[9].toLowerCase().indexOf(sta) && 
-                ~data[10].toLowerCase().indexOf(kat))
+                ~data[10].toLowerCase().indexOf(sta) && 
+                ~data[11].toLowerCase().indexOf(lok))
                 return true;
             if (~data[6].toLowerCase().indexOf(src) && 
-                ~data[9].toLowerCase().indexOf(sta) && 
-                ~data[10].toLowerCase().indexOf(kat))
+                ~data[10].toLowerCase().indexOf(sta) && 
+                ~data[11].toLowerCase().indexOf(lok))
                 return true;
             return false;
         })
@@ -149,7 +150,7 @@
     function saveKey(){
         var src = $('input[name="filter-search"]').val().toLowerCase();
         var sta = $('select[name="filter-status"]').val().toLowerCase();
-        var kat = $('select[name="filter-kategori"]').val().toLowerCase();
+        var lok = $('select[name="filter-lokasi"]').val().toLowerCase();
         
         if(src != undefined){
             $('#datatable-produk').DataTable().search(src).draw();
@@ -157,8 +158,8 @@
         if(sta != undefined){
             $('#datatable-produk').DataTable().search(sta).draw();
         }
-        if(kat != undefined){
-            $('#datatable-produk').DataTable().search(kat).draw();
+        if(lok != undefined){
+            $('#datatable-produk').DataTable().search(lok).draw();
         }
     }
 
@@ -171,6 +172,28 @@
 
     $("#tambah_produk").on("click", function () {
         $("#modal-produk").modal();
+		const id_posisi = $('input[name="id_posisi"]').val();
+        if(id_posisi == 3){
+            $(".lok-edit").addClass('gone');
+            $("#id_lokasi").removeAttr('required');
+            produkByLok(null);
+        }else{
+            $(".lok-edit").removeClass('gone');
+            $("#id_lokasi").attr('required', '');
+            $('#id_lokasi').change(function() {
+                const val = $(this).val();
+                $('#id_kat_produk').empty().append($('<option>', {
+                    value: '',
+                    text: 'Pilih Produk'
+                }));
+                if(val != ""){
+                    produkByLok(val);
+                }else{
+                    $('.select-katpro').attr('disabled', true);
+                }
+            });
+        }
+        
         document.getElementById("text-produk").innerHTML = "Tambah Produk";
 		$('#barcode_produk').val('');
 		$('#nama_produk').val('');
@@ -179,6 +202,8 @@
 		$('#harga_jual').val('');
 		$('#satuan_produk').val('');
 		$('#nama_kat_produk').val('');
+		$('#id_kat_produk').val('');
+		$('#id_lokasi').val('');
         $('input[name="edit_produk"]').attr("type", "hidden");
         $('input[name="add_produk"]').attr("type", "submit");
     });
@@ -209,9 +234,16 @@
     
     $('body').on('click','#produk-edit', function(){
         $("#modal-produk").modal();
+        $(".lok-edit").addClass('gone');
+        $("#id_lokasi").removeAttr('required');
+        $('#id_kat_produk').empty().append($('<option>', {
+            value: '',
+            text: 'Pilih Produk'
+        }));
         let id_produk = $(this).data('id');
         document.getElementById("text-produk").innerHTML = "Ubah Produk";
 		var data = table_produk.row($(this).parents("tr")).data();
+        produkByLok(data["id_lokasi"],data["id_kat_produk"]);
 		$('#barcode_produk').val(data["barcode_produk"]);
 		$('#nama_produk').val(data["nama_produk"]);
 		$('#qty_produk').val(data["qty_produk"]);
@@ -219,6 +251,8 @@
 		$('#harga_jual').val(FormatCurrency(data["harga_jual"]));
 		$('#satuan_produk').val(data["satuan_produk"]);
 		$('#nama_kat_produk').val(data["nama_kat_produk"]);
+		$('#id_kat_produk').val(data["id_kat_produk"]);
+		$('#id_lokasi').val(data["id_lokasi"]);
 		$('input[name="id_produk"]').val(id_produk);
         $('input[name="edit_produk"]').attr("type", "submit");
         $('input[name="add_produk"]').attr("type", "hidden");
@@ -257,6 +291,29 @@
         let id_produk = $(this).data('id');
         action('remove_produk',id_produk,'Data produk akan dihapus dari daftar produk aktif');
     });
+
+    function produkByLok(id_lokasi,lok_val = null){
+        $.ajax({
+            url: "pos/get_kat_produk",
+            method: "POST",
+            dataType: "json",
+            data: {
+                id_lokasi: id_lokasi,
+            },
+            success: function (data) {
+                $('.select-katpro').attr('disabled', false);
+                if(data.length > 0){
+                    for(var i=0; i<data.length; i++) {
+                        $('#id_kat_produk').append($('<option>', {
+                            value: data[i].id_kat_produk,
+                            text: data[i].nama_kat_produk,
+                            selected: lok_val ? (lok_val == data[i].id_kat_produk ? true : false) : false
+                        }));
+                    }
+                }
+            },
+        });
+    }
 
     function FormatCurrency(angka,rp=false){
         var rev = parseInt(angka, 10).toString().split('').reverse().join('');

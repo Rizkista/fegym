@@ -12,6 +12,7 @@
 </div>
 
 <div class="mask"></div>
+<input type="hidden" name="id_posisi" value="<?= $this->session->userdata('id_posisi') ?>">
 <input type="hidden" name="base_url" value="<?= base_url() ?>">
 <?php require_once('corejs.php'); ?>
 

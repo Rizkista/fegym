@@ -19,13 +19,13 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-sm">
+                <div class="col-sm <?= ($this->session->userdata('id_posisi') == 3 ? 'gone' : '') ?>">
                     <div class="btn-group border-option my-1">
-                        <label class="label-filter">Kategori: </label>&nbsp;&nbsp;
-                        <select class="form-control" name="filter-kategori" id="filter-kategori">
-                            <option value="">Semua Kategori</option>
-                            <?php foreach ($data_katproduk as $list){ ?>
-                                <option value="-<?= $list->id_kat_produk ?>-"><?= $list->nama_kat_produk ?></option>
+                        <label class="label-filter">Lokasi: </label>&nbsp;&nbsp;
+                        <select class="form-control" name="filter-lokasi" id="filter-lokasi">
+                            <option value="">Semua Lokasi</option>
+                            <?php foreach ($data_lokasi as $list){ ?>
+                                <option value="-<?= $list->id_lokasi ?>-"><?= $list->nama_lokasi ?></option>
                             <?php } ?> 
                         </select>
                     </div>
@@ -51,17 +51,18 @@
 
     <div class="card">
         <div class="card-body">
-            <table id="datatable-produk" class="table-responsive display nowrap table table-striped table-hover" >
+            <table id="datatable-produk" class="table-responsive display table table-striped table-hover" >
                 <thead>
                     <tr>
                         <th style="width:5%;">No</th>
-                        <th style="width:12%;" class="nowraping">ID Barcode</th>
+                        <th style="width:10%;" class="nowraping">ID Barcode</th>
                         <th style="width:30%;">Produk</th>
-                        <th style="width:12%;" class="nowraping">Harga Beli</th>
-                        <th style="width:12%;" class="nowraping">Harga Jual</th>
+                        <th style="width:10%;" class="nowraping">Harga Beli</th>
+                        <th style="width:10%;" class="nowraping">Harga Jual</th>
                         <th style="width:5%;">Qty</th>
                         <th style="width:5%;">Satuan</th>
-                        <th style="width:12%;">Kategori</th>
+                        <th style="width:10%;">Kategori</th>
+                        <th style="width:15%;">Lokasi</th>
                         <th style="width:5%;">Aksi</th>
                     </tr>
                 </thead>
@@ -98,25 +99,12 @@
                                                     <tr>
                                                         <td>ID Barcode </td>
                                                         <td>&nbsp;:&nbsp;</td>
-                                                        <td colspan="2"><input type="text" class="form-control form-rm" name="barcode_produk" id="barcode_produk" placeholder="ID Barcode" required></textarea></td>
+                                                        <td colspan="2"><input type="text" class="form-control form-rm" name="barcode_produk" id="barcode_produk" placeholder="ID Barcode"></textarea></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Satuan <span class="text-danger">*</span></td>
                                                         <td>&nbsp;:&nbsp;</td>
                                                         <td colspan="2"><input type="text" class="form-control form-rm" name="satuan_produk" id="satuan_produk" placeholder="Satuan pcs/lainya" required></textarea></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Kategori Produk <span class="text-danger">*</span></td>
-                                                        <td>&nbsp;:&nbsp;</td>
-                                                        <td>
-                                                            <select class="form-control form-rm" name="id_kat_produk" id="id_kat_produk" required style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
-                                                                <option value="">Pilih Kategori</option>
-                                                                <?php foreach ($data_katproduk as $list){ ?>
-                                                                    <option value="<?= $list->id_kat_produk ?>"><?= $list->nama_kat_produk ?></option>
-                                                                <?php } ?> 
-                                                            </select>
-                                                        </td>
-                                                        <td width="2%"><input class="btn form-rm" type="button" id="new_kat" value="new" style="background: #72a6d9;color: #fff;" readonly></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Harga Beli <span class="text-danger">*</span></td>
@@ -127,6 +115,28 @@
                                                         <td>Harga Jual <span class="text-danger">*</span></td>
                                                         <td>&nbsp;:&nbsp;</td>
                                                         <td colspan="2"><input type="text" class="form-control form-rm" name="harga_jual" id="harga_jual" placeholder="0" data-type="currency" required></td>
+                                                    </tr>
+                                                    <tr class="lok-edit">
+                                                        <td>Lokasi Gym <span class="text-danger">*</span></td>
+                                                        <td>&nbsp;:&nbsp;</td>
+                                                        <td colspan="2">
+                                                            <select class="form-control form-rm" name="id_lokasi" id="id_lokasi" style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
+                                                                <option value="">Pilih Lokasi</option>
+                                                                <?php foreach ($data_lokasi as $list){ ?>
+                                                                    <option value="<?= $list->id_lokasi ?>"><?= $list->nama_lokasi ?></option>
+                                                                <?php } ?> 
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Kategori Produk <span class="text-danger">*</span></td>
+                                                        <td>&nbsp;:&nbsp;</td>
+                                                        <td>
+                                                            <select class="form-control form-rm select-katpro" name="id_kat_produk" id="id_kat_produk" required disabled style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
+                                                                <option value="">Pilih Kategori</option>
+                                                            </select>
+                                                        </td>
+                                                        <td width="2%"><input class="btn form-rm select-katpro" type="button" id="new_kat" value="new" disabled style="background: #72a6d9;color: #fff;" readonly></td>
                                                     </tr>
                                             </table>
                                         </div>

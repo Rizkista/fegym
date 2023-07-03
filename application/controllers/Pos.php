@@ -19,7 +19,7 @@ class Pos extends CI_Controller {
 
     //================= KATEGORI PRODUK
 	public function read_katproduk(){
-		$katproduk = $this->m_main->getResultData('db_kat_produk','id_office = '.ID_OFFICE,'tgl_edit desc');
+		$katproduk = $this->m_auth->getDataKategoriProduk(ID_OFFICE,ID_LOKASI);
 		$data = [];
 		$no = 0;
 		foreach ($katproduk as $list) {
@@ -27,6 +27,9 @@ class Pos extends CI_Controller {
 			$row = [];
 			$row['no'] = $no;
 			$row['nama_kat_produk'] = $list->nama_kat_produk;
+			$row['nama_lokasi'] = $list->nama_lokasi;
+			$row['id_lokasi'] = $list->id_lokasi;
+			$row['id_lokasi_filter'] = '-'.$list->id_lokasi.'-';
 			$row['aksi'] = $list->id_kat_produk;
 			$row['status'] = $list->status == 1 ? 'aktif-' : 'hapus-';
 			$data[] = $row; 
@@ -39,6 +42,7 @@ class Pos extends CI_Controller {
 		if(!empty($_POST['nama_kat_produk'])){
 			$data = [
 				'id_office' => ID_OFFICE,
+				'id_lokasi' => $_POST['id_lokasi'] ? $_POST['id_lokasi'] : (ID_LOKASI != '' ? ID_LOKASI : 1),
 				'nama_kat_produk' => $_POST['nama_kat_produk'],
 				'tgl_input' => date("Y-m-d H:i:s"),
 				'tgl_edit' => date("Y-m-d H:i:s"),
@@ -108,7 +112,7 @@ class Pos extends CI_Controller {
 
     //================= PRODUK
 	public function read_produk(){
-		$produk = $this->m_auth->getDataProduk(ID_OFFICE);
+		$produk = $this->m_auth->getDataProduk(ID_OFFICE,ID_LOKASI);
 		$data = [];
 		$no = 0;
 		foreach ($produk as $list) {
@@ -122,7 +126,10 @@ class Pos extends CI_Controller {
 			$row['harga_jual'] = $list->harga_jual;
 			$row['satuan_produk'] = $list->satuan_produk;
 			$row['nama_kat_produk'] = $list->nama_kat_produk;
-			$row['id_kat_produk'] = '-'.$list->id_kat_produk.'-';
+			$row['nama_lokasi'] = $list->nama_lokasi;
+			$row['id_kat_produk'] = $list->id_kat_produk;
+			$row['id_lokasi'] = $list->id_lokasi;
+			$row['id_lokasi_filter'] = '-'.$list->id_lokasi.'-';
 			$row['aksi'] = $list->id_produk;
 			$row['status'] = $list->status == 1 ? 'aktif-' : 'hapus-';
 			$data[] = $row; 
@@ -131,10 +138,22 @@ class Pos extends CI_Controller {
 		echo json_encode($output);
 	}
 
+	public function get_kat_produk(){
+		$id_lok = $_POST['id_lokasi'];
+		if($id_lok != null){
+			$id_lokasi = $id_lok;
+		}else{
+			$id_lokasi = ID_LOKASI;
+		}
+		$kategori = $this->m_main->getResultData('db_kat_produk','status = 1 AND id_office = '.ID_OFFICE.' AND id_lokasi = '.$id_lokasi,'nama_kat_produk asc');
+		echo json_encode($kategori);
+	}
+
 	public function add_produk(){
 		if(!empty($_POST['nama_produk'])){
 			$data = [
 				'id_office' => ID_OFFICE,
+				'id_lokasi' => $_POST['id_lokasi'] ? $_POST['id_lokasi'] : (ID_LOKASI != '' ? ID_LOKASI : 1),
 				'id_kat_produk' => $_POST['id_kat_produk'],
 				'barcode_produk' => $_POST['barcode_produk'],
 				'nama_produk' => $_POST['nama_produk'],

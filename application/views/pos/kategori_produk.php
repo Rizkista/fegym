@@ -19,6 +19,17 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
+                <div class="col-sm <?= ($this->session->userdata('id_posisi') == 3 ? 'gone' : '') ?>">
+                    <div class="btn-group border-option my-1">
+                        <label class="label-filter">Lokasi: </label>&nbsp;&nbsp;
+                        <select class="form-control" name="filter-lokasi" id="filter-lokasi">
+                            <option value="">Semua Lokasi</option>
+                            <?php foreach ($data_lokasi as $list){ ?>
+                                <option value="-<?= $list->id_lokasi ?>-"><?= $list->nama_lokasi ?></option>
+                            <?php } ?> 
+                        </select>
+                    </div>
+                </div>
                 <div class="col-sm">
                     <div class="btn-group border-option my-1">
                         <label class="label-filter">Status: </label>&nbsp;&nbsp;
@@ -44,7 +55,8 @@
                 <thead>
                     <tr>
                         <th style="width:5%;">No</th>
-                        <th style="width:95%;" class="nowraping">Nama Kategori</th>
+                        <th style="width:60%;" class="nowraping">Nama Kategori</th>
+                        <th style="width:30%;" class="nowraping">Lokasi Gym</th>
                         <th style="width:10%;">Aksi</th>
                     </tr>
                 </thead>
@@ -77,6 +89,18 @@
                                                         <td width="10%">Nama Katgori <span class="text-danger">*</span></td>
                                                         <td width="2%">&nbsp;:&nbsp;</td>
                                                         <td><input type="text" class="form-control form-rm" name="nama_kat_produk" id="nama_kat_produk" placeholder="Kategori Produk" required></td>
+                                                    </tr>
+                                                    <tr class="lok-edit">
+                                                        <td>Lokasi Gym <span class="text-danger">*</span></td>
+                                                        <td>&nbsp;:&nbsp;</td>
+                                                        <td>
+                                                            <select class="form-control form-rm" name="id_lokasi" id="id_lokasi" required style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
+                                                                <option value="">Pilih Lokasi</option>
+                                                                <?php foreach ($data_lokasi as $list){ ?>
+                                                                    <option value="<?= $list->id_lokasi ?>"><?= $list->nama_lokasi ?></option>
+                                                                <?php } ?> 
+                                                            </select>
+                                                        </td>
                                                     </tr>
                                             </table>
                                         </div>

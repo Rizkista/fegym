@@ -16,7 +16,7 @@
         ],
         columnDefs: [
             {
-                "targets": [3],
+                "targets": [4,5],
                 "orderable": false,
                 "visible": false
             },
@@ -65,6 +65,7 @@
         columns: [
             { data: "no" },
             { data: "nama_kat_produk" },
+            { data: "nama_lokasi" },
             { data: "aksi" , render : function ( data, type, row, meta ) {
                 return type === 'display'  ?
                 '<div class="btn-group" role="group">'
@@ -80,6 +81,7 @@
                 data;
             }},
             { data: "status" },
+            { data: "id_lokasi_filter" },
         ],
         fnDrawCallback:function(){
             var sta = $('select[name="filter-status"]').val().toLowerCase();
@@ -107,12 +109,19 @@
         filter();
     });
 
+    $('select[name="filter-lokasi"]').change(function() {
+        saveKey();
+        filter();
+    });
+
     function filter(){
         var src = $('input[name="filter-search"]').val().toLowerCase();
         var sta = $('select[name="filter-status"]').val().toLowerCase();
+        var lok = $('select[name="filter-lokasi"]').val().toLowerCase();
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
             if (~data[1].toLowerCase().indexOf(src) && 
-                ~data[3].toLowerCase().indexOf(sta))
+                ~data[4].toLowerCase().indexOf(sta) && 
+                ~data[5].toLowerCase().indexOf(lok))
                 return true;
             return false;
         })
@@ -123,12 +132,16 @@
     function saveKey(){
         var src = $('input[name="filter-search"]').val().toLowerCase();
         var sta = $('select[name="filter-status"]').val().toLowerCase();
+        var lok = $('select[name="filter-lokasi"]').val().toLowerCase();
         
         if(src != undefined){
             $('#datatable-katproduk').DataTable().search(src).draw();
         }
         if(sta != undefined){
             $('#datatable-katproduk').DataTable().search(sta).draw();
+        }
+        if(lok != undefined){
+            $('#datatable-katproduk').DataTable().search(lok).draw();
         }
     }
 
@@ -141,8 +154,17 @@
 
     $("#tambah_katproduk").on("click", function () {
         $("#modal-katproduk").modal();
+		const id_posisi = $('input[name="id_posisi"]').val();
+        if(id_posisi == 3){
+            $(".lok-edit").addClass('gone');
+            $("#id_lokasi").removeAttr('required');
+        }else{
+            $(".lok-edit").removeClass('gone');
+            $("#id_lokasi").attr('required', '');
+        }
         document.getElementById("text-katproduk").innerHTML = "Tambah Kategori Produk";
 		$('#nama_kat_produk').val('');
+		$('#id_lokasi').val('');
         $('input[name="edit_katproduk"]').attr("type", "hidden");
         $('input[name="add_katproduk"]').attr("type", "submit");
     });
@@ -174,9 +196,12 @@
     $('body').on('click','#katproduk-edit', function(){
         $("#modal-katproduk").modal();
         let id_katproduk = $(this).data('id');
+        $(".lok-edit").addClass('gone');
+        $("#id_lokasi").removeAttr('required');
         document.getElementById("text-katproduk").innerHTML = "Ubah Kategori Produk";
 		var data = table_katproduk.row($(this).parents("tr")).data();
 		$('#nama_kat_produk').val(data["nama_kat_produk"]);
+		$('#id_lokasi').val(data["id_lokasi"]);
 		$('input[name="id_katproduk"]').val(id_katproduk);
         $('input[name="edit_katproduk"]').attr("type", "submit");
         $('input[name="add_katproduk"]').attr("type", "hidden");

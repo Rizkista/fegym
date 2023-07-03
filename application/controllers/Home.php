@@ -31,11 +31,12 @@ class Home extends CI_Controller {
 			if($account){
 				if($account['status'] == 1){
 					if(password_verify($password, $account['password'])){
+						$lokasi = $this->m_main->getRow('db_lokasi','id_account',$account['id_account']);
 						$data = [
 							'id_account' => $account['id_account'],
 							'id_posisi' => $account['id_posisi'],
 							'id_office' => $account['id_office'],
-							'id_lokasi' => $account['id_lokasi'],
+							'id_lokasi' => $lokasi ? $lokasi['id_lokasi'] : null,
 							'nama' => $account['nama'],
 							'email' => $account['email'],
 							'login' => true,
