@@ -65,7 +65,7 @@
                 exportOptions: {
                     columns: [0,1,2,3,4,5,6],
                 },
-                filename: 'Data Anggota Gim '+$('#filter-cabang option:selected').text(),
+                filename: 'Data Anggota Gim '+$('#filter-lokasi option:selected').text(),
                 title: ''
             },
             {
@@ -99,7 +99,7 @@
                 data;
             }},
             { data: "status" },
-            { data: "IDcabang" },
+            { data: "IDlokasi" },
         ],
         fnDrawCallback:function(){
             var sta = $('select[name="filter-status"]').val().toLowerCase();
@@ -127,7 +127,7 @@
         filter();
     });
 
-    $('select[name="filter-cabang"]').change(function() {
+    $('select[name="filter-lokasi"]').change(function() {
         saveKey();
         filter();
     });
@@ -135,7 +135,7 @@
     function filter(){
         var src = $('input[name="filter-search"]').val().toLowerCase();
         var sta = $('select[name="filter-status"]').val().toLowerCase();
-        var cbg = $('select[name="filter-cabang"]').val().toLowerCase();
+        var cbg = $('select[name="filter-lokasi"]').val().toLowerCase();
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
             if (~data[1].toLowerCase().indexOf(src) && 
                 ~data[9].toLowerCase().indexOf(cbg) &&
@@ -159,7 +159,7 @@
     function saveKey(){
         var src = $('input[name="filter-search"]').val().toLowerCase();
         var sta = $('select[name="filter-status"]').val().toLowerCase();
-        var cbg = $('select[name="filter-cabang"]').val().toLowerCase();
+        var cbg = $('select[name="filter-lokasi"]').val().toLowerCase();
         
         if(src != undefined){
             $('#datatable-anggota').DataTable().search(src).draw();

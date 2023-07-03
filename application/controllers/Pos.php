@@ -14,7 +14,7 @@ class Pos extends CI_Controller {
 		define('ID_ACCOUNT',$this->session->userdata('id_account'));
 		define('ID_POSISI',$this->session->userdata('id_posisi'));
 		define('ID_OFFICE',$this->session->userdata('id_office'));
-		define('ID_CABANG',$this->session->userdata('id_cabang'));
+		define('ID_LOKASI',$this->session->userdata('id_lokasi'));
     }
 
     //================= KATEGORI PRODUK

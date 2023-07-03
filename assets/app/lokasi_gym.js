@@ -1,7 +1,7 @@
 (function ($) {
-    var table_cabang = $("#datatable-cabang").DataTable({
+    var table_lokasi = $("#datatable-lokasi").DataTable({
         ajax: {
-            url: "master/read_cabang",
+            url: "master/read_lokasi",
             type: "GET",
         },
         order: [],
@@ -30,7 +30,7 @@
         ],
         language: {
             search: "_INPUT_",
-            emptyTable: "Belum ada daftar cabang!",
+            emptyTable: "Belum ada daftar lokasi!",
             infoEmpty: "Tidak ada data untuk ditampilkan!",
             info: "_START_ to _END_ of _TOTAL_ entries",
             infoFiltered: ""
@@ -41,7 +41,7 @@
                 className: "btn btn-warning wid-max-select text-white",
                 text: '<i class="fas fa-plus mr-2"></i> Tambah',
                 attr:  {
-                    id: 'tambah_cabang'
+                    id: 'tambah_lokasi'
                 }
             },
             {
@@ -58,14 +58,14 @@
                 className: "btn btn-secondary wid-max-select text-white",
                 text: '<i class="fas fa-sync-alt mr-2"></i> Refresh',
                 action: function (e, dt, node, config) {
-                    table_cabang.ajax.reload();
+                    table_lokasi.ajax.reload();
                 },
             },
         ],
         columns: [
             { data: "no" },
-            { data: "nama_cabang" },
-            { data: "alamat_cabang" },
+            { data: "nama_lokasi" },
+            { data: "alamat_lokasi" },
             { data: "admin" , render : function ( data, type, row, meta ) {
                 var view = '\n\
                 <i>\n\
@@ -82,9 +82,9 @@
                     +'Action'
                 +'</button>'
                 +'<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">'
-                    +'<a class="dropdown-item pointer cabang-edit" data-id_account="'+row['id_account']+'" data-id_cabang="'+row['id_cabang']+'" id="cabang-edit"> <i class="fas fa-pen"></i> Edit</a>'
-                    +'<a class="dropdown-item pointer cabang-remove" data-id_account="'+row['id_account']+'" data-id_cabang="'+row['id_cabang']+'" id="cabang-remove"> <i class="fas fa-trash"></i> Remove</a>'
-                    +'<a class="dropdown-item pointer cabang-restore" data-id_account="'+row['id_account']+'" data-id_cabang="'+row['id_cabang']+'" id="cabang-restore"> <i class="fas fa-undo-alt"></i> Restore</a>'
+                    +'<a class="dropdown-item pointer lokasi-edit" data-id_account="'+row['id_account']+'" data-id_lokasi="'+row['id_lokasi']+'" id="lokasi-edit"> <i class="fas fa-pen"></i> Edit</a>'
+                    +'<a class="dropdown-item pointer lokasi-remove" data-id_account="'+row['id_account']+'" data-id_lokasi="'+row['id_lokasi']+'" id="lokasi-remove"> <i class="fas fa-trash"></i> Remove</a>'
+                    +'<a class="dropdown-item pointer lokasi-restore" data-id_account="'+row['id_account']+'" data-id_lokasi="'+row['id_lokasi']+'" id="lokasi-restore"> <i class="fas fa-undo-alt"></i> Restore</a>'
                 +'</div>'
                 +'</div>':
                 data;
@@ -95,13 +95,13 @@
             var sta = $('select[name="filter-status"]').val().toLowerCase();
             let style = 'display:none;';
             if(sta == 'aktif-'){
-                $('.cabang-edit').attr('style','');
-                $('.cabang-restore').attr('style',style);
-                $('.cabang-remove').attr('style','');
+                $('.lokasi-edit').attr('style','');
+                $('.lokasi-restore').attr('style',style);
+                $('.lokasi-remove').attr('style','');
             }else if(sta == 'hapus-'){
-                $('.cabang-edit').attr('style',style);
-                $('.cabang-restore').attr('style','');
-                $('.cabang-remove').attr('style',style);
+                $('.lokasi-edit').attr('style',style);
+                $('.lokasi-restore').attr('style','');
+                $('.lokasi-remove').attr('style',style);
             }
         },
     });
@@ -132,7 +132,7 @@
                 return true;
             return false;
         })
-        table_cabang.draw(); 
+        table_lokasi.draw(); 
         $.fn.dataTable.ext.search.pop();
     }
 
@@ -141,10 +141,10 @@
         var sta = $('select[name="filter-status"]').val().toLowerCase();
         
         if(src != undefined){
-            $('#datatable-cabang').DataTable().search(src).draw();
+            $('#datatable-lokasi').DataTable().search(src).draw();
         }
         if(sta != undefined){
-            $('#datatable-cabang').DataTable().search(sta).draw();
+            $('#datatable-lokasi').DataTable().search(sta).draw();
         }
     }
 
@@ -155,28 +155,28 @@
         alias: "tt.mm.jjjj"
     }).mask('.tgl');
 
-    $("#tambah_cabang").on("click", function () {
-        $("#modal-cabang").modal();
-        document.getElementById("text-cabang").innerHTML = "Tambah";
-		$('#nama_cabang').val('');
-		$('#alamat_cabang').val('');
+    $("#tambah_lokasi").on("click", function () {
+        $("#modal-lokasi").modal();
+        document.getElementById("text-lokasi").innerHTML = "Tambah";
+		$('#nama_lokasi').val('');
+		$('#alamat_lokasi').val('');
 		$('#nama').val('');
 		$('#email').val('');
 		$('#telp').val('');
 		$('#password').val('');
         $("#password").attr('required', '');
-        $('input[name="edit_cabang"]').attr("type", "hidden");
-        $('input[name="add_cabang"]').attr("type", "submit");
+        $('input[name="edit_lokasi"]').attr("type", "hidden");
+        $('input[name="add_lokasi"]').attr("type", "submit");
     });
 
-    $("input#add_cabang").on("click", function (e) {
+    $("input#add_lokasi").on("click", function (e) {
         e.preventDefault();
-        let validasi = document.getElementById("form-cabang").reportValidity();
+        let validasi = document.getElementById("form-lokasi").reportValidity();
         if (validasi) {
-            $("#add_cabang").prop('disabled', true);
-            var formData = new FormData(document.querySelector("#form-cabang"));
+            $("#add_lokasi").prop('disabled', true);
+            var formData = new FormData(document.querySelector("#form-lokasi"));
             $.ajax({
-                url: "master/add_cabang",
+                url: "master/add_lokasi",
                 method: "POST",
                 data: formData,
                 dataType: "json",
@@ -186,40 +186,40 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-cabang").modal('hide');
-                    $("#add_cabang").prop('disabled', false);
+                    $("#modal-lokasi").modal('hide');
+                    $("#add_lokasi").prop('disabled', false);
                 },
             });
         }
     });
     
-    $('body').on('click','#cabang-edit', function(){
-        $("#modal-cabang").modal();
-        let id_cabang = $(this).data('id_cabang');
+    $('body').on('click','#lokasi-edit', function(){
+        $("#modal-lokasi").modal();
+        let id_lokasi = $(this).data('id_lokasi');
         let id_account = $(this).data('id_account');
-        document.getElementById("text-cabang").innerHTML = "Ubah";
-		var data = table_cabang.row($(this).parents("tr")).data();
-		$('#nama_cabang').val(data["nama_cabang"]);
-		$('#alamat_cabang').val(data["alamat_cabang"]);
+        document.getElementById("text-lokasi").innerHTML = "Ubah";
+		var data = table_lokasi.row($(this).parents("tr")).data();
+		$('#nama_lokasi').val(data["nama_lokasi"]);
+		$('#alamat_lokasi').val(data["alamat_lokasi"]);
 		$('#nama').val(data["nama"]);
 		$('#email').val(data["email"]);
 		$('#telp').val(data["telp"]);
 		$('#password').val('');
         $("#password").removeAttr('required');
-		$('input[name="id_cabang"]').val(id_cabang);
+		$('input[name="id_lokasi"]').val(id_lokasi);
 		$('input[name="id_account"]').val(id_account);
-        $('input[name="edit_cabang"]').attr("type", "submit");
-        $('input[name="add_cabang"]').attr("type", "hidden");
+        $('input[name="edit_lokasi"]').attr("type", "submit");
+        $('input[name="add_lokasi"]').attr("type", "hidden");
     });
     
-    $("input#edit_cabang").on("click", function (e) {
+    $("input#edit_lokasi").on("click", function (e) {
         e.preventDefault();
-        let validasi = document.getElementById("form-cabang").reportValidity();
+        let validasi = document.getElementById("form-lokasi").reportValidity();
         if (validasi) {
-            $("#edit_cabang").prop('disabled', true);
-            var formData = new FormData(document.querySelector("#form-cabang"));
+            $("#edit_lokasi").prop('disabled', true);
+            var formData = new FormData(document.querySelector("#form-lokasi"));
             $.ajax({
-                url: "master/edit_cabang",
+                url: "master/edit_lokasi",
                 method: "POST",
                 data: formData,
                 dataType: "json",
@@ -229,26 +229,26 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-cabang").modal('hide');
-                    $("#edit_cabang").prop('disabled', false);
+                    $("#modal-lokasi").modal('hide');
+                    $("#edit_lokasi").prop('disabled', false);
                 },
             });
         }
     });
 
-    $('body').on('click','#cabang-restore', function(){
-        let id_cabang = $(this).data('id_cabang');
+    $('body').on('click','#lokasi-restore', function(){
+        let id_lokasi = $(this).data('id_lokasi');
         let id_account = $(this).data('id_account');
-        action('restore_cabang',id_cabang,id_account,'Data cabang akan dikembalikan ke daftar cabang aktif!');
+        action('restore_lokasi',id_lokasi,id_account,'Data lokasi akan dikembalikan ke daftar lokasi aktif!');
     });
 
-    $('body').on('click','#cabang-remove', function(){
-        let id_cabang = $(this).data('id_cabang');
+    $('body').on('click','#lokasi-remove', function(){
+        let id_lokasi = $(this).data('id_lokasi');
         let id_account = $(this).data('id_account');
-        action('remove_cabang',id_cabang,id_account,'Data cabang akan dihapus dari daftar cabang aktif');
+        action('remove_lokasi',id_lokasi,id_account,'Data lokasi akan dihapus dari daftar lokasi aktif');
     });
 
-    function action(urlfunc,id_cabang,id_account,text){
+    function action(urlfunc,id_lokasi,id_account,text){
         swal({
             title: "Apakah anda yakin?",
             text: text,
@@ -271,7 +271,7 @@
                     method: "POST",
                     dataType: "json",
                     data: {
-                        id_cabang: id_cabang,
+                        id_lokasi: id_lokasi,
                         id_account: id_account
                     },
                     success: function (json) {
@@ -296,7 +296,7 @@
                     },
                 },
             });
-            table_cabang.ajax.reload();
+            table_lokasi.ajax.reload();
             if(reload == 1){
                 setTimeout(() => {
                     window.location.reload();

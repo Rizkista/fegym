@@ -4,19 +4,19 @@ class M_auth extends CI_Model {
 
     public function GetAllAnggota($id_office){
         $query = $this->db->query("
-            SELECT a.*, b.id_cabang, b.nama_cabang
+            SELECT a.*, b.id_lokasi, b.nama_lokasi
             FROM db_anggota a
-            JOIN db_cabang b ON a.id_cabang = b.id_cabang
+            JOIN db_lokasi b ON a.id_lokasi = b.id_lokasi
             WHERE a.id_office = ".$id_office."
             GROUP BY a.tgl_edit
         ")->result();
         return $query;
     }
     
-    public function getDataCabang($id_office){
+    public function getDataLokasi($id_office){
         $query = $this->db->query("
-            SELECT a.status, a.nama_cabang, a.alamat_cabang, a.id_cabang, b.id_account, b.nama, b.email, b.telp, b.pass_view
-            FROM db_cabang a
+            SELECT a.status, a.nama_lokasi, a.alamat_lokasi, a.id_lokasi, b.id_account, b.nama, b.email, b.telp, b.pass_view
+            FROM db_lokasi a
             JOIN db_account b ON a.id_account = b.id_account
             WHERE a.id_office = ".$id_office."
             GROUP BY a.tgl_edit desc

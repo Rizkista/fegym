@@ -14,7 +14,7 @@ class Anggota extends CI_Controller {
 		define('ID_ACCOUNT',$this->session->userdata('id_account'));
 		define('ID_POSISI',$this->session->userdata('id_posisi'));
 		define('ID_OFFICE',$this->session->userdata('id_office'));
-		define('ID_CABANG',$this->session->userdata('id_cabang'));
+		define('ID_LOKASI',$this->session->userdata('id_lokasi'));
     }
 
 	//================= Anggota
@@ -32,10 +32,10 @@ class Anggota extends CI_Controller {
             $row['email_anggota'] = $list->email_anggota;
             $row['alamat_anggota'] = $list->alamat_anggota;
             $row['status_member'] = $list->status_member == 1 ? 'Ya' : 'Tidak';
-            $row['id_cabang'] = $list->id_cabang;
+            $row['id_lokasi'] = $list->id_lokasi;
             $row['status'] = $list->status == 1 ? 'aktif-' : 'hapus-';
             $row['Aksi'] = $list->id_anggota;
-            $row['IDcabang'] = '-'.$list->id_cabang.'-';
+            $row['IDlokasi'] = '-'.$list->id_lokasi.'-';
             $data[] = $row;
 		}
 		$output = [ "data" => $data ];
@@ -47,7 +47,7 @@ class Anggota extends CI_Controller {
 		if(!$cekData){
 			$data = [
 				'id_office' => ID_OFFICE,
-				'id_cabang' => ID_CABANG != '' ? ID_CABANG : 1,
+				'id_lokasi' => ID_LOKASI != '' ? ID_LOKASI : 1,
 				'nama_anggota' => $_POST['nama_anggota'],
 				'gender_anggota' => $_POST['gender_anggota'],
 				'telp_anggota' => $_POST['telp_anggota'],

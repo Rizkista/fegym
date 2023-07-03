@@ -25,7 +25,7 @@
                 );
                 $master = array(
                     'paket-gym',
-                    'cabang-gym',
+                    'lokasi-gym',
                 );
                 $laporan = array(
                     'laporan-pembayaran-gym',
@@ -125,9 +125,9 @@
                                     <span class="sub-item">Paket Gym</span>
                                 </a>
                             </li>
-                            <li class="<?= $uri_path == "cabang-gym"? 'active' : '' ?>">
-                                <a href="<?= base_url('cabang-gym') ?>">
-                                    <span class="sub-item">Cabang Gym</span>
+                            <li class="<?= $uri_path == "lokasi-gym"? 'active' : '' ?>">
+                                <a href="<?= base_url('lokasi-gym') ?>">
+                                    <span class="sub-item">Lokasi Gym</span>
                                 </a>
                             </li>
                         </ul>

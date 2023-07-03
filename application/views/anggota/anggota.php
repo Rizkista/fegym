@@ -30,11 +30,11 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="btn-group border-option my-1">
-                        <label class="label-filter">Cabang: </label>&nbsp;&nbsp;
-                        <select class="form-control" name="filter-cabang" id="filter-cabang">
-                            <option value="">Semua Cabang</option>
-                            <?php foreach ($data_cabang as $list) { ?>
-                                <option value="<?= '-'.$list->id_cabang.'-' ?>"><?= $list->nama_cabang ?></option>
+                        <label class="label-filter">Lokasi: </label>&nbsp;&nbsp;
+                        <select class="form-control" name="filter-lokasi" id="filter-lokasi">
+                            <option value="">Semua Lokasi</option>
+                            <?php foreach ($data_lokasi as $list) { ?>
+                                <option value="<?= '-'.$list->id_lokasi.'-' ?>"><?= $list->nama_lokasi ?></option>
                             <?php } ?>
                         </select>
                     </div>

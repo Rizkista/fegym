@@ -165,13 +165,13 @@ class Menu extends CI_Controller {
 		}
     }
 
-	public function cabang_gym(){
+	public function lokasi_gym(){
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
-			$data['title'] = 'Cabang Gym';
+			$data['title'] = 'Lokasi Gym';
 			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
 			$this->load->view('layout/header', $data);
-			$this->load->view('master/cabang_gym');
+			$this->load->view('master/lokasi_gym');
 			$this->load->view('layout/footer');
 		}else{
 			redirect('logout');

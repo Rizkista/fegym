@@ -14,25 +14,25 @@ class Master extends CI_Controller {
 		define('ID_ACCOUNT',$this->session->userdata('id_account'));
 		define('ID_POSISI',$this->session->userdata('id_posisi'));
 		define('ID_OFFICE',$this->session->userdata('id_office'));
-		define('ID_CABANG',$this->session->userdata('id_cabang'));
+		define('ID_LOKASI',$this->session->userdata('id_lokasi'));
     }
 
-	//================= CABANG
-	public function read_cabang(){
-		$cabang = $this->m_auth->getDataCabang(ID_OFFICE);
+	//================= LOKASI
+	public function read_lokasi(){
+		$lokasi = $this->m_auth->getDataLokasi(ID_OFFICE);
 		$data = [];
 		$no = 0;
-		foreach ($cabang as $list) {
+		foreach ($lokasi as $list) {
 			$no++;
 			$row = [];
 			$row['no'] = $no;
-			$row['nama_cabang'] = $list->nama_cabang;
-			$row['alamat_cabang'] = $list->alamat_cabang;
+			$row['nama_lokasi'] = $list->nama_lokasi;
+			$row['alamat_lokasi'] = $list->alamat_lokasi;
 			$row['nama'] = $list->nama;
 			$row['email'] = $list->email;
 			$row['telp'] = $list->telp;
 			$row['password'] = $list->pass_view;
-			$row['id_cabang'] = $list->id_cabang;
+			$row['id_lokasi'] = $list->id_lokasi;
 			$row['id_account'] = $list->id_account;
 			$row['admin'] = null;
 			$row['aksi'] = null;
@@ -43,8 +43,8 @@ class Master extends CI_Controller {
 		echo json_encode($output);
 	}
 
-	public function add_cabang(){
-		if(!empty($_POST['nama_cabang'])){
+	public function add_lokasi(){
+		if(!empty($_POST['nama_lokasi'])){
 			$admin = [
 				'id_posisi' => 3,
 				'id_office' => ID_OFFICE,
@@ -58,34 +58,34 @@ class Master extends CI_Controller {
 				'status' => 1,
 			];
 			$id_account = $this->m_main->createIN('db_account',$admin)['result'];
-			$cabang = [
+			$lokasi = [
 				'id_office' => ID_OFFICE,
 				'id_account' => $id_account,
-				'nama_cabang' => $_POST['nama_cabang'],
-				'alamat_cabang' => $_POST['alamat_cabang'],
+				'nama_lokasi' => $_POST['nama_lokasi'],
+				'alamat_lokasi' => $_POST['alamat_lokasi'],
 				'tgl_input' => date("Y-m-d H:i:s"),
 				'tgl_edit' => date("Y-m-d H:i:s"),
 				'status' => 1,
 			];
-			$this->m_main->createIN('db_cabang',$cabang);
-			$output['message'] = "Data cabang dan admin berhasil ditambah!";
+			$this->m_main->createIN('db_lokasi',$lokasi);
+			$output['message'] = "Data lokasi dan admin berhasil ditambah!";
 			$output['result'] = "success";
 		}else{
-			$output['message'] = "Nama cabang tidak boleh kosong!";
+			$output['message'] = "Nama lokasi tidak boleh kosong!";
 			$output['result'] = "error";
 		}
         echo json_encode($output);
         exit();
 	}
 
-	public function edit_cabang(){
-		if(!empty($_POST['id_cabang'])){
-			$cabang = [
-				'nama_cabang' => $_POST['nama_cabang'],
-				'alamat_cabang' => $_POST['alamat_cabang'],
+	public function edit_lokasi(){
+		if(!empty($_POST['id_lokasi'])){
+			$lokasi = [
+				'nama_lokasi' => $_POST['nama_lokasi'],
+				'alamat_lokasi' => $_POST['alamat_lokasi'],
 				'tgl_edit' => date("Y-m-d H:i:s"),
 			];
-			$this->m_main->updateIN('db_cabang','id_cabang',$_POST['id_cabang'],$cabang);
+			$this->m_main->updateIN('db_lokasi','id_lokasi',$_POST['id_lokasi'],$lokasi);
 			$admin = [
 				'nama' => $_POST['nama'],
 				'email' => $_POST['email'],
@@ -100,56 +100,56 @@ class Master extends CI_Controller {
 			}
 			$this->m_main->updateIN('db_account','id_account',$_POST['id_account'],$admin);
 
-			$output['message'] = "Data cabang dan admin berhasil di ubah!";
+			$output['message'] = "Data lokasi dan admin berhasil di ubah!";
 			$output['result'] = "success";
 		}else{
-			$output['message'] = "Data id cabang tidak tersedia!";
+			$output['message'] = "Data id lokasi tidak tersedia!";
 			$output['result'] = "error";
 		}
         echo json_encode($output);
         exit();
 	}
 	
-	public function remove_cabang(){
-		if(!empty($_POST['id_cabang'])){
-			$cabang = [
+	public function remove_lokasi(){
+		if(!empty($_POST['id_lokasi'])){
+			$lokasi = [
 				'status' => 0,
 				'tgl_edit' => date("Y-m-d H:i:s"),
 			];
-			$this->m_main->updateIN('db_cabang','id_cabang',$_POST['id_cabang'],$cabang);
+			$this->m_main->updateIN('db_lokasi','id_lokasi',$_POST['id_lokasi'],$lokasi);
 			$admin = [
 				'status' => 0,
 				'tgl_edit' => date("Y-m-d H:i:s"),
 			];
 			$this->m_main->updateIN('db_account','id_account',$_POST['id_account'],$admin);
 
-			$output['message'] = "Cabang berhasil di hapus!";
+			$output['message'] = "Lokasi berhasil di hapus!";
 			$output['result'] = "success";
 		}else{
-			$output['message'] = "Data id cabang tidak tersedia!";
+			$output['message'] = "Data id lokasi tidak tersedia!";
 			$output['result'] = "error";
 		}
         echo json_encode($output);
         exit();
 	}
 	
-	public function restore_cabang(){
-		if(!empty($_POST['id_cabang'])){
-			$cabang = [
+	public function restore_lokasi(){
+		if(!empty($_POST['id_lokasi'])){
+			$lokasi = [
 				'status' => 1,
 				'tgl_edit' => date("Y-m-d H:i:s"),
 			];
-			$this->m_main->updateIN('db_cabang','id_cabang',$_POST['id_cabang'],$cabang);
+			$this->m_main->updateIN('db_lokasi','id_lokasi',$_POST['id_lokasi'],$lokasi);
 			$admin = [
 				'status' => 1,
 				'tgl_edit' => date("Y-m-d H:i:s"),
 			];
 			$this->m_main->updateIN('db_account','id_account',$_POST['id_account'],$admin);
 
-			$output['message'] = "Cabang berhasil di pulihkan!";
+			$output['message'] = "Lokasi berhasil di pulihkan!";
 			$output['result'] = "success";
 		}else{
-			$output['message'] = "Data id cabang tidak tersedia!";
+			$output['message'] = "Data id lokasi tidak tersedia!";
 			$output['result'] = "error";
 		}
         echo json_encode($output);

@@ -264,7 +264,7 @@
                                         <div class="status"><?= $list->email ?></div>
                                     </div>
                                     <div class="d-flex ml-auto align-items-center">
-                                        <p class="text-info fw-bold"><?= $list->kode_cabang ?></p>
+                                        <p class="text-info fw-bold"><?= $list->kode_lokasi ?></p>
                                     </div>
                                 </div>
                                 <div class="separator-dashed m-0"></div>
