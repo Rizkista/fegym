@@ -158,6 +158,7 @@ class Menu extends CI_Controller {
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Paket Gym';
 			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('master/paket_gym');
 			$this->load->view('layout/footer');

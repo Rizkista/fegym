@@ -158,7 +158,7 @@ class Master extends CI_Controller {
 
     //================= PAKET
 	public function read_paket(){
-		$paket = $this->m_main->getResultData('db_paket_gym','id_office = '.ID_OFFICE,'tgl_edit desc');
+		$paket = $this->m_auth->getPaketGym(ID_OFFICE,ID_LOKASI);
 		$data = [];
 		$no = 0;
 		foreach ($paket as $list) {
@@ -170,6 +170,9 @@ class Master extends CI_Controller {
 			$row['lama_durasi'] = $list->lama_durasi;
 			$row['harga_paket'] = $list->harga_paket;
 			$row['status_member'] = $list->status_member;
+			$row['nama_lokasi'] = $list->nama_lokasi;
+			$row['id_lokasi'] = $list->id_lokasi;
+			$row['id_lokasi_filter'] = '-'.$list->id_lokasi.'-';
 			$row['durasi'] = null;
 			$row['aksi'] = $list->id_paket_gym;
 			$row['status'] = $list->status == 1 ? 'aktif-' : 'hapus-';
@@ -183,6 +186,7 @@ class Master extends CI_Controller {
 		if(!empty($_POST['nama_paket'])){
 			$data = [
 				'id_office' => ID_OFFICE,
+				'id_lokasi' => $_POST['id_lokasi'] ? $_POST['id_lokasi'] : (ID_LOKASI != '' ? ID_LOKASI : 1),
 				'nama_paket' => $_POST['nama_paket'],
 				'durasi_paket' => $_POST['durasi_paket'],
 				'lama_durasi' => $_POST['lama_durasi'],

@@ -51,5 +51,17 @@ class M_auth extends CI_Model {
         return $query;
     }
 
+    public function getPaketGym($id_office,$id_lokasi){
+        $id_lokasi = $id_lokasi != '' ? 'AND a.id_lokasi = '.$id_lokasi : '';
+        $query = $this->db->query("
+            SELECT a.*, b.nama_lokasi
+            FROM db_paket_gym a
+            JOIN db_lokasi b ON a.id_lokasi = b.id_lokasi
+            WHERE a.id_office = ".$id_office."
+            ".$id_lokasi."
+            GROUP BY a.tgl_edit desc
+        ")->result();
+        return $query;
+    }
 
 }

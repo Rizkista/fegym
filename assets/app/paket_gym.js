@@ -16,7 +16,7 @@
         ],
         columnDefs: [
             {
-                "targets": [6],
+                "targets": [7,8],
                 "orderable": false,
                 "visible": false
             },
@@ -75,6 +75,7 @@
             { data: "status_member" , render : function ( data, type, row, meta ) {
                 return data == 1 ? 'YA' : 'TIDAK';
             }},
+            { data: "nama_lokasi" },
             { data: "aksi" , render : function ( data, type, row, meta ) {
                 return type === 'display'  ?
                 '<div class="btn-group" role="group">'
@@ -90,6 +91,7 @@
                 data;
             }},
             { data: "status" },
+            { data: "id_lokasi_filter" },
         ],
         fnDrawCallback:function(){
             var sta = $('select[name="filter-status"]').val().toLowerCase();
@@ -117,18 +119,27 @@
         filter();
     });
 
+    $('select[name="filter-lokasi"]').change(function() {
+        saveKey();
+        filter();
+    });
+
     function filter(){
         var src = $('input[name="filter-search"]').val().toLowerCase();
         var sta = $('select[name="filter-status"]').val().toLowerCase();
+        var lok = $('select[name="filter-lokasi"]').val().toLowerCase();
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
             if (~data[1].toLowerCase().indexOf(src) && 
-                ~data[6].toLowerCase().indexOf(sta))
+                ~data[7].toLowerCase().indexOf(sta) && 
+                ~data[8].toLowerCase().indexOf(lok))
                 return true;
             if (~data[2].toLowerCase().indexOf(src) && 
-                ~data[6].toLowerCase().indexOf(sta))
+                ~data[7].toLowerCase().indexOf(sta) && 
+                ~data[8].toLowerCase().indexOf(lok))
                 return true;
             if (~data[3].toLowerCase().indexOf(src) && 
-                ~data[6].toLowerCase().indexOf(sta))
+                ~data[7].toLowerCase().indexOf(sta) && 
+                ~data[8].toLowerCase().indexOf(lok))
                 return true;
             return false;
         })
@@ -139,12 +150,16 @@
     function saveKey(){
         var src = $('input[name="filter-search"]').val().toLowerCase();
         var sta = $('select[name="filter-status"]').val().toLowerCase();
+        var lok = $('select[name="filter-lokasi"]').val().toLowerCase();
         
         if(src != undefined){
             $('#datatable-paket').DataTable().search(src).draw();
         }
         if(sta != undefined){
             $('#datatable-paket').DataTable().search(sta).draw();
+        }
+        if(lok != undefined){
+            $('#datatable-paket').DataTable().search(lok).draw();
         }
     }
 
@@ -157,6 +172,14 @@
 
     $("#tambah_paket").on("click", function () {
         $("#modal-paket").modal();
+		const id_posisi = $('input[name="id_posisi"]').val();
+        if(id_posisi == 3){
+            $(".lok-edit").addClass('gone');
+            $("#id_lokasi").removeAttr('required');
+        }else{
+            $(".lok-edit").removeClass('gone');
+            $("#id_lokasi").attr('required', '');
+        }
         document.getElementById("text-paket").innerHTML = "Tambah Paket Gym";
 		$('#nama_paket').val('');
 		$('#harga_paket').val('');
@@ -194,6 +217,8 @@
     $('body').on('click','#paket-edit', function(){
         $("#modal-paket").modal();
         let id_paket = $(this).data('id');
+        $(".lok-edit").addClass('gone');
+        $("#id_lokasi").removeAttr('required');
         document.getElementById("text-paket").innerHTML = "Ubah Paket Gym";
 		var data = table_paket.row($(this).parents("tr")).data();
 		$('#nama_paket').val(data["nama_paket"]);
