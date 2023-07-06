@@ -103,15 +103,14 @@
         ],
         fnDrawCallback:function(){
             var sta = $('select[name="filter-status"]').val().toLowerCase();
-            let style = 'display:none;';
             if(sta == 'aktif-'){
-                $('.anggota-edit').attr('style','');
-                $('.anggota-restore').attr('style',style);
-                $('.anggota-remove').attr('style','');
+                $('.anggota-edit').removeClass('gone');
+                $('.anggota-restore').addClass('gone');
+                $('.anggota-remove').removeClass('gone');
             }else if(sta == 'hapus-'){
-                $('.anggota-edit').attr('style',style);
-                $('.anggota-restore').attr('style','');
-                $('.anggota-remove').attr('style',style);
+                $('.anggota-edit').addClass('gone');
+                $('.anggota-restore').removeClass('gone');
+                $('.anggota-remove').addClass('gone');
             }
         },
     });

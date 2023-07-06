@@ -66,20 +66,20 @@ class Menu extends CI_Controller {
 			$data['title'] = 'Pembayaran';
 			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
 			$this->load->view('layout/header', $data);
-			$this->load->view('transaksi/pembayaran');
+			$this->load->view('pembayaran/pembayaran');
 			$this->load->view('layout/footer');
 		}else{
 			redirect('logout');
 		}
     }
 
-	public function point_of_sale(){
+	public function penjualan(){
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Point Of Sale';
 			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
 			$this->load->view('layout/header', $data);
-			$this->load->view('transaksi/point_of_sale');
+			$this->load->view('penjualan/penjualan');
 			$this->load->view('layout/footer');
 		}else{
 			redirect('logout');
@@ -119,6 +119,7 @@ class Menu extends CI_Controller {
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Stok Masuk';
 			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('pos/stok_masuk');
 			$this->load->view('layout/footer');
@@ -132,6 +133,7 @@ class Menu extends CI_Controller {
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Stok Keluar';
 			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('pos/stok_keluar');
 			$this->load->view('layout/footer');
@@ -145,6 +147,7 @@ class Menu extends CI_Controller {
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Stok Opname';
 			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('pos/stok_opname');
 			$this->load->view('layout/footer');

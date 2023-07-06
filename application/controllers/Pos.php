@@ -121,7 +121,7 @@ class Pos extends CI_Controller {
 			$row['no'] = $no;
 			$row['barcode_produk'] = $list->barcode_produk;
 			$row['nama_produk'] = $list->nama_produk;
-			$row['qty_produk'] = $list->qty_produk;
+			$row['stok_produk'] = floatval($list->stok_produk);
 			$row['harga_beli'] = $list->harga_beli;
 			$row['harga_jual'] = $list->harga_jual;
 			$row['satuan_produk'] = $list->satuan_produk;
@@ -174,7 +174,7 @@ class Pos extends CI_Controller {
 				'harga_beli' => str_replace(".","",$_POST['harga_beli']),
 				'harga_jual' => str_replace(".","",$_POST['harga_jual']),
 				'satuan_produk' => $_POST['satuan_produk'],
-				'qty_produk' => 0,
+				'stok_produk' => 0,
 				'tgl_input' => date("Y-m-d H:i:s"),
 				'tgl_edit' => date("Y-m-d H:i:s"),
 				'status' => 1,
@@ -259,6 +259,122 @@ class Pos extends CI_Controller {
         echo json_encode($output);
         exit();
 	}
+
+	public function list_produk(){
+		$id_lokasi = ID_POSISI == 3 ? ID_LOKASI : $_POST['id_lokasi'];
+		$produk = $this->m_auth->getListProduk(ID_OFFICE,$id_lokasi);
+		$data = [];
+		foreach ($produk as $list) {
+			$row = [];
+			$row['id_produk'] = $list->id_produk;
+			$row['barcode_produk'] = $list->barcode_produk;
+			$row['nama_produk'] = $list->nama_produk;
+			$row['stok_produk'] = floatval($list->stok_produk);
+			$row['satuan_produk'] = $list->satuan_produk;
+			$data[] = $row; 
+		}
+		$output = [ "data" => $data ];
+		echo json_encode($output);
+	}
 	
+    //================= STOK MASUK
+	public function read_stok_masuk(){
+		$start_date = $_POST['start_date'];
+		$end_date = $_POST['end_date'];
+		$status = $_POST['status'];
+		$id_lokasi = ID_POSISI == 3 ? ID_LOKASI : $_POST['id_lokasi'];
+		$stok_masuk = $this->m_auth->getDataStokMasuk($start_date,$end_date,$status,$id_lokasi,ID_OFFICE);
+		$data = [];
+		$no = 0;
+		foreach ($stok_masuk as $list) {
+			$no++;
+			$row = [];
+			$row['no'] = $no;
+			$row['date_format'] = date('d-m-Y H:i:s',strtotime($list->tgl_masuk));
+			$row['nofaktur'] = $list->nofaktur;
+			$row['supplier'] = $list->supplier;
+			$row['nama_lokasi'] = $list->nama_lokasi;
+			$row['alasan_hapus'] = $list->alasan_hapus;
+			$row['produk'] = str_replace('   ,','<br>',$list->produk);
+			$row['jumlah'] = str_replace(',','<br>',$list->jumlah);
+			$row['aksi'] = $list->id_stok_masuk ;
+			$row['tgl_masuk'] = $list->tgl_masuk;
+			$data[] = $row; 
+		}
+		$output = [ "data" => $data ];
+		echo json_encode($output);
+	}
+
+	public function add_stok_masuk(){
+		if(!empty($_POST['data_produk'])){
+			$id_lokasi = ID_POSISI == 3 ? ID_LOKASI : ($_POST['id_lokasi'] == 0 ? ID_LOKASI : $_POST['id_lokasi']);
+			$data = [
+				'id_office' => ID_OFFICE,
+				'id_lokasi' => $id_lokasi,
+				'nofaktur' => $_POST['nofaktur'],
+				'supplier' => $_POST['supplier'],
+				'tgl_masuk' => date("Y-m-d", strtotime($_POST['tgl_masuk'])).' '.date("H:i:s"),
+				'tgl_input' => date("Y-m-d H:i:s"),
+				'tgl_edit' => date("Y-m-d H:i:s"),
+				'status' => 1,
+			];
+			$id_stok_masuk  = $this->m_main->createIN('db_stok_masuk',$data)['result'];	
+			$listProduk = $_POST['data_produk'];
+			for($i=0; $i<count($listProduk); $i++){
+				$list = [
+					'id_stok_masuk ' => $id_stok_masuk,
+					'id_produk ' => $listProduk[$i]['id_produk'],
+					'jml_produk' => $listProduk[$i]['jml_produk'],
+					'status' => 1,
+				];
+				$this->m_main->createIN('db_stok_masuk_detail',$list);
+				
+				$data_produk = $this->m_main->getRow('db_produk','id_produk',$listProduk[$i]['id_produk']);
+				$datup = [
+					'stok_produk ' => floatval($data_produk['stok_produk']) + floatval($listProduk[$i]['jml_produk']),
+					'tgl_edit' => date("Y-m-d H:i:s"),
+				];
+				$this->m_main->updateIN('db_produk','id_produk',$listProduk[$i]['id_produk'],$datup);
+			}
+			$output['message'] ="Stok masuk produk berhasil ditambah!";
+			$output['result'] = "success";
+		}else{
+			$output['message'] ="Data produk tidak boleh kosong!";
+			$output['result'] = "error";
+		}
+        echo json_encode($output);
+        exit();
+	}
+	
+	public function remove_stok_masuk(){
+		if(!empty($_POST['id_stok_masuk'])){
+			$data = [
+				'alasan_hapus' => $_POST['alasan_hapus'],
+				'status' => 0,
+				'tgl_edit' => date("Y-m-d H:i:s"),
+			];
+			$this->m_main->updateIN('db_stok_masuk','id_stok_masuk',$_POST['id_stok_masuk'],$data);
+			$list = [
+				'status' => 0,
+			];
+			$this->m_main->updateIN('db_stok_masuk_detail','id_stok_masuk',$_POST['id_stok_masuk'],$list);
+			$DTlist = $this->m_main->getResult('db_stok_masuk_detail','id_stok_masuk',$_POST['id_stok_masuk']);
+			foreach ($DTlist as $list) {
+				$data_produk = $this->m_main->getRow('db_produk','id_produk',$list->id_produk);
+				$datup = [
+					'stok_produk ' => floatval($data_produk['stok_produk']) - floatval($list->jml_produk),
+					'tgl_edit' => date("Y-m-d H:i:s"),
+				];
+				$this->m_main->updateIN('db_produk','id_produk',$list->id_produk,$datup);
+			}
+			$output['message'] = "Stok masuk berhasil di hapus!";
+			$output['result'] = "success";
+		}else{
+			$output['message'] = "Data id transaksi tidak tersedia!";
+			$output['result'] = "error";
+		}
+        echo json_encode($output);
+        exit();
+	}
 
 }

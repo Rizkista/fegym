@@ -85,15 +85,14 @@
         ],
         fnDrawCallback:function(){
             var sta = $('select[name="filter-status"]').val().toLowerCase();
-            let style = 'display:none;';
             if(sta == 'aktif-'){
-                $('.katproduk-edit').attr('style','');
-                $('.katproduk-restore').attr('style',style);
-                $('.katproduk-remove').attr('style','');
+                $('.katproduk-edit').removeClass('gone');
+                $('.katproduk-restore').addClass('gone');
+                $('.katproduk-remove').removeClass('gone');
             }else if(sta == 'hapus-'){
-                $('.katproduk-edit').attr('style',style);
-                $('.katproduk-restore').attr('style','');
-                $('.katproduk-remove').attr('style',style);
+                $('.katproduk-edit').addClass('gone');
+                $('.katproduk-restore').removeClass('gone');
+                $('.katproduk-remove').addClass('gone');
             }
         },
     });

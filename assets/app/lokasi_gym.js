@@ -16,7 +16,7 @@
         ],
         columnDefs: [
             {
-                "targets": [5],
+                "targets": [6],
                 "orderable": false,
                 "visible": false
             },
@@ -64,13 +64,14 @@
         ],
         columns: [
             { data: "no" },
+            { data: "kode_lokasi" },
             { data: "nama_lokasi" },
             { data: "alamat_lokasi" },
             { data: "admin" , render : function ( data, type, row, meta ) {
                 var view = '\n\
                 <i>\n\
-                    <span class="nowraping">Nama: <sup><font color="#FF0000"><i>'+row['nama']+'</i></font></sup> , </span>\n\
-                    <span class="nowraping">Email: <sup><font color="#FF0000"><i>'+row['email']+'</i></font></sup> , </span>\n\
+                    <span class="nowraping">Nama: <sup><font color="#FF0000"><i>'+row['nama']+'</i></font></sup></span>\n\
+                    <span class="nowraping">Email: <sup><font color="#FF0000"><i>'+row['email']+'</i></font></sup></span>\n\
                     <span class="nowraping">Password: <sup><font color="#FF0000"><i>'+row['password']+'</i></font></sup></span>\n\
                 </i>';
                 return view;
@@ -93,15 +94,14 @@
         ],
         fnDrawCallback:function(){
             var sta = $('select[name="filter-status"]').val().toLowerCase();
-            let style = 'display:none;';
             if(sta == 'aktif-'){
-                $('.lokasi-edit').attr('style','');
-                $('.lokasi-restore').attr('style',style);
-                $('.lokasi-remove').attr('style','');
+                $('.lokasi-edit').removeClass('gone');
+                $('.lokasi-restore').addClass('gone');
+                $('.lokasi-remove').removeClass('gone');
             }else if(sta == 'hapus-'){
-                $('.lokasi-edit').attr('style',style);
-                $('.lokasi-restore').attr('style','');
-                $('.lokasi-remove').attr('style',style);
+                $('.lokasi-edit').addClass('gone');
+                $('.lokasi-restore').removeClass('gone');
+                $('.lokasi-remove').addClass('gone');
             }
         },
     });
@@ -122,13 +122,16 @@
         var sta = $('select[name="filter-status"]').val().toLowerCase();
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
             if (~data[1].toLowerCase().indexOf(src) && 
-                ~data[5].toLowerCase().indexOf(sta))
+                ~data[6].toLowerCase().indexOf(sta))
                 return true;
             if (~data[2].toLowerCase().indexOf(src) && 
-                ~data[5].toLowerCase().indexOf(sta))
+                ~data[6].toLowerCase().indexOf(sta))
                 return true;
             if (~data[3].toLowerCase().indexOf(src) && 
-                ~data[5].toLowerCase().indexOf(sta))
+                ~data[6].toLowerCase().indexOf(sta))
+                return true;
+            if (~data[4].toLowerCase().indexOf(src) && 
+                ~data[6].toLowerCase().indexOf(sta))
                 return true;
             return false;
         })
@@ -158,6 +161,7 @@
     $("#tambah_lokasi").on("click", function () {
         $("#modal-lokasi").modal();
         document.getElementById("text-lokasi").innerHTML = "Tambah";
+		$('#kode_lokasi').val('');
 		$('#nama_lokasi').val('');
 		$('#alamat_lokasi').val('');
 		$('#nama').val('');
@@ -199,6 +203,7 @@
         let id_account = $(this).data('id_account');
         document.getElementById("text-lokasi").innerHTML = "Ubah";
 		var data = table_lokasi.row($(this).parents("tr")).data();
+		$('#kode_lokasi').val(data["kode_lokasi"]);
 		$('#nama_lokasi').val(data["nama_lokasi"]);
 		$('#alamat_lokasi').val(data["alamat_lokasi"]);
 		$('#nama').val(data["nama"]);

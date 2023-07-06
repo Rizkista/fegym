@@ -12,10 +12,6 @@
                 $uri_path = $this->uri->segment(1);
                 $posisi = $this->session->userdata('id_posisi');
                 
-                $transaksi = array(
-                    'pembayaran',
-                    'point-of-sale',
-                );
                 $pos = array(
                     'produk',
                     'kategori-produk',
@@ -55,31 +51,22 @@
                         <p>Anggota</p>
                     </a>
                 </li>
-                <li class="nav-item <?= in_array($uri_path, $transaksi) ? 'active submenu' : '' ?>">
-                    <a data-toggle="collapse" href="#transaksi">
-                        <i class="fas fa-money-check-alt"></i>
-                        <p>Transaksi</p>
-                        <span class="caret"></span>
+                <li class="nav-item <?= $uri_path == 'pembayaran' ? 'active' : '' ?>">
+                    <a href="<?= base_url('pembayaran') ?>">
+                        <i class="fas fa-credit-card"></i>
+                        <p>Pembayaran</p>
                     </a>
-                    <div id="transaksi" <?= in_array($uri_path, $transaksi) ? 'class="collapse show"' : 'class="collapse"' ?>>
-                        <ul class="nav nav-collapse">
-                            <li class="<?= $uri_path == "pembayaran"? 'active' : '' ?>">
-                                <a href="<?= base_url('pembayaran') ?>">
-                                    <span class="sub-item">Pembayaran</span>
-                                </a>
-                            </li>
-                            <li class="<?= $uri_path == "point-of-sale"? 'active' : '' ?>">
-                                <a href="<?= base_url('point-of-sale') ?>">
-                                    <span class="sub-item">Point Of Sale</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                </li>
+                <li class="nav-item <?= $uri_path == 'penjualan' ? 'active' : '' ?>">
+                    <a href="<?= base_url('penjualan') ?>">
+                        <i class="fas fa-money-check-alt"></i>
+                        <p>Penjualan</p>
+                    </a>
                 </li>
                 <li class="nav-item <?= in_array($uri_path, $pos) ? 'active submenu' : '' ?>">
                     <a data-toggle="collapse" href="#pos">
                         <i class="fas fa-shopping-cart"></i>
-                        <p>POS</p>
+                        <p>Point Of Sale</p>
                         <span class="caret"></span>
                     </a>
                     <div id="pos" <?= in_array($uri_path, $pos) ? 'class="collapse show"' : 'class="collapse"' ?>>

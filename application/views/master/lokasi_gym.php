@@ -44,9 +44,10 @@
                 <thead>
                     <tr>
                         <th style="width:5%;">No</th>
+                        <th style="width:5%;">Kode</th>
                         <th style="width:20%;" class="nowraping">Nama Lokasi</th>
                         <th style="width:25%;">Alamat</th>
-                        <th style="width:50%;">Admin</th>
+                        <th style="width:45%;">Admin</th>
                         <th style="width:10%;">Aksi</th>
                     </tr>
                 </thead>
@@ -73,16 +74,26 @@
                                 <div class="card-body">
                                     <div class="box-bg-grey">
                                         <span><b>- Data Lokasi -</b></span>
-                                        <div class="table-responsive mt-2">
+                                        <div class="mt-2">
                                             <table class="mb-0" width="100%">
-                                                <tbody class="nowraping">
+                                                <tbody>
                                                     <tr>
-                                                        <td width="10%">Lokasi <span class="text-danger">*</span></td>
+                                                        <td class="nowraping" width="10%">Kode <span class="text-danger">*</span></td>
                                                         <td width="2%">&nbsp;:&nbsp;</td>
+                                                        <td>
+                                                            <div class="mytooltip">
+                                                                <span class="tooltiptext">Digunakan untuk membuat kode nota setiap lokasi</span>
+                                                                <input type="text" class="form-control form-rm" name="kode_lokasi" id="kode_lokasi" placeholder="3 Character" oninput="this.value = this.value.slice(0, 3).toUpperCase()" required>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="nowraping">Lokasi <span class="text-danger">*</span></td>
+                                                        <td>&nbsp;:&nbsp;</td>
                                                         <td><input type="text" class="form-control form-rm" name="nama_lokasi" id="nama_lokasi" placeholder="Nama Lokasi" required></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Alamat <span class="text-danger">*</span></td>
+                                                        <td class="nowraping">Alamat <span class="text-danger">*</span></td>
                                                         <td>&nbsp;:&nbsp;</td>
                                                         <td><textarea class="form-control" name="alamat_lokasi" id="alamat_lokasi" style="padding: 0.25rem 0.5rem; min-height: 92px;" placeholder="Alamat Lokasi" required></textarea></td>
                                                     </tr>
@@ -91,7 +102,7 @@
                                     </div>
                                     <div class="box-bg-grey mt-2">
                                         <span><b>- Data Admin -</b></span>
-                                        <div class="table-responsive mt-2">
+                                        <div class="mt-2">
                                             <table class="mb-0" width="100%">
                                                 <tbody class="nowraping">
                                                     <tr>
@@ -105,7 +116,7 @@
                                                         <td><input type="email" class="form-control form-rm" name="email" id="email" placeholder="Email"></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>No. Hp <span class="text-danger">*</span></td>
+                                                        <td>No.Hp <span class="text-danger">*</span></td>
                                                         <td>&nbsp;:&nbsp;</td>
                                                         <td><input type="text" class="form-control form-rm" id="telp" name="telp" placeholder="No. Hp" required></td>
                                                     </tr>

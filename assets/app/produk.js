@@ -72,7 +72,7 @@
             { data: "harga_jual" , render: function(data, type, row, meta) {
                 return '<sup><font color="#FF0000">Rp</font></sup> '+FormatCurrency(data);
             }},
-            { data: "qty_produk" },
+            { data: "stok_produk" },
             { data: "satuan_produk" },
             { data: "nama_kat_produk" },
             { data: "nama_lokasi" },
@@ -95,16 +95,19 @@
         ],
         fnDrawCallback:function(){
             var sta = $('select[name="filter-status"]').val().toLowerCase();
-            let style = 'display:none;';
             if(sta == 'aktif-'){
-                $('.produk-edit').attr('style','');
-                $('.produk-restore').attr('style',style);
-                $('.produk-remove').attr('style','');
+                $('.produk-edit').removeClass('gone');;
+                $('.produk-restore').addClass('gone');
+                $('.produk-remove').removeClass('gone');;
             }else if(sta == 'hapus-'){
-                $('.produk-edit').attr('style',style);
-                $('.produk-restore').attr('style','');
-                $('.produk-remove').attr('style',style);
+                $('.produk-edit').addClass('gone');
+                $('.produk-restore').removeClass('gone');;
+                $('.produk-remove').addClass('gone');
             }
+        },
+        rowCallback:function(row,data,index){
+            $('td', row).eq(3).addClass('nowraping');
+            $('td', row).eq(4).addClass('nowraping');
         },
     });
 
@@ -214,7 +217,6 @@
         document.getElementById("text-produk").innerHTML = "Tambah Produk";
 		$('#barcode_produk').val('');
 		$('#nama_produk').val('');
-		$('#qty_produk').val('');
 		$('#harga_beli').val('');
 		$('#harga_jual').val('');
 		$('#satuan_produk').val('');
@@ -264,7 +266,6 @@
         produkByLok(data["id_lokasi"],data["id_kat_produk"]);
 		$('#barcode_produk').val(data["barcode_produk"]);
 		$('#nama_produk').val(data["nama_produk"]);
-		$('#qty_produk').val(data["qty_produk"]);
 		$('#harga_beli').val(FormatCurrency(data["harga_beli"]));
 		$('#harga_jual').val(FormatCurrency(data["harga_jual"]));
 		$('#satuan_produk').val(data["satuan_produk"]);

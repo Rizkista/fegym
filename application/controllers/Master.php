@@ -26,6 +26,7 @@ class Master extends CI_Controller {
 			$no++;
 			$row = [];
 			$row['no'] = $no;
+			$row['kode_lokasi'] = $list->kode_lokasi;
 			$row['nama_lokasi'] = $list->nama_lokasi;
 			$row['alamat_lokasi'] = $list->alamat_lokasi;
 			$row['nama'] = $list->nama;
@@ -61,6 +62,7 @@ class Master extends CI_Controller {
 			$lokasi = [
 				'id_office' => ID_OFFICE,
 				'id_account' => $id_account,
+				'kode_lokasi' => $_POST['kode_lokasi'],
 				'nama_lokasi' => $_POST['nama_lokasi'],
 				'alamat_lokasi' => $_POST['alamat_lokasi'],
 				'tgl_input' => date("Y-m-d H:i:s"),
@@ -81,6 +83,7 @@ class Master extends CI_Controller {
 	public function edit_lokasi(){
 		if(!empty($_POST['id_lokasi'])){
 			$lokasi = [
+				'kode_lokasi' => $_POST['kode_lokasi'],
 				'nama_lokasi' => $_POST['nama_lokasi'],
 				'alamat_lokasi' => $_POST['alamat_lokasi'],
 				'tgl_edit' => date("Y-m-d H:i:s"),

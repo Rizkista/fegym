@@ -59,7 +59,7 @@
                         <th style="width:30%;">Produk</th>
                         <th style="width:10%;" class="nowraping">Harga Beli</th>
                         <th style="width:10%;" class="nowraping">Harga Jual</th>
-                        <th style="width:5%;">Qty</th>
+                        <th style="width:5%;">Stok</th>
                         <th style="width:5%;">Satuan</th>
                         <th style="width:10%;">Kategori</th>
                         <th style="width:15%;">Lokasi</th>
