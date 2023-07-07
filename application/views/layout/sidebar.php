@@ -28,7 +28,6 @@
                     'laporan-penjualan-produk',
                 );
                 $pengaturan = array(
-                    'konfigurasi',
                     'akun-saya',
                 );
             ?> 
@@ -128,16 +127,7 @@
                     </a>
                     <div id="laporan" <?= in_array($uri_path, $laporan) ? 'class="collapse show"' : 'class="collapse"' ?>>
                         <ul class="nav nav-collapse">
-                            <li class="<?= $uri_path == "laporan-pembayaran-gym"? 'active' : '' ?>">
-                                <a href="<?= base_url('laporan-pembayaran-gym') ?>">
-                                    <span class="sub-item">Laporan Pembayaran Gym</span>
-                                </a>
-                            </li>
-                            <li class="<?= $uri_path == "laporan-penjualan-produk"? 'active' : '' ?>">
-                                <a href="<?= base_url('laporan-penjualan-produk') ?>">
-                                    <span class="sub-item">Laporan Penjualan Produk</span>
-                                </a>
-                            </li>
+                            
                         </ul>
                     </div>
                 </li>
@@ -149,11 +139,6 @@
                     </a>
                     <div id="pengaturan" <?= in_array($uri_path, $pengaturan) ? 'class="collapse show"' : 'class="collapse"' ?>>
                         <ul class="nav nav-collapse">
-                            <li class="<?= $uri_path == "konfigurasi"? 'active' : '' ?>">
-                                <a href="<?= base_url('konfigurasi') ?>">
-                                    <span class="sub-item">Konfigurasi</span>
-                                </a>
-                            </li>
                             <li class="<?= $uri_path == "akun-saya"? 'active' : '' ?>">
                                 <a href="<?= base_url('akun-saya') ?>">
                                     <span class="sub-item">Akun Saya</span>

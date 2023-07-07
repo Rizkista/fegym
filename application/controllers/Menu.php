@@ -183,19 +183,6 @@ class Menu extends CI_Controller {
 		}
     }
 
-	public function konfigurasi(){
-		if(EMAIL){
-			$data['vrs'] = U_VERSI; 
-			$data['title'] = 'Konfigurasi';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
-			$this->load->view('layout/header', $data);
-			$this->load->view('pengaturan/konfigurasi');
-			$this->load->view('layout/footer');
-		}else{
-			redirect('logout');
-		}
-    }
-
 	public function akun_saya(){
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 

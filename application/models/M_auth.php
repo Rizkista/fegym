@@ -93,5 +93,47 @@ class M_auth extends CI_Model {
         return $query;
     }
 
+    public function getDataStokKeluar($start_date,$end_date,$status,$id_lokasi,$id_office){
+        $this->db->simple_query('SET SESSION group_concat_max_len = 15000');
+        $query = $this->db->query("
+            SELECT a.*, d.nama_lokasi,
+                group_concat(c.nama_produk, '   ' order by id_stok_keluar_detail asc) as produk, 
+                group_concat(b.jml_produk order by id_stok_keluar_detail asc) as jumlah
+            FROM db_stok_keluar a
+            JOIN db_stok_keluar_detail b ON a.id_stok_keluar = b.id_stok_keluar
+            JOIN db_produk c ON b.id_produk = c.id_produk
+            JOIN db_lokasi d ON a.id_lokasi = d.id_lokasi
+            WHERE a.status = ".$status."
+            AND a.id_office = ".$id_office."
+            AND DATE_FORMAT(a.tgl_keluar,'%Y-%m-%d') >= '".$start_date."' 
+            AND DATE_FORMAT(a.tgl_keluar,'%Y-%m-%d') <= '".$end_date."'
+            ".($id_lokasi != null ? 'AND a.id_lokasi = '.$id_lokasi : '')."
+            GROUP BY a.id_stok_keluar
+            ORDER BY a.tgl_edit DESC
+        ")->result();
+        return $query;
+    }
+
+    public function getDataStokOpname($start_date,$end_date,$status,$id_lokasi,$id_office){
+        $this->db->simple_query('SET SESSION group_concat_max_len = 15000');
+        $query = $this->db->query("
+            SELECT a.*, d.nama_lokasi,
+                group_concat(c.nama_produk, '   ' order by id_stok_opname_detail asc) as produk, 
+                group_concat(b.jml_produk order by id_stok_opname_detail asc) as jumlah
+            FROM db_stok_opname a
+            JOIN db_stok_opname_detail b ON a.id_stok_opname = b.id_stok_opname
+            JOIN db_produk c ON b.id_produk = c.id_produk
+            JOIN db_lokasi d ON a.id_lokasi = d.id_lokasi
+            WHERE a.status = ".$status."
+            AND a.id_office = ".$id_office."
+            AND DATE_FORMAT(a.tgl_opname,'%Y-%m-%d') >= '".$start_date."' 
+            AND DATE_FORMAT(a.tgl_opname,'%Y-%m-%d') <= '".$end_date."'
+            ".($id_lokasi != null ? 'AND a.id_lokasi = '.$id_lokasi : '')."
+            GROUP BY a.id_stok_opname
+            ORDER BY a.tgl_edit DESC
+        ")->result();
+        return $query;
+    }
+
 
 }

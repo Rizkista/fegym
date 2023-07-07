@@ -23,7 +23,6 @@ $route['paket-gym'] = 'menu/paket_gym';
 $route['lokasi-gym'] = 'menu/lokasi_gym';
 $route['laporan-pembayaran-gym'] = 'menu/laporan_pembayaran_gym';
 $route['laporan-penjualan-produk'] = 'menu/laporan_penjualan_produk';
-$route['konfigurasi'] = 'menu/konfigurasi';
 $route['akun-saya'] = 'menu/akun_saya';
 
 

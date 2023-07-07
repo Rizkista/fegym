@@ -104,7 +104,7 @@
                 <div class="card">
                     <div class="card-header p-2">
                         <div class="btn-group p-1 bg-grey3 btn-full">
-                            <input type="text" class="form-control" name="list-search" id="list-search" placeholder="Kode / Produk">
+                            <input type="text" class="form-control" name="list-search" id="list-search" placeholder="Barcode / Produk">
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0">
@@ -240,7 +240,7 @@
                     <div class="nota">
                         <table class="w100 mb5">
                             <tr>
-                                <th class="left-text">Tanggal Transaksi</th>
+                                <th class="left-text">Stok Masuk</th>
                                 <th class="right-text" id="lokasi">...</th>
                             </tr>
                             <tr>

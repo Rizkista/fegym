@@ -18,26 +18,26 @@
         $('input[name="daterange"]').val(start.format('D MMMM YYYY') +' - ' + end.format('D MMMM YYYY'));
         $('input[name="start-date"]').val(start.format('YYYY-MM-DD'));
         $('input[name="end-date"]').val(end.format('YYYY-MM-DD'));
-        stok_masuk();
+        stok_keluar();
     }
 
     $('select[name="filter-lokasi"]').change(function() {
-        stok_masuk();
+        stok_keluar();
     });
     
     $('select[name="filter-status"]').change(function() {
-        stok_masuk();
+        stok_keluar();
     });
 
-    function stok_masuk(){
+    function stok_keluar(){
         var start = $('input[name="start-date"]').val();
         var end = $('input[name="end-date"]').val();
         var status = $('select[name="filter-status"]').val();
         var lokasi = $('select[name="filter-lokasi"]').val();
         var id_lokasi = lokasi == "" ? null : lokasi;
-        var table_stok_masuk = $("#datatable-stok-masuk").DataTable({
+        var table_stok_keluar = $("#datatable-stok-keluar").DataTable({
             ajax: {
-                url: "pos/read_stok_masuk",
+                url: "pos/read_stok_keluar",
                 type: "POST",
                 data: { 
                     start_date: start,
@@ -67,7 +67,7 @@
             ],
             language: {
                 search: "_INPUT_",
-                emptyTable: "Belum ada daftar stok masuk!",
+                emptyTable: "Belum ada daftar stok keluar!",
                 infoEmpty: "Tidak ada data untuk ditampilkan!",
                 info: "_START_ to _END_ of _TOTAL_ entries",
                 infoFiltered: ""
@@ -97,17 +97,17 @@
                     className: "btn btn-secondary wid-max-select text-white",
                     text: '<i class="fas fa-sync-alt mr-2"></i> Refresh',
                     action: function (e, dt, node, config) {
-                        table_stok_masuk.ajax.reload();
+                        table_stok_keluar.ajax.reload();
                     },
                 },
             ],
             columns: [
                 { data: "no" },
                 { data: "date_format" },
-                { data: "nofaktur" },
+                { data: "nokeluar" },
                 { data: "produk" },
                 { data: "jumlah" },
-                { data: "supplier" },
+                { data: "keterangan" },
                 { data: "nama_lokasi" },
                 { data: "aksi" , render : function ( data, type, row, meta ) {
                     return '<span class="alasan_hapus gone">'+row['alasan_hapus']+'</span>'+
@@ -154,14 +154,14 @@
                     
                 return false;
             })
-            table_stok_masuk.draw(); 
+            table_stok_keluar.draw(); 
             $.fn.dataTable.ext.search.pop();
         });
 
         function saveKey(){
             var src = $('input[name="filter-search"]').val().toLowerCase();
             if(src != undefined){
-                $('#datatable-stok-masuk').DataTable().search(src).draw();
+                $('#datatable-stok-keluar').DataTable().search(src).draw();
             }
         }
     }
@@ -303,7 +303,7 @@
                         '<td>'+(i+1)+'.</td>' +
                         '<td>'+nama_produk+'</td>' +
                         '<td>'+satuan_produk+'</td>'+
-                        '<td><input type="number" data-index="'+i+'" name="qty_'+i+'" id="qty" class="form-control sm-height px-1" placeholder="0" value="'+qty[i]+'" required></td>'+
+                        '<td><input type="number" data-index="'+i+'" name="qty_'+i+'" id="qty" min="0" class="form-control sm-height px-1" placeholder="0" value="'+qty[i]+'" required></td>'+
                         '<td class="text-center"><a id="delItem" data-index="'+i+'" class="text-danger" style="cursor:pointer;"><i class="fa fa-trash"></i></a></td>'                        
                     '</tr>';
         }
@@ -326,9 +326,8 @@
                 });
             }else{
                 $("#simpan_transaksi").prop('disabled', true);
-                var tgl_masuk = $('input[name="tgl_masuk"]').val();
-                var supplier = $('input[name="supplier"]').val();
-                var nofaktur = $('input[name="nofaktur"]').val();
+                var tgl_keluar = $('input[name="tgl_keluar"]').val();
+                var keterangan = $('#keterangan').val();
                 var id_lokasi = $('#pilih-lokasi').val();
 
                 for(var i=0; i<arr.length; i++) {
@@ -341,14 +340,13 @@
                 }
 
                 $.ajax({
-                    url: "pos/add_stok_masuk",
+                    url: "pos/add_stok_keluar",
                     method: "POST",
                     data: { 
                         id_lokasi: id_lokasi,
                         data_produk: dataItem,
-                        supplier: supplier,
-                        nofaktur: nofaktur,
-                        tgl_masuk: tgl_masuk,
+                        keterangan: keterangan,
+                        tgl_keluar: tgl_keluar,
                     },
                     dataType: "json",
                     success: function (json) {
@@ -367,10 +365,10 @@
     $("body").on("click", "#stok-print", function () {
         $("#modal-nota").modal();
         let row = $(this).data('row') - 1;
-        var data = $("#datatable-stok-masuk").DataTable().row(row).data();
+        var data = $("#datatable-stok-keluar").DataTable().row(row).data();
         if(data != undefined){
-            $("#tgl").text(data["tgl_masuk"]);
-            $("#nota").text(data["nofaktur"]);
+            $("#tgl").text(data["tgl_keluar"]);
+            $("#nota").text(data["nokeluar"]);
             $("#lokasi").text(data["nama_lokasi"]);
             var produk = data["produk"].split('<br>');
             var jumlah = data["jumlah"].split('<br>');
@@ -388,10 +386,10 @@
     
     $("body").on("click", "#stok-remove", function (e) {
         e.preventDefault();
-        let id_stok_masuk = $(this).data('id');
-        var data = $("#datatable-stok-masuk").DataTable().row($(this).parents("tr")).data();
-        var nota = data["nofaktur"];
-        $('input[name="id_stok_masuk"]').val(id_stok_masuk);
+        let id_stok_keluar = $(this).data('id');
+        var data = $("#datatable-stok-keluar").DataTable().row($(this).parents("tr")).data();
+        var nota = data["nokeluar"];
+        $('input[name="id_stok_keluar"]').val(id_stok_keluar);
         $('#alasan-hapus').val('');
         $("#modal-hapus").modal();
         document.getElementById("no-nota").innerHTML = nota;
@@ -403,14 +401,14 @@
         if($("#form-alasan-hapus").valid()){
             $('#hapus').attr('disabled',true);
             $("#modal-hapus").modal('hide');
-            var id_stok_masuk = $('input[name="id_stok_masuk"]').val();
+            var id_stok_keluar = $('input[name="id_stok_keluar"]').val();
             var alasan_hapus = $('#alasan-hapus').val();
             $.ajax({
-                url: 'pos/remove_stok_masuk',
+                url: 'pos/remove_stok_keluar',
                 method: "POST",
                 dataType: "json",
                 data: {
-                    id_stok_masuk: id_stok_masuk,
+                    id_stok_keluar: id_stok_keluar,
                     alasan_hapus: alasan_hapus,
                 },
                 success: function (json) {
@@ -433,7 +431,7 @@
                     },
                 },
             });
-            $('#datatable-stok-masuk').DataTable().ajax.reload();
+            $('#datatable-stok-keluar').DataTable().ajax.reload();
             if(reload == 1){
                 setTimeout(() => {
                     window.location.reload();
