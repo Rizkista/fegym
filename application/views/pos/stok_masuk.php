@@ -153,11 +153,11 @@
                             <table id="produk-item" class="table-responsive display table table-striped table-hover purc">
                                 <thead>
                                     <tr class="bg-blue-smooth3">
-                                        <th width="5%" color:white;">No</th>
-                                        <th width="50%" color:white;">Produk</th>
-                                        <th width="15%" color:white;">Satuan</th>
-                                        <th width="20%" color:white; text-align:center;">Jumlah</th>
-                                        <th width="10%" color:white; text-align:center;">*</th>
+                                        <th style="width:5%; color:white;">No</th>
+                                        <th style="width:50%; color:white;">Produk</th>
+                                        <th style="width:15%; color:white;">Satuan</th>
+                                        <th style="width:20%; color:white; text-align:center;">Jumlah</th>
+                                        <th style="width:10%; color:white; text-align:center;">*</th>
                                     </tr>
                                 </thead>
                                 <tbody>
