@@ -143,10 +143,10 @@ body[data-background-color="bg3"] {
     background: #02007B !important;
     background: -webkit-linear-gradient(
         legacy-direction(-45deg),
-        #0D0C27,
+        #171552,
         #02007B
     ) !important;
-    background: linear-gradient(-45deg, #0D0C27, #02007B) !important;
+    background: linear-gradient(-45deg, #171552, #02007B) !important;
 }
 :focus {
     outline: 0 !important;
@@ -298,11 +298,11 @@ strong {
 }
 .text-purple,
 .text-purple a {
-    color: #0D0C27 !important;
+    color: #171552 !important;
 }
 .text-purple a:hover,
 .text-purple:hover {
-    color: #0D0C27 !important;
+    color: #171552 !important;
 }
 label {
     color: #495057 !important;
@@ -458,7 +458,7 @@ body {
 .sidebar.nav > .nav-itema[data-toggle="collapse"][aria-expanded="true"]:before,
 .sidebar .nav > .nav-item.active:hover > a:before,
 .sidebar .nav > .nav-item.active > a:before {
-    background: #0D0C27;
+    background: #171552;
     opacity: 1 !important;
     position: absolute;
     z-index: 1;
@@ -581,7 +581,7 @@ body {
     color: #575962 !important;
 }
 .sidebar .nav > .nav-item.active a i {
-    color: #0D0C27;
+    color: #171552;
 }
 .sidebar .nav > .nav-item.submenu {
     background: rgba(0, 0, 0, 0.03);
@@ -614,7 +614,7 @@ body {
 }
 .sidebar .nav > .nav-item a:focus i,
 .sidebar .nav > .nav-item a:hover i {
-    color: #0D0C27 !important;
+    color: #171552 !important;
 }
 .sidebar .nav > .nav-item a .letter-icon {
     color: #a1a2a6;
@@ -665,7 +665,7 @@ body {
     color: #575962;
 }
 .sidebar .nav > .nav-item a[data-toggle="collapse"][aria-expanded="true"] i {
-    color: #0D0C27;
+    color: #171552;
 }
 .sidebar.nav > .nav-itema[data-toggle="collapse"][aria-expanded="true"].caret {
     -webkit-transform: rotate(-180deg);
@@ -1205,6 +1205,7 @@ body {
 }
 .avatar-img {
     height: 100%;
+    width: 100%;
     -o-object-fit: cover;
     object-fit: cover;
 }
@@ -2356,7 +2357,7 @@ label {
     top: auto;
     text-align: center;
     font-size: 22px;
-    color: #0D0C27;
+    color: #171552;
     transition: all 0.2s;
     line-height: 1;
     font-family: LineAwesome;
@@ -3675,12 +3676,12 @@ label.error {
 .btn-gray:disabled,
 .btn-gray:hover {
     background: #efefef !important;
-    border-color: #0D0C27 !important;
+    border-color: #171552 !important;
     color: #9a9a9a !important;
 }
 .btn-gray:focus {
-    background: #0D0C27 !important;
-    border-color: #0D0C27 !important;
+    background: #171552 !important;
+    border-color: #171552 !important;
     color: #ffffff !important;
 }
 .btn-primary {
@@ -3996,7 +3997,7 @@ label.error {
     background: #282a3c;
 }
 .nav-pills.nav-primary .nav-link.active {
-    background: #0D0C27;
+    background: #171552;
 }
 .nav-pills.nav-secondary .nav-link.active {
     background: #716aca;
@@ -9989,7 +9990,7 @@ div.table-responsive
 .tableBodyScroll {
     overflow-y: auto;
     direction: ltr;
-    scrollbar-color: #0D0C27 rgb(243, 243, 243);
+    scrollbar-color: #171552 rgb(243, 243, 243);
     scrollbar-width: thin;
 }
 .noData {
@@ -10024,7 +10025,7 @@ div.table-responsive
 .panel-heading {
     padding: 10px 15px;
     color: white;
-    background: #0D0C27;
+    background: #171552;
     margin: -60px -25px 0 -25px;
     border-radius: 10px 10px 0 0;
 }
@@ -10188,7 +10189,7 @@ hr {
     color: #505458 !important;
 }
 .text-dark-blue {
-    color: #0D0C27 !important;
+    color: #171552 !important;
 }
 .w-3 {
     width: 33.33333333333333%;
@@ -10212,7 +10213,7 @@ hr {
     text-align: center;
 }
 .nav-tabx a:hover {
-    color: #0D0C27;
+    color: #171552;
     text-decoration: none;
 }
 .nav-tabx li a {
@@ -10225,7 +10226,7 @@ hr {
 }
 .nav-tabx li.active a {
     border-radius: 4px;
-    background: #0D0C27;
+    background: #171552;
     display: block;
     text-align: center;
     padding: 4px;
@@ -10276,16 +10277,16 @@ hr {
     text-decoration: none !important;
 }
 .bg-base {
-    background: #0D0C27 !important;
+    background: #171552 !important;
     color: #ffffff;
 }
 .bg-purple {
-    background: #0D0C27 !important;
+    background: #171552 !important;
     color: #ffffff;
 }
 .bg-purple-light {
     background: #f1c5ff !important;
-    color: #0D0C27;
+    color: #171552;
 }
 .bg-purple-custom {
     color: #ffffff;
@@ -10565,7 +10566,7 @@ hr {
     color: #f3545d;
 }
 .border-after:hover {
-    border: 1px solid #0D0C27;
+    border: 1px solid #171552;
 }
 .min-hight-1 {
     min-height: 52px;

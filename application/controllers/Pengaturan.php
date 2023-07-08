@@ -14,6 +14,7 @@ class Pengaturan extends CI_Controller {
 		define('ID_ACCOUNT',$this->session->userdata('id_account'));
 		define('ID_POSISI',$this->session->userdata('id_posisi'));
 		define('ID_OFFICE',$this->session->userdata('id_office'));
+		define('ID_LOKASI',$this->session->userdata('id_lokasi'));
     }
 	
     public function ganti_foto(){
@@ -36,18 +37,16 @@ class Pengaturan extends CI_Controller {
 				$this->load->library('image_lib', $config);
 				$this->image_lib->resize();
 
-                $member = $this->m_auth->getRow('jd_member','email',EMAIL);
-				if ($member['foto_diri'] != "profile.png" && $member['foto_diri'] != NULL || $member['foto_diri'] != '') {
-					$target_file = $uploadDIR . $member['foto_diri'];
+                $account = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+				if ($account['photo'] != "profile.jpg" && $account['photo'] != NULL || $account['photo'] != '') {
+					$target_file = $uploadDIR . $account['photo'];
 					if(file_exists($target_file)){
 						unlink($target_file);
 					}
 				}
 				
-				$data['foto_diri'] = $uploadData['file_name'];
-				$qry = $this->m_auth->updateIN('jd_member','id_member',ID_MEMBER,$data);
-				$this->update_log($qry['string'],'Change Foto oleh '.MEMBER);
-
+				$data['photo'] = $uploadData['file_name'];
+				$this->m_main->updateIN('db_account','id_account',ID_ACCOUNT,$data);
 				$output['message'] ="Foto profil berhasil di ganti!";
 				$output['result'] = "success";
 			}

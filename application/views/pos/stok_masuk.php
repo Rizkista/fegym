@@ -112,7 +112,7 @@
                             <thead>
                                 <tr>
                                     <th style="width:20%;">Barcode</th>
-                                    <th style="width:70%;">Produk</th>
+                                    <th style="width:75%;">Produk</th>
                                     <th style="width:10%;">Stok</th>
                                 </tr>
                             </thead>

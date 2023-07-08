@@ -15,6 +15,7 @@ class Menu extends CI_Controller {
 		define('ID_ACCOUNT',$this->session->userdata('id_account'));
 		define('ID_POSISI',$this->session->userdata('id_posisi'));
 		define('ID_OFFICE',$this->session->userdata('id_office'));
+		define('ID_LOKASI',$this->session->userdata('id_lokasi'));
     }
 
 	public function error_404(){
@@ -76,8 +77,10 @@ class Menu extends CI_Controller {
 	public function penjualan(){
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
-			$data['title'] = 'Point Of Sale';
+			$data['title'] = 'Penjualan';
 			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['nama_lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
+			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('penjualan/penjualan');
 			$this->load->view('layout/footer');

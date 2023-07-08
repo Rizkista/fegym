@@ -22,15 +22,15 @@ $(document).ready(function() {
 			type: 'warning',
 			icon : "warning",
 			buttons:{
-				confirm: {
-					text : 'Ya, Keluar!',
-					className : 'btn btn-success'
-				},
 				cancel: {
 					text : 'Batal',
 					visible: true,
 					className: 'btn btn-danger'
-				}
+				},
+				confirm: {
+					text : 'Ya, Keluar!',
+					className : 'btn btn-success'
+				},
 			}
 		}).then((Delete) => {
 			if (Delete) {
