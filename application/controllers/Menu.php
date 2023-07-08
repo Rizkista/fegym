@@ -188,6 +188,7 @@ class Menu extends CI_Controller {
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Akun Saya';
 			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
 			$this->load->view('layout/header', $data);
 			$this->load->view('pengaturan/akun_saya');
 			$this->load->view('layout/footer');
