@@ -10430,8 +10430,11 @@ hr {
 .cusped th {
     padding: 8px !important;
 }
-.purc td,
-.purc th {
+.table-mini {
+    line-height: 1.15 !important;
+}
+.table-mini td,
+.table-mini th {
     padding: 4px !important;
 }
 .form-rm2 {

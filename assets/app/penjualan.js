@@ -88,7 +88,6 @@
             $.fn.dataTable.ext.search.pop();
         }
     }
-    
 
     detail_transaksi();
     function detail_transaksi(){
@@ -134,7 +133,7 @@
             }
             if(!cek){
                 qty.push(1);
-                dis.push(1);
+                dis.push(0);
                 arr.push(list);
             }else{
                 qty[x]= qty[x]+1;
@@ -151,33 +150,57 @@
             dataList();
         });
 
-        $('body').on('change keyup','input#qty',function(){
-            let index = $(this).data('index');
-            qty[index] = Number($(this).val());
-        });
-
-        $('body').on('change keyup','input#dis',function(){
-            let index = $(this).data('index');
-            dis[index] = Number($(this).val());
-        });
-
         function dataList(){
             var html = "";
-            for (var i = 0; i < arr.length; i++) {
+            for (var i=0; i<arr.length; i++) {
                 let id_produk = arr[i].id_produk;
                 let nama_produk = arr[i].nama_produk;
+                let harga_jual = arr[i].harga_jual;
+
+                const harga_item = qty[i]*harga_jual;
+                const diskon_item = harga_item*dis[i]/100;
+                const price_item = harga_item-diskon_item;
+                var show_price = diskon_item > 0 ? '<s style="color:gray; font-size:12px;">'+FormatCurrency(harga_item)+'</s> <br>'+FormatCurrency(price_item) : FormatCurrency(harga_item);
                 
                 html += '<tr>' +
                             '<input type="hidden" name="id_'+i+'" id="idt" class="form-control" value="'+id_produk+'">'+
+                            '<input type="hidden" name="hrj_'+i+'" id="idt" class="form-control" value="'+harga_jual+'">'+
+                            '<input type="hidden" name="hit_'+i+'" id="idt" class="form-control" value="'+harga_item+'">'+
+                            '<input type="hidden" name="pit_'+i+'" id="idt" class="form-control" value="'+price_item+'">'+
                             '<td>'+(i+1)+'.</td>' +
                             '<td>'+nama_produk+'</td>' +
                             '<td><input type="number" data-index="'+i+'" name="qty_'+i+'" id="qty" min="0" class="form-control sm-height px-1" placeholder="0" value="'+qty[i]+'" style="min-width:60px" required></td>'+
                             '<td><input type="number" data-index="'+i+'" name="dis_'+i+'" id="dis" min="0" max="100" class="form-control sm-height px-1" placeholder="0" value="'+dis[i]+'" style="min-width:60px" required></td>'+
-                            '<td class="text-right">000</td>'+        
+                            '<td class="text-right text-danger" id="show-price-'+i+'">'+show_price+'</td>'+        
                             '<td class="text-center"><a id="delItem" data-index="'+i+'" class="text-danger" style="cursor:pointer;"><i class="fa fa-trash"></i></a></td>'+               
                         '</tr>';
             }
             $("#produk-item tbody").html(html);
+            
+            $('body').on('change keyup','input#qty',function(){
+                let index = $(this).data('index');
+                countPrice(index);
+            });
+
+            $('body').on('change keyup','input#dis',function(){
+                let index = $(this).data('index');
+                countPrice(index);
+            });
+
+            function countPrice(i){
+                qty[i] = Number($('input[name="qty_'+i+'"]').val());
+                dis[i] = Number($('input[name="dis_'+i+'"]').val());
+                const harga_jual = $('input[name="hrj_'+i+'"]').val();
+                
+                const harga_item = qty[i]*harga_jual;
+                const diskon_item = harga_item*dis[i]/100;
+                const price_item = harga_item-diskon_item;
+                var show_price = diskon_item > 0 ? '<s style="color:gray; font-size:12px;">'+FormatCurrency(harga_item)+'</s> <br>'+FormatCurrency(price_item) : FormatCurrency(harga_item);
+                $('#show-price-'+i).html(show_price);
+
+                $('input[name="hit_'+i+'"]').val(harga_item);
+                $('input[name="pit_'+i+'"]').val(price_item);
+            }
         }
 
         $('body').on('click','#reset_transaksi',function(){
@@ -207,5 +230,17 @@
                 }
             });
         });
+    }
+
+    function FormatCurrency(angka,rp=false){
+        var rev = parseInt(angka, 10).toString().split('').reverse().join('');
+        var rev2 = '';
+        for (var i = 0; i < rev.length; i++) {
+            rev2 += rev[i];
+            if ((i + 1) % 3 === 0 && i !== (rev.length - 1)) {
+                rev2 += '.';
+            }
+        }
+        return (rp?'Rp ':'') + rev2.split('').reverse().join('') + '';
     }
 })(jQuery);

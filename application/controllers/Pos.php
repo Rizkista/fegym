@@ -271,6 +271,8 @@ class Pos extends CI_Controller {
 			$row['nama_produk'] = $list->nama_produk;
 			$row['stok_produk'] = floatval($list->stok_produk);
 			$row['satuan_produk'] = $list->satuan_produk;
+			$row['harga_jual'] = $list->harga_jual;
+			$row['harga_beli'] = $list->harga_beli;
 			$data[] = $row; 
 		}
 		$output = [ "data" => $data ];

@@ -145,7 +145,7 @@
                             </div>
                         </div>
                         <div class="card-body p-2" style="min-height:150px">
-                            <table id="produk-item" class="table-responsive display table table-striped table-hover purc">
+                            <table id="produk-item" class="table-responsive display table table-striped table-hover table-mini">
                                 <thead>
                                     <tr class="bg-blue-smooth3">
                                         <th style="width:5%; color:white;">No</th>
