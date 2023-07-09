@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class Transaksi extends CI_Controller {
+class Pembelian extends CI_Controller {
 
     function __construct(){
         parent::__construct();

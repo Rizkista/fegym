@@ -84,7 +84,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-header p-2" style="background:#f4f4f4">
+                        <div class="card-header py-2 px-5" style="background:#f4f4f4">
                             <div class="row px-3">
                                 <div class="col-md-6 form-group pb-0">
                                     <label class="col-form-label p-0">Diskon :</label>
@@ -96,14 +96,14 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <input type="hidden" name="jenis_diskon" value="1">
+                                    <input type="hidden" id="jenis_diskon" name="jenis_diskon" value="1">
                                     <div class="box-numb">
                                         <table class="full-width" class="pt-1">
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <input type="text" id="percent_diskon" id="percent_diskon" name="percent_diskon" class="form-control form-rm form-nota text-right" placeholder="0 %">
-                                                        <input type="text" id="nominal_diskon" id="nominal_diskon" name="nominal_diskon" class="form-control form-rm form-nota text-right none" placeholder="0">
+                                                        <input type="text" id="percent_diskon" name="percent_diskon" class="form-control form-rm form-nota text-right" placeholder="0 %">
+                                                        <input type="text" id="nominal_diskon" name="nominal_diskon" data-type="currency" class="form-control form-rm form-nota text-right none" placeholder="0">
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -120,14 +120,14 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <input type="hidden" name="jenis_ppn" value="1">
+                                    <input type="hidden" id="jenis_ppn" name="jenis_ppn" value="1">
                                     <div class="box-numb">
                                         <table class="full-width" class="pt-1">
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <input type="text" id="percent_ppn" id="percent_ppn" name="percent_ppn" class="form-control form-rm form-nota text-right" placeholder="0 %">
-                                                        <input type="text" id="nominal_ppn" id="nominal_ppn" name="nominal_ppn" class="form-control form-rm form-nota text-right none" placeholder="0">
+                                                        <input type="text" id="percent_ppn" name="percent_ppn" class="form-control form-rm form-nota text-right" placeholder="0 %">
+                                                        <input type="text" id="nominal_ppn" name="nominal_ppn" data-type="currency" class="form-control form-rm form-nota text-right none" placeholder="0">
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -146,20 +146,25 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <input type="hidden" name="jenis_pembayaran" value="1">
+                                <input type="hidden" id="jenis_pembayaran" name="jenis_pembayaran" value="1">
                                 <div class="box-numb non-tunai none">
                                     <table class="full-width" class="pt-1">
                                         <tbody>
                                             <tr>
-                                                <td>
+                                                <td width="50%">
                                                     <select class="form-control form-rm form-nota none" id="payment_bank" name="payment_bank">
-                                                        <option value="2">EDC</option>
-                                                        <option value="3">Transfer</option>
+                                                        <?php foreach ($data_payment as $list){ if($list->jenis === "bank") {?>
+                                                            <option value="<?= $list->id_tipe_bayar ?>"><?= $list->tipe_bayar ?></option>
+                                                        <?php } } ?>
                                                     </select>
                                                     <select class="form-control form-rm form-nota none" id="payment_walet" name="payment_walet">
-                                                        <option value="4">QRIS</option>
-                                                        <option value="5">Shopeey</option>
+                                                        <?php foreach ($data_payment as $list){ if($list->jenis === "walet") {?>
+                                                            <option value="<?= $list->id_tipe_bayar ?>"><?= $list->tipe_bayar ?></option>
+                                                        <?php } } ?> 
                                                     </select>
+                                                </td>
+                                                <td width="50%">
+                                                    <input type="text" id="charge" name="charge" class="form-control form-rm form-nota text-right" placeholder="Charge  0 %">
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -167,48 +172,56 @@
                                 </div>
                             </div>
                             <div class="form-group pb-0">
-                                    <label class="col-form-label p-0">Nominal Dibayar :</label>
-                                    <table class="full-width">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="box-numb">
-                                                        <input type="text" id="nominal_dibayar" name="nominal_dibayar" class="form-control form-rm form-nota text-right" placeholder="0">
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <label class="col-form-label p-0">Nominal Dibayar :</label>
+                                <table class="full-width">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="box-numb text-right">
+                                                    <input type="text" id="nominal_dibayar" name="nominal_dibayar" data-type="currency" class="form-control form-rm form-nota text-right" placeholder="0" required>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="card-body p-2">
+                        <div class="card-body py-2 px-5">
                             <div class="form-group pb-0">
                                 <label class="col-form-label p-0">Ringkasan Pembayaran :</label>
                                 <table class="tabsum table-responsive mb-0 px-4 nowraping">
                                     <tbody>
                                         <tr>
-                                            <td><b>Total Transaksi</b></td>
-                                            <td class="text-right" id="total_transaksi">Rp 0</td>
+                                            <td><b>Total Harga</b></td>
+                                            <td class="text-right" id="total_harga">Rp 0</td>
                                         </tr>
                                         <tr>
-                                            <td><b>Total Diskon (-)</b></td>
-                                            <td class="text-right" id="total_diskon">Rp 100.000.000</td>
+                                            <td><b>Total Diskon <sup id="prc-dis">(0%)</sup></b></td>
+                                            <td class="text-right" id="total_diskon">Rp 0</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Total PPN <sup id="prc-ppn">(0%)</sup></b></td>
+                                            <td class="text-right" id="total_ppn">Rp 0</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Total Charge <sup id="prc-chr">(0%)</sup></b></td>
+                                            <td class="text-right" id="total_charge">Rp 0</td>
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td class="text-right text-11-gray">--------------------------</td>
+                                            <td class="text-right text-11-gray">----------------------------</td>
                                         </tr>
                                         <tr>
-                                            <td><b>Total Biaya</b></td> <input type="hidden" name="total_biaya" value="0">
-                                            <td class="text-danger text-right fw-bold" id="total_biaya">Rp 0</td>
+                                            <td><b>Total Transaksi</b></td>
+                                            <td class="text-danger text-right fw-bold" id="total_transaksi">Rp 0</td>
                                         </tr>
                                         <tr>
-                                            <td><b>Total Dibayar</b></td>
+                                            <td><b>Dibayar</b></td>
                                             <td class="text-right fw-bold" id="jumlah_dibayar">Rp 0</td>
                                         </tr>
                                         <tr>
-                                            <td><b>Total Kekurangan</b></td>
-                                            <td class="text-right fw-bold" id="total_kekurangan">Rp 0</td>
+                                            <td><b>Kembalian</b></td>
+                                            <td class="text-right fw-bold" id="jumlah_kembalian">Rp 0</td>
                                         </tr>
                                     </tbody>
                                 </table>

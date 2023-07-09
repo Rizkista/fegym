@@ -81,6 +81,7 @@ class Menu extends CI_Controller {
 			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
 			$data['nama_lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
+			$data['data_payment'] = $this->m_main->getResultData('db_tipe_bayar','status = 1','id_tipe_bayar asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('penjualan/penjualan');
 			$this->load->view('layout/footer');

@@ -174,31 +174,33 @@
                     '</tr>';
         }
         $("#produk-item tbody").html(html);
+        countTransaksi();
+    }
+    
+    $('body').on('change keyup','input#qty',function(){
+        let index = $(this).data('index');
+        countPrice(index);
+    });
+
+    $('body').on('change keyup','input#dis',function(){
+        let index = $(this).data('index');
+        countPrice(index);
+    });
+
+    function countPrice(i){
+        qty[i] = Number($('input[name="qty_'+i+'"]').val());
+        dis[i] = Number($('input[name="dis_'+i+'"]').val());
+        const harga_jual = $('input[name="hrj_'+i+'"]').val();
         
-        $('body').on('change keyup','input#qty',function(){
-            let index = $(this).data('index');
-            countPrice(index);
-        });
+        const harga_item = qty[i]*harga_jual;
+        const diskon_item = harga_item*dis[i]/100;
+        const price_item = harga_item-diskon_item;
+        var show_price = diskon_item > 0 ? '<s style="color:gray; font-size:12px;">'+FormatCurrency(harga_item)+'</s> <br>'+FormatCurrency(price_item) : FormatCurrency(harga_item);
+        $('#show-price-'+i).html(show_price);
 
-        $('body').on('change keyup','input#dis',function(){
-            let index = $(this).data('index');
-            countPrice(index);
-        });
-
-        function countPrice(i){
-            qty[i] = Number($('input[name="qty_'+i+'"]').val());
-            dis[i] = Number($('input[name="dis_'+i+'"]').val());
-            const harga_jual = $('input[name="hrj_'+i+'"]').val();
-            
-            const harga_item = qty[i]*harga_jual;
-            const diskon_item = harga_item*dis[i]/100;
-            const price_item = harga_item-diskon_item;
-            var show_price = diskon_item > 0 ? '<s style="color:gray; font-size:12px;">'+FormatCurrency(harga_item)+'</s> <br>'+FormatCurrency(price_item) : FormatCurrency(harga_item);
-            $('#show-price-'+i).html(show_price);
-
-            $('input[name="hit_'+i+'"]').val(harga_item);
-            $('input[name="pit_'+i+'"]').val(price_item);
-        }
+        $('input[name="hit_'+i+'"]').val(harga_item);
+        $('input[name="pit_'+i+'"]').val(price_item);
+        countTransaksi();
     }
     
     $("body").on("click", "#dis1", function () {
@@ -207,6 +209,9 @@
         $("#percent_diskon").removeClass("none");
         $("#nominal_diskon").addClass("none");
         $('input[name="jenis_diskon"]').val('1');
+        $('#percent_diskon').val('');
+        $('#nominal_diskon').val('0');
+        countTransaksi();
     });
     $("body").on("click", "#dis2", function () {
         $("#dis1").removeClass("choice");
@@ -214,14 +219,25 @@
         $("#percent_diskon").addClass("none");
         $("#nominal_diskon").removeClass("none");
         $('input[name="jenis_diskon"]').val('2');
+        $('#percent_diskon').val('0');
+        $('#nominal_diskon').val('');
+        countTransaksi();
     });
-    $('#percent_diskon').inputmask({alias: 'percentage'});
-    $('#percent_diskon').keyup(function(){
+    $('#percent_diskon').inputmask({alias: 'percentage'}).keyup(function(){
         var val = parseInt($(this).val().split(" %").join(''));
         val = isNaN(val) ? 0 : val;
         val = val >= 100 ? 100 : val;
         val = val < 0 ? 0 : val;
         $(this).val(val);
+        countTransaksi();
+    });
+    $('#nominal_diskon').keyup(function(){
+        var val = $('#nominal_diskon').val().split(".").join('');
+        var total_harga = $('#total_harga').html().split(".").join('').split("Rp ").join('');
+        val = $(this).val() == '' ? 0 : val;
+        var total = Number(val) >= Number(total_harga) ? total_harga : val;
+        $(this).val(FormatCurrency(total));
+        countTransaksi();
     });
 
     $("body").on("click", "#ppn1", function () {
@@ -230,6 +246,9 @@
         $("#percent_ppn").removeClass("none");
         $("#nominal_ppn").addClass("none");
         $('input[name="jenis_ppn"]').val('1');
+        $('#percent_ppn').val('');
+        $('#nominal_ppn').val('0');
+        countTransaksi();
     });
     $("body").on("click", "#ppn2", function () {
         $("#ppn1").removeClass("choice");
@@ -237,14 +256,20 @@
         $("#percent_ppn").addClass("none");
         $("#nominal_ppn").removeClass("none");
         $('input[name="jenis_ppn"]').val('2');
+        $('#percent_ppn').val('0');
+        $('#nominal_ppn').val('');
+        countTransaksi();
     });
-    $('#percent_ppn').inputmask({alias: 'percentage'});
-    $('#percent_ppn').keyup(function(){
+    $('#percent_ppn').inputmask({alias: 'percentage'}).keyup(function(){
         var val = parseInt($(this).val().split(" %").join(''));
         val = isNaN(val) ? 0 : val;
         val = val >= 100 ? 100 : val;
         val = val < 0 ? 0 : val;
         $(this).val(val);
+        countTransaksi();
+    });
+    $('#nominal_ppn').keyup(function(){
+        countTransaksi();
     });
     
     $("body").on("click", "#jenbayar1", function () {
@@ -254,7 +279,9 @@
         $("#payment_bank").addClass("none");
         $("#payment_walet").addClass("none");
         $(".non-tunai").addClass("none");
+        $('#charge').val('');
         $('input[name="jenis_pembayaran"]').val('1');
+        countTransaksi();
     });
     $("body").on("click", "#jenbayar2", function () {
         $("#jenbayar1").removeClass("choice");
@@ -263,6 +290,7 @@
         $("#payment_bank").addClass("none");
         $("#payment_walet").removeClass("none");
         $(".non-tunai").removeClass("none");
+        $('#charge').val('');
         walet();
         $('select[name="payment_walet"]').change(function() {
             walet();
@@ -271,6 +299,7 @@
             var jenbayar = $('select[name="payment_walet"]').val();
             $('input[name="jenis_pembayaran"]').val(jenbayar);
         }
+        countTransaksi();
     });
     $("body").on("click", "#jenbayar3", function () {
         $("#jenbayar1").removeClass("choice");
@@ -279,6 +308,7 @@
         $("#payment_bank").removeClass("none");
         $("#payment_walet").addClass("none");
         $(".non-tunai").removeClass("none");
+        $('#charge').val('');
         bank();
         $('select[name="payment_bank"]').change(function() {
             bank();
@@ -287,7 +317,106 @@
             var jenbayar = $('select[name="payment_bank"]').val();
             $('input[name="jenis_pembayaran"]').val(jenbayar);
         }
+        countTransaksi();
     });
+    $('#charge').inputmask({alias: 'percentage'}).keyup(function(){
+        var val = parseInt($(this).val().split(" %").join(''));
+        val = isNaN(val) ? 0 : val;
+        val = val >= 100 ? 100 : val;
+        val = val < 0 ? 0 : val;
+        $(this).val(val);
+        countTransaksi();
+    });
+    
+    $('#nominal_dibayar').keyup(function(){
+        countTransaksi();
+    });
+    
+    function countTransaksi(){
+        let data_item = [];
+        let total_transaksi = 0;
+        let total_harga = 0;
+        let percent_diskon = 0;
+        let nominal_diskon = 0;
+        let percent_ppn = 0;
+        let nominal_ppn = 0;
+        let percent_charge = 0;
+        let nominal_charge = 0;
+        let dibayar = 0;
+        let kembalian = 0;
+        for(var i=0; i<arr.length; i++) {
+            var list_item = {
+                id_produk : Number($('input[name="id_'+i+'"]').val()),
+                qty_produk : Number($('input[name="qty_'+i+'"]').val()),
+                diskon_persen : Number($('input[name="dis_'+i+'"]').val()),
+                diskon_nominal : Number($('input[name="hit_'+i+'"]').val() - $('input[name="pit_'+i+'"]').val()),
+                harga_jual : Number($('input[name="hrj_'+i+'"]').val()),
+                harga_item : Number($('input[name="hit_'+i+'"]').val()),
+                price_item : Number($('input[name="pit_'+i+'"]').val()),
+            };
+            data_item.push(list_item);
+            total_harga += Number($('input[name="pit_'+i+'"]').val());
+        }
+        const jenis_diskon = $('#jenis_diskon').val();
+        if(jenis_diskon == 1){
+            percent_diskon = $('#percent_diskon').val().split(" %").join('');
+            percent_diskon = percent_diskon == '' ? 0 : percent_diskon;
+            nominal_diskon = total_harga * percent_diskon / 100;
+        }else{
+            nominal_diskon = $('#nominal_diskon').val().split(".").join('');
+            nominal_diskon = nominal_diskon == '' ? 0 : nominal_diskon;
+            percent_diskon = parseFloat((nominal_diskon * 100 / total_harga).toFixed(2));
+            percent_diskon = isNaN(percent_diskon) ? 0 : percent_diskon;
+        }
+        const jenis_ppn = $('#jenis_ppn').val();
+        if(jenis_ppn == 1){
+            percent_ppn = $('#percent_ppn').val().split(" %").join('');
+            percent_ppn = percent_ppn == '' ? 0 : percent_ppn;
+            nominal_ppn = total_harga * percent_ppn / 100;
+        }else{
+            nominal_ppn = $('#nominal_ppn').val().split(".").join('');
+            nominal_ppn = nominal_ppn == '' ? 0 : nominal_ppn;
+            percent_ppn = parseFloat((nominal_ppn * 100 / total_harga).toFixed(2));
+            percent_ppn = isNaN(percent_ppn) ? 0 : percent_ppn;
+        }
+        percent_charge = $('#charge').val().split(" %").join('');
+        percent_charge = percent_charge == '' ? 0 : percent_charge;
+        nominal_charge = total_harga * percent_charge / 100;
+
+        total_transaksi = total_harga - nominal_diskon + nominal_ppn + nominal_charge;
+        dibayar = $('#nominal_dibayar').val().split(".").join('');
+        dibayar = dibayar == '' ? 0 : dibayar;
+        kembalian = dibayar - total_transaksi;
+        kembalian = kembalian < 0 ? -1 : kembalian;
+
+
+        $('#total_harga').html(FormatCurrency(total_harga,true));
+        $('#prc-dis').html('('+percent_diskon+'%)');
+        $('#total_diskon').html(FormatCurrency(nominal_diskon,true));
+        $('#prc-ppn').html('('+percent_ppn+'%)');
+        $('#total_ppn').html(FormatCurrency(nominal_ppn,true));
+        $('#prc-chr').html('('+percent_charge+'%)');
+        $('#total_charge').html(FormatCurrency(nominal_charge,true));
+        $('#total_transaksi').html(FormatCurrency(total_transaksi,true));
+        $('#jumlah_dibayar').html(FormatCurrency(dibayar,true));
+        $('#jumlah_kembalian').html(FormatCurrency(kembalian < 0 ? 0 : kembalian,true));
+
+        var data = {
+            data_item : data_item,
+            total_harga : total_harga,
+            nominal_diskon : nominal_diskon,
+            percent_diskon : percent_diskon,
+            nominal_ppn : nominal_ppn,
+            percent_ppn : percent_ppn,
+            percent_charge : percent_charge,
+            nominal_charge : nominal_charge,
+            total_transaksi : total_transaksi,
+            dibayar : dibayar,
+            kembalian : kembalian,
+        };
+        
+        return data;
+    }
 
     $('body').on('click','#reset_item',function(){
         swal({
@@ -307,10 +436,7 @@
             }
         }).then((Delete) => {
             if (Delete) {
-                qty.splice(0, qty.length);
-                dis.splice(0, dis.length);
-                arr.splice(0, arr.length);
-                dataList();
+                location.reload();
             } else {
                 swal.close();
             }
@@ -319,6 +445,7 @@
 
     $("body").on("click", "#simpan_item", function (e) {
         e.preventDefault();
+        const data_transaksi = countTransaksi();
         let validasi = document.getElementById("form-penjualan").reportValidity();
         if(validasi){
             if(arr.length == 0){
@@ -330,10 +457,19 @@
                         },
                     },
                 });
+            }else if(data_transaksi['kembalian'] < 0){
+                swal("Warning", 'Nominal dibayar tidak boleh kurang dari total transaksi!', {
+                    icon: "warning",
+                    buttons: {
+                        confirm: {
+                            className: "btn btn-warning",
+                        },
+                    },
+                });
             }else{
                 $("#proses-1").addClass("none");
                 $("#proses-2").removeClass("none");
-                $("#proses-3").addClass("none");
+                //proses simpan transaksi
             }
         }
     });
