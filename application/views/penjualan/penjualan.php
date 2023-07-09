@@ -229,7 +229,7 @@
                         </div>
                         <div class="card-footer text-right p-2">
                             <button class="btn btn-danger btn-sm fw-bold" type="button" id="reset_item">Reset</button>
-                            <button class="btn btn-success btn-sm fw-bold" type="submit" id="simpan_item">Bayar</button>
+                            <button class="btn btn-success btn-sm fw-bold" type="submit" id="simpan_item">Simpan</button>
                         </div>
                     </form>
                 </div>
