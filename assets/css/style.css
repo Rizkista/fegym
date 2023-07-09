@@ -10451,7 +10451,6 @@ hr {
     width: 70px;
 }
 .form-nota {
-    max-width: 300px;
     font-size: 12px;
     height: auto !important;
 }
@@ -10506,8 +10505,7 @@ hr {
 .box-numb {
     padding: 5px;
     width: 100%;
-    background-color: rgb(246, 246, 246);
-    max-width: 290px;
+    background-color: #e8ebf1;
 }
 .xs-height {
     height: 11px !important;

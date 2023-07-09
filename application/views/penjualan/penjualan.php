@@ -1,21 +1,4 @@
 <div class="page-inner">
-    <div class="page-header">
-        <h4 class="page-title"><?= $title ?></h4>
-        <ul class="breadcrumbs">
-            <li class="nav-home">
-                <a href="<?= base_url('dashboard') ?>">
-                    <i class="flaticon-home"></i>
-                </a>
-            </li>
-            <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-            </li>
-            <li class="nav-item">
-                <a href=""><?= $title ?></a>
-            </li>
-        </ul>
-    </div>
-
     <div class="card">
         <div class="card-body p-2">
             <input type="hidden" id="tab-menu" value="1">
@@ -31,7 +14,7 @@
     </div>
 
     <div id="transaksi">
-        <div class="row">
+        <div id="proses-1" class="row">
             <div class="col-md-6">
                 <div class="card <?= ($this->session->userdata('id_posisi') == 3 ? 'gone' : '') ?>">
                     <div class="card-header p-2">
@@ -71,7 +54,7 @@
             </div>
             <div class="col-md-6">
                 <div class="card">
-                    <form id="form-item" novalidate="novalidate" enctype="multipart/form-data" accept-charset="utf-8">
+                    <form id="form-penjualan" novalidate="novalidate" enctype="multipart/form-data" accept-charset="utf-8">
                         <div class="card-header p-2">
                             <div class="box-bg-grey">
                                 <input type="hidden" id="nama_lokasi" value="<?= $nama_lokasi ? $nama_lokasi['nama_lokasi'] : '' ?>">
@@ -85,7 +68,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="card-body p-2" style="min-height:150px">
+                        <div class="card-header p-2" style="min-height:150px">
                             <table id="produk-item" class="table-responsive display table table-striped table-hover table-mini">
                                 <thead>
                                     <tr class="bg-blue-smooth3">
@@ -101,12 +84,149 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-footer text-right p-2">
-                            <button class="btn btn-danger btn-sm fw-bold" type="button" id="reset_transaksi">Reset</button>
-                            <button class="btn btn-success btn-sm fw-bold" type="submit" id="simpan_transaksi">Lanjutkan</button>
+                        <div class="card-header p-2" style="background:#f4f4f4">
+                            <div class="row px-3">
+                                <div class="col-md-6 form-group pb-0">
+                                    <label class="col-form-label p-0">Diskon :</label>
+                                    <table class="full-width mb-2">
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="text" id="dis1" class="form-rm form-nota btn-choice choice" value="Percent" readonly></td>
+                                                <td><input type="text" id="dis2" class="form-rm form-nota btn-choice" value="Nominal" readonly></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <input type="hidden" name="jenis_diskon" value="1">
+                                    <div class="box-numb">
+                                        <table class="full-width" class="pt-1">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="percent_diskon" id="percent_diskon" name="percent_diskon" class="form-control form-rm form-nota text-right" placeholder="0 %">
+                                                        <input type="text" id="nominal_diskon" id="nominal_diskon" name="nominal_diskon" class="form-control form-rm form-nota text-right none" placeholder="0">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group pb-0">
+                                    <label class="col-form-label p-0">PPN :</label>
+                                    <table class="full-width mb-2">
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="text" id="ppn1" class="form-rm form-nota btn-choice choice" value="Percent" readonly></td>
+                                                <td><input type="text" id="ppn2" class="form-rm form-nota btn-choice" value="Nominal" readonly></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <input type="hidden" name="jenis_ppn" value="1">
+                                    <div class="box-numb">
+                                        <table class="full-width" class="pt-1">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" id="percent_ppn" id="percent_ppn" name="percent_ppn" class="form-control form-rm form-nota text-right" placeholder="0 %">
+                                                        <input type="text" id="nominal_ppn" id="nominal_ppn" name="nominal_ppn" class="form-control form-rm form-nota text-right none" placeholder="0">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group pb-0">
+                                <label class="col-form-label p-0">Jenis Pembayaran :</label>
+                                <table class="full-width mb-2">
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="text" id="jenbayar1" class="form-rm form-nota btn-choice choice" value="Tunai" readonly></td>
+                                            <td><input type="text" id="jenbayar2" class="form-rm form-nota btn-choice" value="E-Walet" readonly></td>
+                                            <td><input type="text" id="jenbayar3" class="form-rm form-nota btn-choice" value="Card" readonly></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <input type="hidden" name="jenis_pembayaran" value="1">
+                                <div class="box-numb non-tunai none">
+                                    <table class="full-width" class="pt-1">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <select class="form-control form-rm form-nota none" id="payment_bank" name="payment_bank">
+                                                        <option value="2">EDC</option>
+                                                        <option value="3">Transfer</option>
+                                                    </select>
+                                                    <select class="form-control form-rm form-nota none" id="payment_walet" name="payment_walet">
+                                                        <option value="4">QRIS</option>
+                                                        <option value="5">Shopeey</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="form-group pb-0">
+                                    <label class="col-form-label p-0">Nominal Dibayar :</label>
+                                    <table class="full-width">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="box-numb">
+                                                        <input type="text" id="nominal_dibayar" name="nominal_dibayar" class="form-control form-rm form-nota text-right" placeholder="0">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="card-body p-2">
+                            <div class="form-group pb-0">
+                                <label class="col-form-label p-0">Ringkasan Pembayaran :</label>
+                                <table class="tabsum table-responsive mb-0 px-4 nowraping">
+                                    <tbody>
+                                        <tr>
+                                            <td><b>Total Transaksi</b></td>
+                                            <td class="text-right" id="total_transaksi">Rp 0</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Total Diskon (-)</b></td>
+                                            <td class="text-right" id="total_diskon">Rp 100.000.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td class="text-right text-11-gray">--------------------------</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Total Biaya</b></td> <input type="hidden" name="total_biaya" value="0">
+                                            <td class="text-danger text-right fw-bold" id="total_biaya">Rp 0</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Total Dibayar</b></td>
+                                            <td class="text-right fw-bold" id="jumlah_dibayar">Rp 0</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Total Kekurangan</b></td>
+                                            <td class="text-right fw-bold" id="total_kekurangan">Rp 0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer text-right p-2">
+                            <button class="btn btn-danger btn-sm fw-bold" type="button" id="reset_item">Reset</button>
+                            <button class="btn btn-success btn-sm fw-bold" type="submit" id="simpan_item">Bayar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="proses-2" class="row none">
+            <div class="col-md-5 ml-auto mr-auto">
+                <div class="card">
+                    NOTA TRANSAKSI
+                </div>
             </div>
         </div>
     </div>

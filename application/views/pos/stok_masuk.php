@@ -169,8 +169,8 @@
                                 <span class="btn-label mr-2"><i class="fas fa-save"></i></span>Simpan
                             </button>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
