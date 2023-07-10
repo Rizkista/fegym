@@ -2,6 +2,16 @@
 
 class M_main extends CI_Model {
 
+    public function runQueryRow($query){
+        $query = $this->db->query($query)->row_array();
+        return $query;
+    }
+    
+    public function runQueryResult($query){
+        $query = $this->db->query($query)->result();
+        return $query;
+    }
+
     public function readIN($in){
         return $this->db->select('*')->from($in)->get()->result();
     }

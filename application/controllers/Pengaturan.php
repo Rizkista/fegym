@@ -47,11 +47,11 @@ class Pengaturan extends CI_Controller {
 				
 				$data['photo'] = $uploadData['file_name'];
 				$this->m_main->updateIN('db_account','id_account',ID_ACCOUNT,$data);
-				$output['message'] ="Foto profil berhasil di ganti!";
+				$output['message'] = "Foto profil berhasil di ganti!";
 				$output['result'] = "success";
 			}
 		}else{
-			$output['message'] ="Foto profil gagal di ganti!";
+			$output['message'] = "Foto profil gagal di ganti!";
 			$output['result'] = "error";
 		}
 		echo json_encode($output);
@@ -83,7 +83,7 @@ class Pengaturan extends CI_Controller {
 			'email' => $_POST['email'],
 		];
 		$this->session->set_userdata($sess);
-		$output['message'] ="Data profile berhasil diganti!";
+		$output['message'] = "Data profile berhasil diganti!";
 		$output['result'] = "success";
 
         echo json_encode($output);
@@ -98,7 +98,7 @@ class Pengaturan extends CI_Controller {
 			'alamat_office' => $_POST['alamat_office'],
 		];
 		$this->m_main->updateIN('db_office','id_office',ID_OFFICE,$data);
-		$output['message'] ="Data perusahaan berhasil diganti!";
+		$output['message'] = "Data perusahaan berhasil diganti!";
 		$output['result'] = "success";
 
         echo json_encode($output);

@@ -198,6 +198,7 @@ class Master extends CI_Controller {
 				'tgl_input' => date("Y-m-d H:i:s"),
 				'tgl_edit' => date("Y-m-d H:i:s"),
 				'status' => 1,
+				'id_account' => ID_ACCOUNT,
 			];
 			$this->m_main->createIN('db_paket_gym',$data);
 			$output['message'] = "Data paket gym berhasil ditambah!";

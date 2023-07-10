@@ -135,5 +135,28 @@ class M_auth extends CI_Model {
         return $query;
     }
 
+    public function getDataPenjualan($start_date,$end_date,$status,$id_lokasi,$id_office){
+        $this->db->simple_query('SET SESSION group_concat_max_len = 15000');
+        $query = $this->db->query("
+            SELECT a.*, d.nama_lokasi,
+                group_concat(c.nama_produk, '   ' order by id_penjualan_item asc) as nama_item, 
+                group_concat(FORMAT(b.jml_produk_item, 0, 'de_DE') order by id_penjualan_item asc) as jml_item,
+                group_concat(concat('Rp ',FORMAT(b.diskon_nominal_item, 0, 'de_DE')) order by id_penjualan_item asc) as diskon_item,
+                group_concat(concat('Rp ',FORMAT(b.subtotal_harga_item, 0, 'de_DE')) order by id_penjualan_item asc) as harga_item
+            FROM db_penjualan a
+            JOIN db_penjualan_item b ON a.id_penjualan = b.id_penjualan
+            JOIN db_produk c ON b.id_produk = c.id_produk
+            JOIN db_lokasi d ON a.id_lokasi = d.id_lokasi
+            WHERE a.status = ".$status."
+            AND a.id_office = ".$id_office."
+            AND DATE_FORMAT(a.tgl_penjualan,'%Y-%m-%d') >= '".$start_date."' 
+            AND DATE_FORMAT(a.tgl_penjualan,'%Y-%m-%d') <= '".$end_date."'
+            ".($id_lokasi != null ? 'AND a.id_lokasi = '.$id_lokasi : '')."
+            GROUP BY a.id_penjualan
+            ORDER BY a.tgl_edit DESC
+        ")->result();
+        return $query;
+    }
+
 
 }

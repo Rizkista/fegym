@@ -84,7 +84,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-header py-2 px-5" style="background:#f4f4f4">
+                        <div class="card-header py-2 px-5" style="background:#f4fff7">
                             <div class="row px-3">
                                 <div class="col-md-6 form-group pb-0">
                                     <label class="col-form-label p-0">Diskon :</label>
@@ -147,6 +147,7 @@
                                     </tbody>
                                 </table>
                                 <input type="hidden" id="jenis_pembayaran" name="jenis_pembayaran" value="1">
+                                <input type="hidden" id="tipe_bayar" name="tipe_bayar" value="Tunai">
                                 <div class="box-numb non-tunai none">
                                     <table class="full-width" class="pt-1">
                                         <tbody>
@@ -237,8 +238,101 @@
         </div>
         <div id="proses-2" class="row none">
             <div class="col-md-5 ml-auto mr-auto">
-                <div class="card">
-                    NOTA TRANSAKSI
+                <div class="card" style="font-size:13px;">
+                    <div class="card-header" style="background:#25B1E6;">
+                        <div style="font-size:16px; display:block; padding:10px; background:#31C7FF; text-align:center; margin-top:15px; margin-bottom:10px; color:white; border-radius:5px;">
+                            <b>Transaksi Berhasil</b>
+                        </div>
+                        <table style="width:100%; color:white;">
+                            <tbody>
+                                <tr>
+                                    <td>Tipe Pembayaran</td>
+                                    <td id="nt-tipe" style="text-align:right;">Tunai</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Transaksi</td>
+                                    <td id="nt-total" style="text-align:right; font-weight:bolder;">Rp 0</td>
+                                </tr>
+                                <tr>
+                                    <td>Uang Dibayar</td>
+                                    <td id="nt-dibayar" style="text-align:right;">Rp 0</td>
+                                </tr>
+                                <tr>
+                                    <td>Uang Kembalian</td>
+                                    <td id="nt-kembalian" style="text-align:right;">Rp 0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-header">
+                        <label class="control-label mb-1" style="color: #686868;">Detail Penjualan</label>
+                        <table style="width:100%;">
+                            <tbody>
+                                <tr>
+                                    <td>No.Nota</td>
+                                    <td id="nt-nota" style="text-align:right;">A000-1</td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal</td>
+                                    <td id="nt-tanggal" style="text-align:right;">0000-00-00 00:00:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Operator</td>
+                                    <td id="nt-operator" style="text-align:right;">Demo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-header">
+                        <label class="control-label mb-1" style="color: #686868;">Detail Item</label>
+                        <table id="detail-item" class="table-mini" style="width:100%; padding:4px; background:#f4f4f4; font-size:12px;">
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-header">
+                        <label class="control-label mb-1" style="color: #686868;">Detail Transaksi</label>
+                        <table style="width:100%;">
+                            <tbody>
+                                <tr>
+                                    <td>Total Harga</td>
+                                    <td id="nt-harga" style="text-align:right;">Rp 0</td>
+                                </tr>
+                                <tr>
+                                    <td>Diskon <span id="nt-dis">(0%)</span></td>
+                                    <td id="nt-diskon-nom" style="text-align:right;">Rp 0</td>
+                                </tr>
+                                <tr>
+                                    <td>PPN <span id="nt-ppn">(0%)</span></td>
+                                    <td id="nt-ppn-nom" style="text-align:right;">Rp 0</td>
+                                </tr>
+                                <tr>
+                                    <td>Charge <span id="nt-chr">(0%)</span></td>
+                                    <td id="nt-charge-nom" style="text-align:right;">Rp 0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-header">
+                        <table style="width:100%; font-weight:bolder;">
+                            <tbody>
+                                <tr>
+                                    <td>Total Transaksi</td>
+                                    <td id="nt-amount" style="text-align:right;">Rp 0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <table style="width:100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="width:50%;"><button class="btn btn-secondary fw-bold full-width" type="button" id="new_trans">Transaksi Baru</button></td>
+                                    <td style="width:50%;"><button class="btn btn-default fw-bold full-width" type="button" id="print_trans">Print Nota</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -290,17 +384,21 @@
 
         <div class="card">
             <div class="card-body p-2">
-                <table id="datatable-stok-masuk" class="table-responsive display table table-striped table-hover" >
+                <table id="datatable-penjualan" class="table-responsive display table table-striped table-hover" >
                     <thead>
                         <tr>
                             <th style="width:5%;">No</th>
-                            <th style="width:15%;">Tanggal</th>
-                            <th style="width:10%;">No.Faktur</th>
-                            <th style="width:25%;">Produk</th>
-                            <th style="width:5%;">Jumlah</th>
-                            <th style="width:15%;">Supplier</th>
-                            <th style="width:15%;">Lokasi</th>
-                            <th style="width:15%;" id="text-aksi">Aksi</th>
+                            <th style="width:10%;">Tanggal</th>
+                            <th style="width:10%;">Nota</th>
+                            <th style="width:15%;" class="nowraping">Nama Item</th>
+                            <th style="width:10%;" class="nowraping">Jml Item</th>
+                            <th style="width:10%;" class="nowraping">Diskon Item</th>
+                            <th style="width:10%;" class="nowraping">Harga Item</th>
+                            <th style="width:10%;">Diskon</th>
+                            <th style="width:10%;">PPN</th>
+                            <th style="width:10%;">Charge</th>
+                            <th style="width:10%;" class="nowraping">Total Transaksi</th>
+                            <th style="width:10%;" id="text-aksi">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -308,6 +406,28 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-hapus" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false">
+    <div class="modal-dialog modal-xs modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="form-alasan-hapus" novalidate="novalidate" enctype="multipart/form-data" accept-charset="utf-8">
+                <div class="modal-body text-center">
+                    <h5 class="modal-title py-3" style="color:rgba(0,0,0,.65);font-weight:600;font-size:27px;line-height:normal;">Hapus Transaksi</h5>
+                    <div class="" style="width:100% !important; padding:15px; border-radius:4px; font-size:13px; background-color:#f7d9d9;">
+                        <span>Apakah anda yakin ingin menghapus data penjualan dengan nota</span><br>
+                        <b><span id="no-nota">...</span></b>
+                        <textarea id="alasan-hapus" style="min-height:100px;" class="form-control mt-2" placeholder="Alasan di Hapus . . ." required></textarea>
+                    </div>
+                    <div class="py-3">
+                        <input type="hidden" name="id_penjualan">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success" id="hapus">Lanjutkan</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

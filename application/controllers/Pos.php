@@ -47,6 +47,7 @@ class Pos extends CI_Controller {
 				'tgl_input' => date("Y-m-d H:i:s"),
 				'tgl_edit' => date("Y-m-d H:i:s"),
 				'status' => 1,
+				'id_account' => ID_ACCOUNT,
 			];
 			$this->m_main->createIN('db_kat_produk',$data);
 			$output['message'] = "Data kategori produk berhasil ditambah!";
@@ -160,6 +161,7 @@ class Pos extends CI_Controller {
 					'tgl_input' => date("Y-m-d H:i:s"),
 					'tgl_edit' => date("Y-m-d H:i:s"),
 					'status' => 1,
+					'id_account' => ID_ACCOUNT,
 				];
 				$id_kat_produk = $this->m_main->createIN('db_kat_produk',$kate)['result'];
 			}else{
@@ -178,6 +180,7 @@ class Pos extends CI_Controller {
 				'tgl_input' => date("Y-m-d H:i:s"),
 				'tgl_edit' => date("Y-m-d H:i:s"),
 				'status' => 1,
+				'id_account' => ID_ACCOUNT,
 			];
 			$this->m_main->createIN('db_produk',$data);
 			$output['message'] = "Data produk berhasil ditambah!";
@@ -319,6 +322,7 @@ class Pos extends CI_Controller {
 				'tgl_input' => date("Y-m-d H:i:s"),
 				'tgl_edit' => date("Y-m-d H:i:s"),
 				'status' => 1,
+				'id_account' => ID_ACCOUNT,
 			];
 			$id_stok_masuk  = $this->m_main->createIN('db_stok_masuk',$data)['result'];	
 			$listProduk = $_POST['data_produk'];
@@ -338,10 +342,10 @@ class Pos extends CI_Controller {
 				];
 				$this->m_main->updateIN('db_produk','id_produk',$listProduk[$i]['id_produk'],$datup);
 			}
-			$output['message'] ="Stok masuk produk berhasil ditambah!";
+			$output['message'] = "Stok masuk produk berhasil ditambah!";
 			$output['result'] = "success";
 		}else{
-			$output['message'] ="Data produk tidak boleh kosong!";
+			$output['message'] = "Data produk tidak boleh kosong!";
 			$output['result'] = "error";
 		}
         echo json_encode($output);
@@ -420,6 +424,7 @@ class Pos extends CI_Controller {
 				'tgl_input' => date("Y-m-d H:i:s"),
 				'tgl_edit' => date("Y-m-d H:i:s"),
 				'status' => 1,
+				'id_account' => ID_ACCOUNT,
 			];
 			$id_stok_keluar  = $this->m_main->createIN('db_stok_keluar',$data)['result'];	
 			$listProduk = $_POST['data_produk'];
@@ -439,10 +444,10 @@ class Pos extends CI_Controller {
 				];
 				$this->m_main->updateIN('db_produk','id_produk',$listProduk[$i]['id_produk'],$datup);
 			}
-			$output['message'] ="Stok keluar produk berhasil ditambah!";
+			$output['message'] = "Stok keluar produk berhasil ditambah!";
 			$output['result'] = "success";
 		}else{
-			$output['message'] ="Data produk tidak boleh kosong!";
+			$output['message'] = "Data produk tidak boleh kosong!";
 			$output['result'] = "error";
 		}
         echo json_encode($output);
@@ -521,6 +526,7 @@ class Pos extends CI_Controller {
 				'tgl_input' => date("Y-m-d H:i:s"),
 				'tgl_edit' => date("Y-m-d H:i:s"),
 				'status' => 1,
+				'id_account' => ID_ACCOUNT,
 			];
 			$id_stok_opname  = $this->m_main->createIN('db_stok_opname',$data)['result'];	
 			$listProduk = $_POST['data_produk'];
@@ -540,10 +546,10 @@ class Pos extends CI_Controller {
 				];
 				$this->m_main->updateIN('db_produk','id_produk',$listProduk[$i]['id_produk'],$datup);
 			}
-			$output['message'] ="Stok opname produk berhasil ditambah!";
+			$output['message'] = "Stok opname produk berhasil ditambah!";
 			$output['result'] = "success";
 		}else{
-			$output['message'] ="Data produk tidak boleh kosong!";
+			$output['message'] = "Data produk tidak boleh kosong!";
 			$output['result'] = "error";
 		}
         echo json_encode($output);
