@@ -26,7 +26,9 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI;
 			$data['title'] = 'Dashboard';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$this->load->view('layout/header', $data);
 			$this->load->view('dashboard/dashboard_'.ID_POSISI);
 			$this->load->view('layout/footer');
@@ -39,7 +41,9 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Account';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$this->load->view('layout/header', $data);
 			$this->load->view('developer/account');
 			$this->load->view('layout/footer');
@@ -52,7 +56,10 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Anggota';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
+			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('anggota/anggota');
 			$this->load->view('layout/footer');
@@ -65,8 +72,9 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Pembayaran';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
-			$data['nama_lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$data['data_payment'] = $this->m_main->getResultData('db_tipe_bayar','status = 1','id_tipe_bayar asc');
 			$this->load->view('layout/header', $data);
@@ -81,8 +89,9 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Penjualan';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
-			$data['nama_lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$data['data_payment'] = $this->m_main->getResultData('db_tipe_bayar','status = 1','id_tipe_bayar asc');
 			$this->load->view('layout/header', $data);
@@ -97,7 +106,9 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Produk';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('pos/produk');
@@ -111,7 +122,9 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Kategori Produk';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('pos/kategori_produk');
@@ -125,7 +138,9 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Stok Masuk';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('pos/stok_masuk');
@@ -139,7 +154,9 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Stok Keluar';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('pos/stok_keluar');
@@ -153,7 +170,9 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Stok Opname';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('pos/stok_opname');
@@ -167,7 +186,9 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Paket Gym';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('master/paket_gym');
@@ -181,7 +202,9 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Lokasi Gym';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$this->load->view('layout/header', $data);
 			$this->load->view('master/lokasi_gym');
 			$this->load->view('layout/footer');
@@ -194,8 +217,11 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Akun Saya';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
 			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$this->load->view('layout/header', $data);
 			$this->load->view('pengaturan/akun_saya');
 			$this->load->view('layout/footer');
@@ -208,8 +234,11 @@ class Menu extends CI_Controller {
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
 			$data['title'] = 'Konfigurasi';
-			$data['account'] = $this->m_main->getRow('db_account','email',EMAIL);
+			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
 			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
+			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['account_online'] = $this->m_auth->getAccountOnline();
 			$this->load->view('layout/header', $data);
 			$this->load->view('pengaturan/konfigurasi');

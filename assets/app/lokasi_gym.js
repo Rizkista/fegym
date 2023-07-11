@@ -190,7 +190,9 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-lokasi").modal('hide');
+                    if(result == 'success'){
+                        $("#modal-lokasi").modal('hide');
+                    }
                     $("#add_lokasi").prop('disabled', false);
                 },
             });
@@ -234,7 +236,9 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-lokasi").modal('hide');
+                    if(result == 'success'){
+                        $("#modal-lokasi").modal('hide');
+                    }
                     $("#edit_lokasi").prop('disabled', false);
                 },
             });

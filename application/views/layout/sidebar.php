@@ -32,6 +32,13 @@
                     'konfigurasi',
                 );
             ?> 
+            <!-- <li class="nav-item mt-3"> -->
+                <!-- <p class="text-12-gray text-center fw-normal my-3">
+                    <a onClick="window.location.href=window.location.href" class="logo pointer">
+                        <span class="loading-trans text-base text-12-gray shadow" id="realtime"> xx xxx xxxx xxxxxxxx xx </span>
+                    </a>
+                </p> -->
+            <!-- </li> -->
             <ul class="nav">
                 <li class="nav-item <?= $uri_path == 'dashboard' ? 'active' : '' ?>">
                     <a href="<?= base_url('dashboard') ?>">

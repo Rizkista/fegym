@@ -16,7 +16,7 @@
         ],
         columnDefs: [
             {
-                "targets": [0,1,2,3,4,5,6,7],
+                "targets": [0,1,2,3,5,6,7,8],
                 "orderable": false,
                 "visible": true
             },
@@ -63,7 +63,7 @@
                 className: "btn btn-secondary wid-max-select text-white",
                 text: '<i class="fas fa-file-excel mr-2"></i> Excel',
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6],
+                    columns: [0,1,2,3,4,5,6,7],
                 },
                 filename: 'Data Anggota Gim '+$('#filter-lokasi option:selected').text(),
                 title: ''
@@ -84,6 +84,7 @@
             { data: "email_anggota" },
             { data: "alamat_anggota" },
             { data: "status_member" },
+            { data: "nama_lokasi" },
             { data: "Aksi" , render : function ( data, type, row, meta ) {
                 return type === 'display'  ?
                 '<div class="btn-group" role="group">'
@@ -137,16 +138,16 @@
         var cbg = $('select[name="filter-lokasi"]').val().toLowerCase();
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
             if (~data[1].toLowerCase().indexOf(src) && 
-                ~data[9].toLowerCase().indexOf(cbg) &&
-                ~data[8].toLowerCase().indexOf(sta))
+                ~data[10].toLowerCase().indexOf(cbg) &&
+                ~data[9].toLowerCase().indexOf(sta))
                 return true;
             if (~data[4].toLowerCase().indexOf(src) && 
-                ~data[9].toLowerCase().indexOf(cbg) &&
-                ~data[8].toLowerCase().indexOf(sta))
+                ~data[10].toLowerCase().indexOf(cbg) &&
+                ~data[9].toLowerCase().indexOf(sta))
                 return true;
             if (~data[5].toLowerCase().indexOf(src) && 
-                ~data[9].toLowerCase().indexOf(cbg) &&
-                ~data[8].toLowerCase().indexOf(sta))
+                ~data[10].toLowerCase().indexOf(cbg) &&
+                ~data[9].toLowerCase().indexOf(sta))
                 return true;
                 
             return false;
@@ -180,6 +181,14 @@
 
     $("#tambah_anggota").on("click", function () {
         $("#modal-anggota").modal();
+		const id_posisi = $('input[name="id_posisi"]').val();
+        if(id_posisi == 3){
+            $(".lok-edit").addClass('gone');
+            $("#id_lokasi").removeAttr('required');
+        }else{
+            $(".lok-edit").removeClass('gone');
+            $("#id_lokasi").attr('required', '');
+        }
         document.getElementById("text-anggota").innerHTML = "Tambah Anggota";
 		$('#nama_anggota').val('');
         $('#gender_anggota').val('');
@@ -207,7 +216,9 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-anggota").modal('hide');
+                    if(result == 'success'){
+                        $("#modal-anggota").modal('hide');
+                    }
                     $("#add_anggota").prop('disabled', false);
                 },
             });
@@ -217,6 +228,8 @@
     $('body').on('click','#anggota-edit', function(){
         $("#modal-anggota").modal();
         let id_anggota = $(this).data('id');
+        $(".lok-edit").addClass('gone');
+        $("#id_lokasi").removeAttr('required');
         document.getElementById("text-anggota").innerHTML = "Ubah Anggota";
 		var data = table_anggota.row($(this).parents("tr")).data();
 		$('#nama_anggota').val(data["nama_anggota"]);
@@ -246,7 +259,9 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-anggota").modal('hide');
+                    if(result == 'success'){
+                        $("#modal-anggota").modal('hide');
+                    }
                     $("#edit_anggota").prop('disabled', false);
                 },
             });

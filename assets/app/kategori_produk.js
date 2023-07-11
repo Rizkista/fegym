@@ -185,7 +185,9 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-katproduk").modal('hide');
+                    if(result == 'success'){
+                        $("#modal-katproduk").modal('hide');
+                    }
                     $("#add_katproduk").prop('disabled', false);
                 },
             });
@@ -223,7 +225,9 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-katproduk").modal('hide');
+                    if(result == 'success'){
+                        $("#modal-katproduk").modal('hide');
+                    }
                     $("#edit_katproduk").prop('disabled', false);
                 },
             });

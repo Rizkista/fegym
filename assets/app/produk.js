@@ -245,7 +245,9 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-produk").modal('hide');
+                    if(result == 'success'){
+                        $("#modal-produk").modal('hide');
+                    }
                     $("#add_produk").prop('disabled', false);
                 },
             });
@@ -295,7 +297,9 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-produk").modal('hide');
+                    if(result == 'success'){
+                        $("#modal-produk").modal('hide');
+                    }
                     $("#edit_produk").prop('disabled', false);
                 },
             });

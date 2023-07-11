@@ -32,6 +32,7 @@ class Anggota extends CI_Controller {
             $row['email_anggota'] = $list->email_anggota;
             $row['alamat_anggota'] = $list->alamat_anggota;
             $row['status_member'] = $list->status_member == 1 ? 'Ya' : 'Tidak';
+            $row['nama_lokasi'] = $list->nama_lokasi;
             $row['id_lokasi'] = $list->id_lokasi;
             $row['status'] = $list->status == 1 ? 'aktif-' : 'hapus-';
             $row['Aksi'] = $list->id_anggota;
@@ -47,7 +48,7 @@ class Anggota extends CI_Controller {
 		if(!$cekData){
 			$data = [
 				'id_office' => ID_OFFICE,
-				'id_lokasi' => ID_LOKASI != '' ? ID_LOKASI : 1,
+				'id_lokasi' => $_POST['id_lokasi'] ? $_POST['id_lokasi'] : (ID_LOKASI != '' ? ID_LOKASI : 1),
 				'nama_anggota' => $_POST['nama_anggota'],
 				'gender_anggota' => $_POST['gender_anggota'],
 				'telp_anggota' => $_POST['telp_anggota'],

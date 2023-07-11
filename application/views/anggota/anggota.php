@@ -19,7 +19,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm">
                     <div class="btn-group border-option my-1">
                         <label class="label-filter">Status: </label>&nbsp;&nbsp;
                         <select class="form-control" name="filter-status" id="filter-status">
@@ -28,18 +28,18 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm <?= ($this->session->userdata('id_posisi') == 3 ? 'gone' : '') ?>">
                     <div class="btn-group border-option my-1">
                         <label class="label-filter">Lokasi: </label>&nbsp;&nbsp;
                         <select class="form-control" name="filter-lokasi" id="filter-lokasi">
                             <option value="">Semua Lokasi</option>
-                            <?php foreach ($data_lokasi as $list) { ?>
-                                <option value="<?= '-'.$list->id_lokasi.'-' ?>"><?= $list->nama_lokasi ?></option>
-                            <?php } ?>
+                            <?php foreach ($data_lokasi as $list){ ?>
+                                <option value="-<?= $list->id_lokasi ?>-"><?= $list->nama_lokasi ?></option>
+                            <?php } ?> 
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm">
                     <div class="btn-group border-option my-1">
                         <label class="label-filter">Cari: </label>&nbsp;&nbsp;
                         <input type="text" class="form-control" name="filter-search" id="filter-search" placeholder="Cari">
@@ -55,13 +55,14 @@
                 <thead>
                     <tr>
                         <th style="width:5%;">No</th>
-                        <th style="width:20%;">Nama</th>
+                        <th style="width:25%;">Nama</th>
                         <th style="width:5%;">Gender</th>
                         <th style="width:10%;">No.Hp</th>
                         <th style="width:15%;">Email</th>
-                        <th style="width:30%;">Alamat</th>
-                        <th style="width:10%;">Member</th>
-                        <th style="width:10%;">Aksi</th>
+                        <th style="width:25%;">Alamat</th>
+                        <th style="width:5%;">Member</th>
+                        <th style="width:10%;">Lokasi</th>
+                        <th style="width:5%;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -119,6 +120,18 @@
                                                     <td><b>Alamat</b> <span class="text-danger">*</span></td>
                                                     <td><b>&nbsp;:&nbsp;</b></td>
                                                     <td><textarea class="form-control" name="alamat_anggota" id="alamat_anggota" placeholder="Alamat" style="padding: 0.25rem 0.5rem; min-height: 92px;" required></textarea></td>
+                                                </tr>
+                                                <tr class="lok-edit">
+                                                    <td>Lokasi Gym <span class="text-danger">*</span></td>
+                                                    <td>&nbsp;:&nbsp;</td>
+                                                    <td>
+                                                        <select class="form-control form-rm" name="id_lokasi" id="id_lokasi" required style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
+                                                            <option value="">Pilih Lokasi</option>
+                                                            <?php foreach ($data_lokasi as $list){ ?>
+                                                                <option value="<?= $list->id_lokasi ?>"><?= $list->nama_lokasi ?></option>
+                                                            <?php } ?> 
+                                                        </select>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>

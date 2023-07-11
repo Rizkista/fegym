@@ -209,7 +209,9 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-paket").modal('hide');
+                    if(result == 'success'){
+                        $("#modal-paket").modal('hide');
+                    }
                     $("#add_paket").prop('disabled', false);
                 },
             });
@@ -250,7 +252,9 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
-                    $("#modal-paket").modal('hide');
+                    if(result == 'success'){
+                        $("#modal-paket").modal('hide');
+                    }
                     $("#edit_paket").prop('disabled', false);
                 },
             });

@@ -58,7 +58,7 @@
                     <form id="form-penjualan" novalidate="novalidate" enctype="multipart/form-data" accept-charset="utf-8">
                         <div class="card-header p-2">
                             <div class="box-bg-grey">
-                                <input type="hidden" id="nama_lokasi" value="<?= $nama_lokasi ? $nama_lokasi['nama_lokasi'] : '' ?>">
+                                <input type="hidden" id="nama_lokasi" value="<?= $lokasi ? $lokasi['nama_lokasi'] : '' ?>">
                                 <table class="mb-0 full-width">
                                     <tbody class="nowraping">
                                         <tr>

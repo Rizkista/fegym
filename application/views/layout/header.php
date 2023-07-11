@@ -71,9 +71,15 @@
 			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark2">
 				<div class="container-fluid">
 					<div class="collapse left-nav">
-						<a onClick="window.location.href=window.location.href" class="logo pointer">
-							<span class="loading-trans text-base text-12-gray shadow" id="realtime"> xx xxx xxxx xxxxxxxx xx </span>
-						</a>
+						<h3 class="fw-bold mb-0" style="margin-top:-4px;"><?= $office['nama_office'] ?></h3>
+						<h6 class="fw-bold mb-0 text-10-gray mt-1" style="margin-left:1px;" style="margin-top:4px;">
+							<span class="<?= !$lokasi ? 'none' : '' ?> mr-2">
+								<i class="fas fa-map-pin mr-2"></i><?= $lokasi ? $lokasi['nama_lokasi'] : '' ?>
+							</span>
+							<a onClick="window.location.href=window.location.href" class="logo pointer">
+								<span class="loading-trans" id="realtime"> xx xxx xxxx xxxxxxxx xx </span>
+							</a>
+						</h6>
 					</div>
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li class="nav-item dropdown hidden-caret">
