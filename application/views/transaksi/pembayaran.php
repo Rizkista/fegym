@@ -34,16 +34,17 @@
                 <div class="card">
                     <div class="card-header p-2">
                         <div class="btn-group p-1 bg-grey3 btn-full">
-                            <input type="text" class="form-control" name="list-search" id="list-search" placeholder="Barcode / Produk">
+                            <input type="text" class="form-control" name="list-search" id="list-search" placeholder="Cari">
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0">
-                        <table id="datatable-list-produk" class="table-responsive display table table-striped table-hover">
+                        <table id="datatable-list-paket" class="table-responsive display table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th style="width:20%;">Barcode</th>
-                                    <th style="width:75%;">Produk</th>
-                                    <th style="width:10%;">Stok</th>
+                                    <th style="width:60%;">Paket</th>
+                                    <th style="width:15%;">Harga</th>
+                                    <th style="width:15%;">Durasi</th>
+                                    <th style="width:15%;">Member</th>
                                 </tr>
                             </thead>
                             <tbody class="cursor-cell">
@@ -54,7 +55,7 @@
             </div>
             <div class="col-md-6">
                 <div class="card">
-                    <form id="form-penjualan" novalidate="novalidate" enctype="multipart/form-data" accept-charset="utf-8">
+                    <form id="form-pembayaran" novalidate="novalidate" enctype="multipart/form-data" accept-charset="utf-8">
                         <div class="card-header p-2">
                             <div class="box-bg-grey">
                                 <input type="hidden" id="nama_lokasi" value="<?= $nama_lokasi ? $nama_lokasi['nama_lokasi'] : '' ?>">
@@ -69,20 +70,7 @@
                             </div>
                         </div>
                         <div class="card-header p-2" style="min-height:150px">
-                            <table id="produk-item" class="table-responsive display table table-striped table-hover table-mini">
-                                <thead>
-                                    <tr class="bg-blue-smooth3">
-                                        <th style="width:5%; color:white;">No</th>
-                                        <th style="width:40%; color:white;">Produk</th>
-                                        <th style="width:15%; color:white; text-align:center;">Qty</th>
-                                        <th style="width:15%; color:white; text-align:center; white-space:nowrap;">Diskon %</th>
-                                        <th style="width:20%; color:white; text-align:right;">Price</th>
-                                        <th style="width:10%; color:white; text-align:center; min-width:40px;">*</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                            //Detail Paket Gym
                         </div>
                         <div class="card-header py-2 px-5" style="background:#f4fff7">
                             <div class="row px-3">
@@ -265,7 +253,7 @@
                         </table>
                     </div>
                     <div class="card-header">
-                        <label class="control-label mb-1" style="color: #686868;">Detail Penjualan</label>
+                        <label class="control-label mb-1" style="color: #686868;">Detail Pembayaran</label>
                         <table style="width:100%;">
                             <tbody>
                                 <tr>
@@ -384,7 +372,7 @@
 
         <div class="card">
             <div class="card-body p-2">
-                <table id="datatable-penjualan" class="table-responsive display table table-striped table-hover" >
+                <table id="datatable-pembayaran" class="table-responsive display table table-striped table-hover" >
                     <thead>
                         <tr>
                             <th style="width:5%;">No</th>
@@ -417,12 +405,12 @@
                 <div class="modal-body text-center">
                     <h5 class="modal-title py-3" style="color:rgba(0,0,0,.65);font-weight:600;font-size:27px;line-height:normal;">Hapus Transaksi</h5>
                     <div class="" style="width:100% !important; padding:15px; border-radius:4px; font-size:13px; background-color:#f7d9d9;">
-                        <span>Apakah anda yakin ingin menghapus data penjualan dengan nota</span><br>
+                        <span>Apakah anda yakin ingin menghapus data pembayaran dengan nota</span><br>
                         <b><span id="no-nota">...</span></b>
                         <textarea id="alasan-hapus" style="min-height:100px;" class="form-control mt-2" placeholder="Alasan di Hapus . . ." required></textarea>
                     </div>
                     <div class="py-3">
-                        <input type="hidden" name="id_penjualan">
+                        <input type="hidden" name="id_pembayaran">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-success" id="hapus">Lanjutkan</button>
                     </div>

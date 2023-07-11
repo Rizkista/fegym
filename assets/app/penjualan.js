@@ -64,11 +64,17 @@
                 { data: "barcode_produk" },
                 { data: "nama_produk" },
                 { data: "stok_produk" },
+                { data: "harga_jual" , render: function(data, type, row, meta) {
+                    return '<sup><font color="#FF0000">Rp</font></sup> '+FormatCurrency(data);
+                }},
             ],
             fnDrawCallback:function(){
                 $('#datatable-list-produk').attr('style','margin-top:0px;');
                 $('#datatable-list-produk_previous').attr('style','display:none;');
                 $('#datatable-list-produk_next').attr('style','display:none;');
+            },
+            rowCallback:function(row,data,index){
+                $('td', row).eq(3).addClass('nowraping');
             },
         });
 
@@ -530,7 +536,7 @@
                 }).then((Delete) => {
                     if (Delete) {
                         $.ajax({
-                            url: "penjualan/simpan_penjualan",
+                            url: "transaksi/simpan_penjualan",
                             method: "POST",
                             data: data_transaksi,
                             dataType: "json",
@@ -566,7 +572,7 @@
     $('body').on('click','#print_trans',function(){
         let id_penjualan = $(this).data('id');
         $.ajax({
-            url: "penjualan/list_penjualan",
+            url: "transaksi/list_penjualan",
             method: "POST",
             dataType: "json",
             data: {
@@ -617,7 +623,7 @@
             var id_lokasi = lokasi == "" ? null : lokasi;
             var table_penjualan = $("#datatable-penjualan").DataTable({
                 ajax: {
-                    url: "penjualan/read_penjualan",
+                    url: "transaksi/read_penjualan",
                     type: "POST",
                     data: { 
                         start_date: start,
@@ -744,7 +750,7 @@
             e.preventDefault();
             let id_penjualan = $(this).data('id');
             $.ajax({
-                url: "penjualan/list_penjualan",
+                url: "transaksi/list_penjualan",
                 method: "POST",
                 dataType: "json",
                 data: {
@@ -776,7 +782,7 @@
                 var id_penjualan = $('input[name="id_penjualan"]').val();
                 var alasan_hapus = $('#alasan-hapus').val();
                 $.ajax({
-                    url: 'penjualan/remove_penjualan',
+                    url: 'transaksi/remove_penjualan',
                     method: "POST",
                     dataType: "json",
                     data: {
@@ -867,11 +873,11 @@
         '                        <td style="text-align:right;">'+penjualan.tipe_bayar+'</td>'+
         '                    </tr>'+
         '                    <tr>'+
-        '                        <td colspan="3" style="text-align:center;"><div style="border-bottom: 1.5px solid #000 !important"></div></td>'+
+        '                        <td colspan="3" style="text-align:center;"><div style="border-bottom: 1.5px dotted #000 !important"></div></td>'+
         '                    </tr>'+
                                     detail_list_item+
         '                    <tr>'+
-        '                        <td colspan="3" style="text-align:center;"><div style="border-bottom: 1.5px solid #000 !important"></div></td>'+
+        '                        <td colspan="3" style="text-align:center;"><div style="margin-top:5px;"></div></td>'+
         '                    </tr>'+
         '                    <tr>'+
         '                        <td>Subtotal</td>'+
@@ -883,18 +889,18 @@
         '                        <td style="text-align:center;">:</td>'+
         '                        <td style="text-align:right;">'+FormatCurrency(penjualan.diskon_nominal,true)+'</td>'+
         '                    </tr>'+
-        '                    <tr>'+
+        '                    <tr '+(penjualan.ppn_nominal > 0 ? '' : 'style="display:none"')+'>'+
         '                        <td>PPN ('+penjualan.ppn_persen+'%)</td>'+
         '                        <td style="text-align:center;">:</td>'+
         '                        <td style="text-align:right;">'+FormatCurrency(penjualan.ppn_nominal,true)+'</td>'+
         '                    </tr>'+
-        '                    <tr>'+
+        '                    <tr '+(penjualan.charge_nominal > 0 ? '' : 'style="display:none"')+'>'+
         '                        <td>Charge ('+penjualan.charge_persen+'%)</td>'+
         '                        <td style="text-align:center;">:</td>'+
         '                        <td style="text-align:right;">'+FormatCurrency(penjualan.charge_nominal,true)+'</td>'+
         '                    </tr>'+
         '                    <tr>'+
-        '                        <td colspan="3" style="text-align:center;"><div style="border-bottom: 1.5px solid #000 !important"></div></td>'+
+        '                        <td colspan="3" style="text-align:center;"><div style="border-bottom: 1.5px dotted #000 !important"></div></td>'+
         '                    </tr>'+
         '                    <tr>'+
         '                        <td><b>Total Transaksi</b></td>'+
@@ -912,7 +918,7 @@
         '                        <td style="text-align:right;">'+FormatCurrency(penjualan.kembalian,true)+'</td>'+
         '                    </tr>'+
         '                    <tr>'+
-        '                        <td colspan="3" style="text-align:center;"><div style="border-bottom: 1.5px solid #000 !important"></div></td>'+
+        '                        <td colspan="3" style="text-align:center;"><div style="border-bottom: 1.5px dotted #000 !important"></div></td>'+
         '                    </tr>'+
         '                    <tr '+(!penjualan.nota_header ? 'style="display:none"' : '')+'>'+
         '                        <td colspan="3" style="text-align:center; white-space:pre-wrap;">'+penjualan.nota_footer+'</td>'+

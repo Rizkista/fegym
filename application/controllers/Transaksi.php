@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class Penjualan extends CI_Controller {
+class Transaksi extends CI_Controller {
 
     function __construct(){
         parent::__construct();
@@ -76,7 +76,7 @@ class Penjualan extends CI_Controller {
 		if(!empty($_POST['data_item'])){
 			$id_lokasi = ID_POSISI == 3 ? ID_LOKASI : ($_POST['id_lokasi'] == 0 ? 1 : $_POST['id_lokasi']);
 			$kode_lokasi = $this->m_main->getRow('db_lokasi','id_lokasi',$id_lokasi)['kode_lokasi'];
-			$kode_nota = $kode_lokasi.date('Ymd').'-';
+			$kode_nota = 'L'.$kode_lokasi.date('ymd').'-';
 			$cek_nota = $this->m_main->runQueryRow('
 				SELECT * 
 				FROM db_penjualan 
