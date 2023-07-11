@@ -2,7 +2,7 @@
 
 class M_auth extends CI_Model {
 
-    public function GetAllAnggota($id_office){
+    public function getAllAnggota($id_office){
         $query = $this->db->query("
             SELECT a.*, b.id_lokasi, b.nama_lokasi
             FROM db_anggota a
@@ -154,6 +154,19 @@ class M_auth extends CI_Model {
             ".($id_lokasi != null ? 'AND a.id_lokasi = '.$id_lokasi : '')."
             GROUP BY a.id_penjualan
             ORDER BY a.tgl_edit DESC
+        ")->result();
+        return $query;
+    }
+
+    public function getAccountOnline(){
+        $query = $this->db->query("
+            SELECT a.*, b.kode_lokasi
+            FROM db_account a
+            JOIN db_lokasi b ON a.id_account = b.id_account 
+            WHERE a.status = 1
+            AND a.tgl_login > a.tgl_logout 
+            AND DATE(a.tgl_login) = '".date("Y-m-d")."' 
+            ORDER BY a.tgl_login desc
         ")->result();
         return $query;
     }

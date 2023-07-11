@@ -21,7 +21,7 @@ class Pengaturan extends CI_Controller {
 		$uploadDIR = './assets/img/photo/';
 		$config['upload_path']          = $uploadDIR;
 		$config['allowed_types']        = 'jpg|png|jpeg';
-		$config['file_name']            = 'foto-' . date('ymd') . '-' . substr(md5(rand()), 0, 10);
+		$config['file_name']            = 'foto-'.date('ymd').'-'.substr(md5(rand()), 0, 10);
 
 		$this->load->library('upload', $config);
 		if (!empty($_FILES['profile_image']['name'])) {
@@ -96,7 +96,42 @@ class Pengaturan extends CI_Controller {
 			'email_office' => $_POST['email_office'],
 			'telp_office' => $_POST['telp_office'],
 			'alamat_office' => $_POST['alamat_office'],
+			'nota_header' => $_POST['nota_header'],
+			'nota_footer' => $_POST['nota_footer'],
 		];
+		
+		if(!empty($_FILES['logo_nota']['name'])) {
+			$uploadDIR = './assets/img/logo_nota/';
+			$config['upload_path']		= $uploadDIR;
+			$config['allowed_types']	= 'png';
+			$config['file_name']		= 'nota-'.date('ymd').'-'.substr(md5(rand()), 0, 10);
+			$this->load->library('upload', $config);
+			if($this->upload->do_upload('logo_nota')) {
+				$uploadData = $this->upload->data();
+				$config['image_library'] 	= 'gd2';
+				$config['source_image'] 	= $uploadDIR . $uploadData['file_name'];
+				$config['new_image'] 		= $uploadDIR . $uploadData['file_name'];
+				$config['maintain_ratio'] 	= TRUE;
+				$config['master_dim'] 		= 'auto';
+				$config['quality'] 			= '80%';
+				if(getimagesize($_FILES['logo_nota']['tmp_name'])[0] >= 350){
+					$config['width'] = 350;
+				}
+				if(getimagesize($_FILES['logo_nota']['tmp_name'])[1] >= 350){
+					$config['height'] = 350;
+				}
+				$this->load->library('image_lib', $config);
+				$this->image_lib->resize();
+                $office = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
+				if ($office['nota_logo'] != NULL || $office['nota_logo'] != '') {
+					$target_file = $uploadDIR . $office['nota_logo'];
+					if(file_exists($target_file)){
+						unlink($target_file);
+					}
+				}
+				$data['nota_logo'] = $uploadData['file_name'];
+			}
+		}
 		$this->m_main->updateIN('db_office','id_office',ID_OFFICE,$data);
 		$output['message'] = "Data perusahaan berhasil diganti!";
 		$output['result'] = "success";

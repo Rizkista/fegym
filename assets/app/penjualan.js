@@ -798,6 +798,7 @@
         var detail_list_item = "";
         const penjualan = transaksi.db_penjualan;
         const penjualan_item = transaksi.db_penjualan_item;
+        const base_url = $('input[name="base_url"]').val();
         for (var i = 0; i < penjualan_item.length; i++) {
             let diskon = '';
             if(penjualan_item[i].diskon_nominal_item > 0){
@@ -826,8 +827,8 @@
         '                    }'+
         '                </style>'+
         '                <table class="p-table" style="width:100%;">'+
-        '                    <tr >'+
-        '                        <td colspan="3" style="text-align:center;"><img src="'+'#'+'" width="90" height="90"></td>'+
+        '                    <tr '+(!penjualan.nota_logo ? 'style="display:none"' : '')+'>'+
+        '                        <td colspan="3" style="text-align:center;"><img src="'+base_url+'assets/img/logo_nota/'+penjualan.nota_logo+'" width="90" height="90"></td>'+
         '                    </tr>'+
         '                    <tr '+(!penjualan.nota_header ? 'style="display:none"' : '')+'>'+
         '                        <td colspan="3" style="text-align:center; white-space:pre-wrap;">'+penjualan.nota_header+'</td>'+

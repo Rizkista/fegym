@@ -31,6 +31,7 @@ class Home extends CI_Controller {
 			if($account){
 				if($account['status'] == 1){
 					if(password_verify($password, $account['password'])){
+						$this->m_main->updateIN('db_account','id_account',$account['id_account'],['tgl_login' => date("Y-m-d H:i:s")]);
 						$lokasi = $this->m_main->getRow('db_lokasi','id_account',$account['id_account']);
 						$data = [
 							'id_account' => $account['id_account'],
@@ -67,6 +68,9 @@ class Home extends CI_Controller {
 	}
 
 	public function logout(){
+		if($this->session->userdata('id_account')){
+			$this->m_main->updateIN('db_account','id_account',$this->session->userdata('id_account'),['tgl_logout' => date("Y-m-d H:i:s")]);
+		}
 		$data = [
 			'id_account',
 			'id_posisi',

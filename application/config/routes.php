@@ -24,6 +24,7 @@ $route['lokasi-gym'] = 'menu/lokasi_gym';
 $route['laporan-pembayaran-gym'] = 'menu/laporan_pembayaran_gym';
 $route['laporan-penjualan-produk'] = 'menu/laporan_penjualan_produk';
 $route['akun-saya'] = 'menu/akun_saya';
+$route['konfigurasi'] = 'menu/konfigurasi';
 
 
 $route['account'] = 'menu/account';

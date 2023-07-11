@@ -29,6 +29,7 @@
                 );
                 $pengaturan = array(
                     'akun-saya',
+                    'konfigurasi',
                 );
             ?> 
             <ul class="nav">
@@ -142,6 +143,11 @@
                             <li class="<?= $uri_path == "akun-saya"? 'active' : '' ?>">
                                 <a href="<?= base_url('akun-saya') ?>">
                                     <span class="sub-item">Akun Saya</span>
+                                </a>
+                            </li>
+                            <li class="<?= $uri_path == "konfigurasi"? 'active' : '' ?>">
+                                <a href="<?= base_url('konfigurasi') ?>">
+                                    <span class="sub-item">Konfigurasi</span>
                                 </a>
                             </li>
                         </ul>

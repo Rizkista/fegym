@@ -121,45 +121,6 @@
                     </div>
                 </div>
             </form>
-            <form id="form_edit_office" class="<?= ($this->session->userdata('id_posisi') == 3 ? 'gone' : '') ?>" method="POST" enctype="multipart/form-data" accept-charset="utf-8">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-title">Ubah Perusahaan</div>
-                        <div class="card-category mt-0">Pastikan data yang anda lengkapi benar dan masih aktif</div>
-                        <div class="box-bg-grey mt-3">
-                            <div class="table-responsive">
-                                <table class="mb-0" width="100%">
-                                    <tbody class="nowraping">
-                                        <tr>
-                                            <td width="10%">Nama Office</td>
-                                            <td width="2%">&nbsp;:&nbsp;</td>
-                                            <td><input type="text" name="nama_office" value="<?= $office['nama_office']; ?>" class="form-control form-rm" placeholder="Nama Office" required></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Email Office</td>
-                                            <td>&nbsp;:&nbsp;</td>
-                                            <td><input type="text" name="email_office" value="<?= $office['email_office']; ?>" class="form-control form-rm" placeholder="Email Office"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>No.Hp Office</td>
-                                            <td>&nbsp;:&nbsp;</td>
-                                            <td><input type="text" name="telp_office" value="<?= $office['telp_office']; ?>" class="form-control form-rm" placeholder="No.Hp Office" required></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Alamat Office</td>
-                                            <td>&nbsp;:&nbsp;</td>
-                                            <td><textarea class="form-control" name="alamat_office" placeholder="Alamat Office" style="padding: 0.25rem 0.5rem; min-height: 52px;" required><?= $office['alamat_office']; ?></textarea></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="text-right mt-3">
-                            <button class="btn btn-secondary" id="simpan_office" style="padding:0 8px 0 8px; height:calc(2.25rem + 2px)">Simpan</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 </div>

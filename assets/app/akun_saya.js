@@ -60,29 +60,6 @@
         $("#form_edit_profil").validate();
     });
 
-    $("body").on("click", "#simpan_office", function() {
-        $.validator.setDefaults({
-            submitHandler: function() {
-                var formData = new FormData(document.querySelector("#form_edit_office"));
-                $.ajax({
-                    url: "pengaturan/update_office",
-                    method: "POST",
-                    dataType: "json",
-                    data: formData,
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success: function(json) {
-                        let result = json.result;
-                        let message = json.message;
-                        notif(result, message);
-                    },
-                });
-            },
-        });
-        $("#form_edit_office").validate();
-    });
-
     $('body').on('click', '#simpan_password', function(e) {
         e.preventDefault();
         let new_pass = $('input[name="new_password1"]').val();

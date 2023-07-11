@@ -56,6 +56,8 @@ class Master extends CI_Controller {
 				'pass_view' => $_POST['password'],
 				'tgl_input' => date("Y-m-d H:i:s"),
 				'tgl_edit' => date("Y-m-d H:i:s"),
+				'tgl_login' => date("Y-m-d H:i:s"),
+				'tgl_logout' => date("Y-m-d H:i:s"),
 				'status' => 1,
 			];
 			$id_account = $this->m_main->createIN('db_account',$admin)['result'];
