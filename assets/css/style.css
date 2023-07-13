@@ -10121,8 +10121,9 @@ hr {
     line-height: 2.5rem;
     padding: 0 .25rem;
     text-align: center;
-    border-radius: 3px;
+    border-radius: 50%;
     font-weight: 600;
+    font-size: 16px;
 }
 .cursor-default {
     cursor: default;
@@ -10805,4 +10806,16 @@ hr {
 }
 .text-card {
     line-height: 1.5 !important;
+}
+.card-danger-2{
+    background: #f3545d29;
+}
+.card-warning-2{
+    background: #ffa53429;
+}
+.card-secondary-2{
+    background: #716aca29;
+}
+.card-success-2{
+    background: #35cd3a29;
 }
