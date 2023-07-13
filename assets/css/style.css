@@ -110,7 +110,7 @@ body[data-background-color="bg3"] {
         #145180,
         #36a3f7
     ) !important;
-    background: linear-gradient(-45deg, #145180, #36a3f7) !important;
+    background: linear-gradient(-45deg, #196fb1, #36a3f7) !important;
 }
 .bg-success-gradient {
     background: #35cd3a !important;
@@ -3573,7 +3573,7 @@ label.error {
 .alert-success,
 .alert-warning {
     color: inherit;
-    background-color: #ffefd0;
+    background-color: #d0ffd7;
     -webkit-box-shadow: 1px 1px 14px 0 rgba(110, 50, 128, 0.31);
     -moz-box-shadow: 1px 1px 14px 0 rgba(110, 50, 128, 0.31);
     box-shadow: 1px 1px 14px 0 rgba(110, 50, 128, 0.31);
@@ -10802,4 +10802,7 @@ hr {
 .mytooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+}
+.text-card {
+    line-height: 1.5 !important;
 }

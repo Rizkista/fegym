@@ -239,7 +239,7 @@ class Menu extends CI_Controller {
 			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
 			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
-			$data['account_online'] = $this->m_auth->getAccountOnline();
+			$data['account_online'] = $this->m_auth->getAccountOnline(ID_OFFICE);
 			$this->load->view('layout/header', $data);
 			$this->load->view('pengaturan/konfigurasi');
 			$this->load->view('layout/footer');

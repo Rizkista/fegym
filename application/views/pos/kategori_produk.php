@@ -94,7 +94,7 @@
                                                         <td>Lokasi Gym <span class="text-danger">*</span></td>
                                                         <td>&nbsp;:&nbsp;</td>
                                                         <td>
-                                                            <select class="form-control form-rm" name="id_lokasi" id="id_lokasi" required style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
+                                                            <select class="form-control form-rm" name="id_lokasi" id="id_lokasi" required style="padding: 0.4rem 0.5rem !important;">
                                                                 <option value="">Pilih Lokasi</option>
                                                                 <?php foreach ($data_lokasi as $list){ ?>
                                                                     <option value="<?= $list->id_lokasi ?>"><?= $list->nama_lokasi ?></option>

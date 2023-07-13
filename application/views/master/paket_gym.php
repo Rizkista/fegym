@@ -102,7 +102,7 @@
                                                         <td>Durasi Paket <span class="text-danger">*</span></td>
                                                         <td>&nbsp;:&nbsp;</td>
                                                         <td>
-                                                            <select class="form-control form-rm" name="durasi_paket" id="durasi_paket" required style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
+                                                            <select class="form-control form-rm" name="durasi_paket" id="durasi_paket" required style="padding: 0.4rem 0.5rem !important;">
                                                                 <option value="">Pilih Durasi</option>
                                                                 <option value="1">MINUTE</option>
                                                                 <option value="2">DAY</option>
@@ -121,7 +121,7 @@
                                                         <td>Status Member <span class="text-danger">*</span></td>
                                                         <td>&nbsp;:&nbsp;</td>
                                                         <td>
-                                                            <select class="form-control form-rm" name="status_member" id="status_member" required style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
+                                                            <select class="form-control form-rm" name="status_member" id="status_member" required style="padding: 0.4rem 0.5rem !important;">
                                                                 <option value="">Pilih Status</option>
                                                                 <option value="1">YA</option>
                                                                 <option value="0">TIDAK</option>
@@ -132,7 +132,7 @@
                                                         <td>Lokasi Gym <span class="text-danger">*</span></td>
                                                         <td>&nbsp;:&nbsp;</td>
                                                         <td>
-                                                            <select class="form-control form-rm" name="id_lokasi" id="id_lokasi" required style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
+                                                            <select class="form-control form-rm" name="id_lokasi" id="id_lokasi" required style="padding: 0.4rem 0.5rem !important;">
                                                                 <option value="">Pilih Lokasi</option>
                                                                 <?php foreach ($data_lokasi as $list){ ?>
                                                                     <option value="<?= $list->id_lokasi ?>"><?= $list->nama_lokasi ?></option>

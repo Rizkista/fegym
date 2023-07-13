@@ -131,5 +131,24 @@ class Anggota extends CI_Controller {
         echo json_encode($output);
         exit();
 	}
+
+	public function list_anggota(){
+		$anggota = $this->m_main->getResultData('db_anggota','status = 1 AND id_office = '.ID_OFFICE,'nama_anggota asc');
+		$data = [];
+		foreach ($anggota as $list) {
+            $row = [];
+            $row['id_anggota'] = $list->id_anggota;
+            $row['nama_anggota'] = $list->nama_anggota;
+            $row['gender_anggota'] = $list->gender_anggota;
+            $row['telp_anggota'] = $list->telp_anggota;
+            $row['email_anggota'] = $list->email_anggota;
+            $row['alamat_anggota'] = $list->alamat_anggota;
+            $row['status_member'] = $list->status_member;
+            $row['id_lokasi'] = $list->id_lokasi;
+            $data[] = $row;
+		}
+		$output = [ "data" => $data ];
+		echo json_encode($output);
+	}
     
 }

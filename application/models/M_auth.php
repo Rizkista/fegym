@@ -2,6 +2,20 @@
 
 class M_auth extends CI_Model {
 
+    public function getAccountOnline($id_office){
+        $query = $this->db->query("
+            SELECT a.*, b.kode_lokasi
+            FROM db_account a
+            JOIN db_lokasi b ON a.id_account = b.id_account 
+            WHERE a.status = 1
+            AND a.tgl_login > a.tgl_logout 
+            AND DATE(a.tgl_login) = '".date("Y-m-d")."'
+            WHERE a.id_office = ".$id_office." 
+            ORDER BY a.tgl_login desc
+        ")->result();
+        return $query;
+    }
+
     public function getAllAnggota($id_office){
         $query = $this->db->query("
             SELECT a.*, b.id_lokasi, b.nama_lokasi
@@ -56,6 +70,17 @@ class M_auth extends CI_Model {
             AND id_office = ".$id_office."
             AND id_lokasi = ".$id_lokasi."
             ORDER BY nama_produk ASC
+        ")->result();
+        return $query;
+    }
+
+    public function getListPaket($id_office,$id_lokasi){
+        $query = $this->db->query("
+            SELECT * FROM db_paket_gym
+            WHERE status = 1
+            AND id_office = ".$id_office."
+            AND id_lokasi = ".$id_lokasi."
+            ORDER BY nama_paket ASC
         ")->result();
         return $query;
     }
@@ -158,18 +183,21 @@ class M_auth extends CI_Model {
         return $query;
     }
 
-    public function getAccountOnline(){
+    public function getDataPembayaran($start_date,$end_date,$status,$id_lokasi,$id_office){
         $query = $this->db->query("
-            SELECT a.*, b.kode_lokasi
-            FROM db_account a
-            JOIN db_lokasi b ON a.id_account = b.id_account 
-            WHERE a.status = 1
-            AND a.tgl_login > a.tgl_logout 
-            AND DATE(a.tgl_login) = '".date("Y-m-d")."' 
-            ORDER BY a.tgl_login desc
+            SELECT a.*, d.nama_lokasi, b.nama_anggota, c.nama_paket
+            FROM db_pembayaran a
+            JOIN db_anggota b ON a.id_anggota = b.id_anggota
+            JOIN db_paket_gym c ON a.id_paket_gym = c.id_paket_gym
+            JOIN db_lokasi d ON a.id_lokasi = d.id_lokasi
+            WHERE a.status = ".$status."
+            AND a.id_office = ".$id_office."
+            AND DATE_FORMAT(a.tgl_pembayaran,'%Y-%m-%d') >= '".$start_date."' 
+            AND DATE_FORMAT(a.tgl_pembayaran,'%Y-%m-%d') <= '".$end_date."'
+            ".($id_lokasi != null ? 'AND a.id_lokasi = '.$id_lokasi : '')."
+            ORDER BY a.tgl_edit DESC
         ")->result();
         return $query;
     }
-
 
 }

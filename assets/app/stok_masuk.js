@@ -194,7 +194,7 @@
                 {
                     "targets": '_all',
                     "createdCell": function(td, cellData, rowData, row, col) {
-                        let style = 'padding-bottom: 5px !important; padding-top: 5px !important;';
+                        let style = 'padding-bottom: 7px !important; padding-top: 7px !important;';
                         $(td).attr('style', style);
                     }
                 }

@@ -22,11 +22,35 @@
             $("#li-2").addClass("active");
             $("#transaksi").addClass("none");
             $("#histori").removeClass("none");
-            HistoryPenjualan();
+            HistoryPembayaran();
         }
     }
     
     $('#pilih-lokasi').change(function() {
+        $('#pilih-anggota').html('<span class="text-grey">Pilih Anggota</span>');
+        $('#pilih-paket').html('<span class="text-grey">Pilih Paket</span>');
+        $('#id_anggota').val('');
+        $('#nt-tran-anggota').html('');
+        $('#nt-tran-paket').html('');
+        $('#nt-tran-harga').html('');
+        $('#nt-tran-durasi').html('');
+        $('#nt-tran-tanggal').html('');
+        $('#tran-anggota').html('');
+        $('#tran-paket').html('');
+        $('#tran-harga').html('');
+        $('#tran-durasi').html('');
+        $('#tran-tanggal').html('');
+        $('#tran-member').html('');
+        list_transaksi();
+    });
+
+    $('#pilih-anggota').on('click',function(){
+        $("#modal-anggota").modal();
+        list_transaksi();
+    });
+
+    $('#pilih-paket').on('click',function(){
+        $("#modal-paket").modal();
         list_transaksi();
     });
 
@@ -39,16 +63,16 @@
             $('#info-lokasi').html($('#pilih-lokasi option:selected').text());
         }
 
-        var table_list_produk = $("#datatable-list-produk").DataTable({
+        var table_list_paket = $("#datatable-list-paket").DataTable({
             ajax: {
-                url: "pos/list_produk",
+                url: "master/list_paket",
                 type: "POST",
                 data: { 
                     id_lokasi: id_lokasi,
                 },
             },
             order:[], ordering:false, bDestroy:true, processing:true, bAutoWidth:false, deferRender:true, buttons:[],
-            pageLength: 15,
+            pageLength: 10,
             columnDefs: [
                 {
                     "targets": '_all',
@@ -59,31 +83,33 @@
                 }
             ],
             dom: 'Brt'+"<'row'<'col-sm-12'p>>",
-            language: { emptyTable: id_posisi != 3 && id_lokasi == 0 ? "Pilih lokasi terlebih dahulu" : "Tidak ada daftar produk", },
+            language: { emptyTable: id_posisi != 3 && id_lokasi == 0 ? "Pilih lokasi terlebih dahulu" : "Tidak ada daftar paket gym", },
             columns: [
-                { data: "barcode_produk" },
-                { data: "nama_produk" },
-                { data: "stok_produk" },
-                { data: "harga_jual" , render: function(data, type, row, meta) {
+                { data: "nama_paket" },
+                { data: "harga_paket" , render: function(data, type, row, meta) {
                     return '<sup><font color="#FF0000">Rp</font></sup> '+FormatCurrency(data);
+                }},
+                { data: "durasi" , render : function ( data, type, row, meta ) {
+                    const durasi = [null, 'MINUTE', 'DAY', 'WEEK', 'MONTH', 'YEAR'];
+                    return row['lama_durasi']+' '+'<sup><font color="#FF0000">'+durasi[row['durasi_paket']]+'</font></sup>';
+                }},
+                { data: "status_member" , render : function ( data, type, row, meta ) {
+                    return data == 1 ? 'YA' : 'TIDAK';
                 }},
             ],
             fnDrawCallback:function(){
-                $('#datatable-list-produk').attr('style','margin-top:0px;');
-                $('#datatable-list-produk_previous').attr('style','display:none;');
-                $('#datatable-list-produk_next').attr('style','display:none;');
+                $('#datatable-list-paket').attr('style','margin-top:0px; margin-bottom:0.5rem !important;');
+                $('#datatable-list-paket_previous').attr('style','display:none;');
+                $('#datatable-list-paket_next').attr('style','display:none;');
             },
             rowCallback:function(row,data,index){
-                $('td', row).eq(3).addClass('nowraping');
+                $('td', row).eq(1).addClass('nowraping');
+                $('td', row).eq(2).addClass('nowraping');
             },
         });
 
-        $('#list-search').keyup(function(){
-            filter();
-        });
-
-        function filter(){
-            var src = $('input[name="list-search"]').val().toLowerCase();
+        $('#list-search-paket').keyup(function(){
+            var src = $(this).val().toLowerCase();
             $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
                 if (~data[0].toLowerCase().indexOf(src))
                     return true;
@@ -91,127 +117,126 @@
                     return true;
                 return false;
             })
-            table_list_produk.draw(); 
+            table_list_paket.draw(); 
             $.fn.dataTable.ext.search.pop();
-        }
-    }
+        });
 
-    const qty = [];
-    const dis = [];
-    const arr = [];
-    $('#datatable-list-produk tbody').on( 'click', 'tr', function () {
-        var list = $('#datatable-list-produk').DataTable().row(this).data();
-        itemBuySelected(list);
-    });
-    
-    on_scanner();
-    function on_scanner() {
-        let input = document.getElementById("list-search");
-        if(input != undefined){
-            input.addEventListener("focus", function () {
-                input.addEventListener("keypress", function (e) {
-                    if (e.key === "Enter") {
-                        const tab = $("#datatable-list-produk").DataTable().page.info().recordsDisplay;
-                        const val = input.value;
-                        if(val == '' || tab != 1){
-                            return;
-                        }else{
-                            var list = $("#datatable-list-produk").DataTable().row({search:'applied'}).data();
-                            itemBuySelected(list);
-                            input.value = '';
-                        }
+        var table_list_anggota = $("#datatable-list-anggota").DataTable({
+            ajax: {
+                url: "anggota/list_anggota",
+                type: "GET",
+            },
+            order:[], ordering:false, bDestroy:true, processing:true, bAutoWidth:false, deferRender:true, buttons:[],
+            pageLength: 10,
+            columnDefs: [
+                {
+                    "targets": '_all',
+                    "createdCell": function(td, cellData, rowData, row, col) {
+                        let style = 'padding-bottom: 7px !important; padding-top: 7px !important;';
+                        $(td).attr('style', style);
                     }
-                })
+                }
+            ],
+            dom: 'Brt'+"<'row'<'col-sm-12'p>>",
+            language: { emptyTable: id_posisi != 3 && id_lokasi == 0 ? "Pilih lokasi terlebih dahulu" : "Tidak ada daftar paket gym", },
+            columns: [
+                { data: "nama_anggota" , render: function(data, type, row, meta) {
+                    return data+' ['+row['gender_anggota']+']';
+                }},
+                { data: "telp_anggota" },
+                { data: "status_member" , render : function ( data, type, row, meta ) {
+                    return data == 1 ? 'YA' : 'TIDAK';
+                }},
+            ],
+            fnDrawCallback:function(){
+                $('#datatable-list-anggota').attr('style','margin-top:0px; margin-bottom:0.5rem !important;');
+                $('#datatable-list-anggota_previous').attr('style','display:none;');
+                $('#datatable-list-anggota_next').attr('style','display:none;');
+            },
+            rowCallback:function(row,data,index){
+                $('td', row).eq(1).addClass('nowraping');
+                $('td', row).eq(2).addClass('nowraping');
+            },
+        });
+
+        $('#list-search-anggota').keyup(function(){
+            var src = $(this).val().toLowerCase();
+            $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+                if (~data[0].toLowerCase().indexOf(src))
+                    return true;
+                if (~data[1].toLowerCase().indexOf(src))
+                    return true;
+                return false;
             })
-        }
+            table_list_anggota.draw(); 
+            $.fn.dataTable.ext.search.pop();
+        });
     }
 
-    function itemBuySelected(list){
-        var cek = false;
-        let x;
-        for (var i = 0; i < arr.length; i++) {
-            let id_produk = arr[i].id_produk;
-            if(id_produk == list.id_produk){
-                cek = true;
-                x = i;
-            }
-        }
-        if(!cek){
-            qty.push(1);
-            dis.push(0);
-            arr.push(list);
-        }else{
-            qty[x]= qty[x]+1;
-            dis[x]= dis[x];
-        }
-        dataList();
-    }
-
-    $('body').on('click','#delItem',function(){
-        let index = $(this).data('index');
-        arr.splice(index,1);
-        qty.splice(index,1);
-        dis.splice(index,1);
-        dataList();
+    $('#datatable-list-anggota tbody').on( 'click', 'tr', function () {
+        var list = $('#datatable-list-anggota').DataTable().row(this).data();
+        $('#id_anggota').val(list['id_anggota']);
+        $('#pilih-anggota').html(list['nama_anggota']);
+        $('#tran-anggota').html('Anggota : '+list['nama_anggota']);
+        $('#nt-tran-anggota').html(list['nama_anggota']);
+        $("#modal-anggota").modal('hide');
+        $.notify({
+            icon: 'fa fa-check',
+            title: 'Success',
+            message: 'Anggota atas nama "'+list['nama_anggota']+'" berhasil dipilih.',
+        },{
+            type: 'success',
+            placement: {
+                from: 'top',
+                align: 'right'
+            },
+            time: 500,
+            delay: 2000,
+        });
     });
 
-    function dataList(){
-        var html = "";
-        for (var i=0; i<arr.length; i++) {
-            let id_produk = arr[i].id_produk;
-            let nama_produk = arr[i].nama_produk;
-            let harga_jual = arr[i].harga_jual;
-            let harga_beli = arr[i].harga_beli;
-
-            const harga_item = qty[i]*harga_jual;
-            const diskon_item = harga_item*dis[i]/100;
-            const price_item = harga_item-diskon_item;
-            var show_price = diskon_item > 0 ? '<s style="color:gray; font-size:12px;">'+FormatCurrency(harga_item)+'</s> <br>'+FormatCurrency(price_item) : FormatCurrency(harga_item);
-            
-            html += '<tr>' +
-                        '<input type="hidden" name="id_'+i+'" id="idt" class="form-control" value="'+id_produk+'">'+
-                        '<input type="hidden" name="hrj_'+i+'" id="idt" class="form-control" value="'+harga_jual+'">'+
-                        '<input type="hidden" name="hrb_'+i+'" id="idt" class="form-control" value="'+harga_beli+'">'+
-                        '<input type="hidden" name="hit_'+i+'" id="idt" class="form-control" value="'+harga_item+'">'+
-                        '<input type="hidden" name="pit_'+i+'" id="idt" class="form-control" value="'+price_item+'">'+
-                        '<td>'+(i+1)+'.</td>' +
-                        '<td>'+nama_produk+'</td>' +
-                        '<td><input type="number" data-index="'+i+'" name="qty_'+i+'" id="qty" min="0" class="form-control sm-height px-1" placeholder="0" value="'+qty[i]+'" style="min-width:60px" required></td>'+
-                        '<td><input type="number" data-index="'+i+'" name="dis_'+i+'" id="dis" min="0" max="100" class="form-control sm-height px-1" placeholder="0" value="'+dis[i]+'" style="min-width:60px" required></td>'+
-                        '<td class="text-right text-danger" id="show-price-'+i+'">'+show_price+'</td>'+        
-                        '<td class="text-center"><a id="delItem" data-index="'+i+'" class="text-danger" style="cursor:pointer;"><i class="fa fa-trash"></i></a></td>'+               
-                    '</tr>';
-        }
-        $("#produk-item tbody").html(html);
+    let data_paket = [];
+    $('#datatable-list-paket tbody').on( 'click', 'tr', function () {
+        var list = $('#datatable-list-paket').DataTable().row(this).data();
+        data_paket = [{
+            id_paket_gym : list['id_paket_gym'],
+            nama_paket : list['nama_paket'],
+            harga_paket : list['harga_paket'],
+            durasi_paket : list['durasi_paket'],
+            lama_durasi : list['lama_durasi'],
+            status_member : list['status_member'],
+            tgl_mulai : list['tgl_mulai'],
+            tgl_akhir : list['tgl_akhir'],
+        }];
         countTransaksi();
-    }
-    
-    $('body').on('change keyup','input#qty',function(){
-        let index = $(this).data('index');
-        countPrice(index);
+        const durasi = [null, 'Menit', 'Hari', 'Minggu', 'Bulan', 'Tahun'];
+        $('#pilih-paket').html(list['nama_paket']);
+        $('#nt-tran-paket').html(list['nama_paket']);
+        $('#nt-tran-harga').html(FormatCurrency(list['harga_paket'],true));
+        $('#nt-tran-durasi').html('Durasi '+list['lama_durasi']+' '+durasi[list['durasi_paket']]);
+        $('#nt-tran-tanggal').html(list['tgl_paket']);
+        $('#tran-paket').html(list['nama_paket']);
+        $('#tran-harga').html('<sup><font class="fw-bold">Rp </font></sup>'+FormatCurrency(list['harga_paket']));
+        $('#tran-durasi').html('Durasi '+list['lama_durasi']+' '+durasi[list['durasi_paket']]);
+        $('#tran-tanggal').html(list['tgl_paket']);
+        $('#tran-member').html(list['status_member'] == 1 ? 'YA' : 'TIDAK');
+        $('#tran-mtext').html('MEMBER');
+        $("#modal-paket").modal('hide');
+        $.notify({
+            icon: 'fa fa-check',
+            title: 'Success',
+            message: 'Paket gym "'+list['nama_paket']+'" berhasil dipilih.',
+        },{
+            type: 'success',
+            placement: {
+                from: 'top',
+                align: 'right'
+            },
+            time: 500,
+            delay: 2000,
+        });
     });
 
-    $('body').on('change keyup','input#dis',function(){
-        let index = $(this).data('index');
-        countPrice(index);
-    });
-
-    function countPrice(i){
-        qty[i] = Number($('input[name="qty_'+i+'"]').val());
-        dis[i] = Number($('input[name="dis_'+i+'"]').val());
-        const harga_jual = $('input[name="hrj_'+i+'"]').val();
-        
-        const harga_item = qty[i]*harga_jual;
-        const diskon_item = harga_item*dis[i]/100;
-        const price_item = harga_item-diskon_item;
-        var show_price = diskon_item > 0 ? '<s style="color:gray; font-size:12px;">'+FormatCurrency(harga_item)+'</s> <br>'+FormatCurrency(price_item) : FormatCurrency(harga_item);
-        $('#show-price-'+i).html(show_price);
-
-        $('input[name="hit_'+i+'"]').val(harga_item);
-        $('input[name="pit_'+i+'"]').val(price_item);
-        countTransaksi();
-    }
-    
     $("body").on("click", "#dis1", function () {
         $("#dis1").addClass("choice");
         $("#dis2").removeClass("choice");
@@ -347,131 +372,114 @@
     });
     
     function countTransaksi(){
-        let data_item = [];
-        let total_transaksi = 0;
-        let total_harga = 0;
-        let percent_diskon = 0;
-        let nominal_diskon = 0;
-        let percent_ppn = 0;
-        let nominal_ppn = 0;
-        let percent_charge = 0;
-        let nominal_charge = 0;
-        let dibayar = 0;
-        let kembalian = 0;
+        if(data_paket.length > 0){
+            let total_transaksi = 0;
+            let total_harga = 0;
+            let percent_diskon = 0;
+            let nominal_diskon = 0;
+            let percent_ppn = 0;
+            let nominal_ppn = 0;
+            let percent_charge = 0;
+            let nominal_charge = 0;
+            let dibayar = 0;
+            let kembalian = 0;
 
-        var view = '';
-        for(var i=0; i<arr.length; i++) {
-            var list_item = {
-                id_produk : Number($('input[name="id_'+i+'"]').val()),
-                harga_beli_item : Number($('input[name="hrb_'+i+'"]').val()),
-                harga_jual_item : Number($('input[name="hrj_'+i+'"]').val()),
-                jml_produk_item : Number($('input[name="qty_'+i+'"]').val()),
-                diskon_persen_item : Number($('input[name="dis_'+i+'"]').val()),
-                diskon_nominal_item : Number($('input[name="hit_'+i+'"]').val() - $('input[name="pit_'+i+'"]').val()),
-                subtotal_harga_item : Number($('input[name="pit_'+i+'"]').val()),
+            total_harga = data_paket[0].harga_paket;
+
+            const jenis_diskon = $('#jenis_diskon').val();
+            if(jenis_diskon == 1){
+                percent_diskon = $('#percent_diskon').val().split(" %").join('');
+                percent_diskon = percent_diskon == '' ? 0 : percent_diskon;
+                nominal_diskon = total_harga * percent_diskon / 100;
+            }else{
+                nominal_diskon = $('#nominal_diskon').val().split(".").join('');
+                nominal_diskon = nominal_diskon == '' ? 0 : nominal_diskon;
+                percent_diskon = parseFloat((nominal_diskon * 100 / total_harga).toFixed(2));
+                percent_diskon = isNaN(percent_diskon) ? 0 : percent_diskon;
+            }
+
+            const jenis_ppn = $('#jenis_ppn').val();
+            if(jenis_ppn == 1){
+                percent_ppn = $('#percent_ppn').val().split(" %").join('');
+                percent_ppn = percent_ppn == '' ? 0 : percent_ppn;
+                nominal_ppn = total_harga * percent_ppn / 100;
+            }else{
+                nominal_ppn = $('#nominal_ppn').val().split(".").join('');
+                nominal_ppn = nominal_ppn == '' ? 0 : nominal_ppn;
+                percent_ppn = parseFloat((nominal_ppn * 100 / total_harga).toFixed(2));
+                percent_ppn = isNaN(percent_ppn) ? 0 : percent_ppn;
+            }
+
+            percent_charge = $('#charge').val().split(" %").join('');
+            percent_charge = percent_charge == '' ? 0 : percent_charge;
+            nominal_charge = total_harga * percent_charge / 100;
+
+            total_transaksi = total_harga - nominal_diskon + nominal_ppn + nominal_charge;
+            dibayar = $('#nominal_dibayar').val().split(".").join('');
+            dibayar = dibayar == '' ? 0 : dibayar;
+            kembalian = dibayar - total_transaksi;
+            kembalian = kembalian < 0 ? -1 : kembalian;
+
+            $('#total_harga').html(FormatCurrency(total_harga,true));
+            $('#prc-dis').html('('+percent_diskon+'%)');
+            $('#total_diskon').html(FormatCurrency(nominal_diskon,true));
+            $('#prc-ppn').html('('+percent_ppn+'%)');
+            $('#total_ppn').html(FormatCurrency(nominal_ppn,true));
+            $('#prc-chr').html('('+percent_charge+'%)');
+            $('#total_charge').html(FormatCurrency(nominal_charge,true));
+            $('#total_transaksi').html(FormatCurrency(total_transaksi,true));
+            $('#jumlah_dibayar').html(FormatCurrency(dibayar,true));
+            $('#jumlah_kembalian').html(FormatCurrency(kembalian < 0 ? 0 : kembalian,true));
+
+            let nama_tipe_bayar = $('#tipe_bayar').val();
+            let id_tipe_bayar = $('#jenis_pembayaran').val();
+            let id_lokasi = $('#pilih-lokasi').val();
+            let id_anggota = $('#id_anggota').val();
+
+            $('#nt-tipe').html(nama_tipe_bayar);
+            $('#nt-total').html(FormatCurrency(total_transaksi,true));
+            $('#nt-dibayar').html(FormatCurrency(dibayar,true));
+            $('#nt-kembalian').html(FormatCurrency(kembalian < 0 ? 0 : kembalian,true));
+            $('#nt-harga').html(FormatCurrency(total_harga,true));
+            $('#nt-dis').html('('+percent_diskon+'%)');
+            $('#nt-diskon-nom').html(FormatCurrency(nominal_diskon,true));
+            $('#nt-ppn').html('('+percent_ppn+'%)');
+            $('#nt-ppn-nom').html(FormatCurrency(nominal_ppn,true));
+            $('#nt-chr').html('('+percent_charge+'%)');
+            $('#nt-charge-nom').html(FormatCurrency(nominal_charge,true));
+            $('#nt-amount').html(FormatCurrency(total_transaksi,true));
+
+            var data = {
+                id_anggota : id_anggota,
+                id_lokasi : id_lokasi,
+                id_tipe_bayar : id_tipe_bayar,
+                id_paket_gym : data_paket[0].id_paket_gym,
+                durasi_paket : data_paket[0].durasi_paket,
+                lama_durasi : data_paket[0].lama_durasi,
+                status_member : data_paket[0].status_member,
+                tgl_mulai : data_paket[0].tgl_mulai,
+                tgl_akhir : data_paket[0].tgl_akhir,
+                total_harga : total_harga,
+                diskon_persen : percent_diskon,
+                diskon_nominal : nominal_diskon,
+                ppn_persen : percent_ppn,
+                ppn_nominal : nominal_ppn,
+                charge_persen : percent_charge,
+                charge_nominal : nominal_charge,
+                total_transaksi : total_transaksi,
+                dibayar : dibayar,
+                kembalian : kembalian,
             };
-            data_item.push(list_item);
-            total_harga += Number($('input[name="pit_'+i+'"]').val());
-
-            let qty = Number($('input[name="qty_'+i+'"]').val());
-            let dis = Number($('input[name="dis_'+i+'"]').val());
-            let hju = Number($('input[name="hrj_'+i+'"]').val());
-            let hit = Number($('input[name="hit_'+i+'"]').val());
-            let pit = Number($('input[name="pit_'+i+'"]').val());
-            let sub = dis > 0 ? '<s style="color:gray; font-size:11px;">'+FormatCurrency(hit,true)+'</s><br><b>'+FormatCurrency(pit,true)+'</b>' : '<b>'+FormatCurrency(pit,true)+'</b>';
-            let dsk = dis > 0 ? ' ('+dis+'%)' : '';
-            view += '<tr>'+
-                        '<td valign="top" style="padding:5px;">'+(i+1)+'.</td>'+
-                        '<td style="padding:5px;"><b>'+arr[i].nama_produk+'</b><br>'+qty+' x '+FormatCurrency(hju,true)+dsk+'</td>'+
-                        '<td style="padding:5px; text-align:right;">'+sub+'</td>'+
-                    '</tr>';
-        }
-        $("#detail-item tbody").html(view);
-
-        const jenis_diskon = $('#jenis_diskon').val();
-        if(jenis_diskon == 1){
-            percent_diskon = $('#percent_diskon').val().split(" %").join('');
-            percent_diskon = percent_diskon == '' ? 0 : percent_diskon;
-            nominal_diskon = total_harga * percent_diskon / 100;
+            
+            return data;
         }else{
-            nominal_diskon = $('#nominal_diskon').val().split(".").join('');
-            nominal_diskon = nominal_diskon == '' ? 0 : nominal_diskon;
-            percent_diskon = parseFloat((nominal_diskon * 100 / total_harga).toFixed(2));
-            percent_diskon = isNaN(percent_diskon) ? 0 : percent_diskon;
+            return false;
         }
-
-        const jenis_ppn = $('#jenis_ppn').val();
-        if(jenis_ppn == 1){
-            percent_ppn = $('#percent_ppn').val().split(" %").join('');
-            percent_ppn = percent_ppn == '' ? 0 : percent_ppn;
-            nominal_ppn = total_harga * percent_ppn / 100;
-        }else{
-            nominal_ppn = $('#nominal_ppn').val().split(".").join('');
-            nominal_ppn = nominal_ppn == '' ? 0 : nominal_ppn;
-            percent_ppn = parseFloat((nominal_ppn * 100 / total_harga).toFixed(2));
-            percent_ppn = isNaN(percent_ppn) ? 0 : percent_ppn;
-        }
-
-        percent_charge = $('#charge').val().split(" %").join('');
-        percent_charge = percent_charge == '' ? 0 : percent_charge;
-        nominal_charge = total_harga * percent_charge / 100;
-
-        total_transaksi = total_harga - nominal_diskon + nominal_ppn + nominal_charge;
-        dibayar = $('#nominal_dibayar').val().split(".").join('');
-        dibayar = dibayar == '' ? 0 : dibayar;
-        kembalian = dibayar - total_transaksi;
-        kembalian = kembalian < 0 ? -1 : kembalian;
-
-        $('#total_harga').html(FormatCurrency(total_harga,true));
-        $('#prc-dis').html('('+percent_diskon+'%)');
-        $('#total_diskon').html(FormatCurrency(nominal_diskon,true));
-        $('#prc-ppn').html('('+percent_ppn+'%)');
-        $('#total_ppn').html(FormatCurrency(nominal_ppn,true));
-        $('#prc-chr').html('('+percent_charge+'%)');
-        $('#total_charge').html(FormatCurrency(nominal_charge,true));
-        $('#total_transaksi').html(FormatCurrency(total_transaksi,true));
-        $('#jumlah_dibayar').html(FormatCurrency(dibayar,true));
-        $('#jumlah_kembalian').html(FormatCurrency(kembalian < 0 ? 0 : kembalian,true));
-
-        let nama_tipe_bayar = $('#tipe_bayar').val();
-        let id_tipe_bayar = $('#jenis_pembayaran').val();
-        let id_lokasi = $('#pilih-lokasi').val();
-
-        $('#nt-tipe').html(nama_tipe_bayar);
-        $('#nt-total').html(FormatCurrency(total_transaksi,true));
-        $('#nt-dibayar').html(FormatCurrency(dibayar,true));
-        $('#nt-kembalian').html(FormatCurrency(kembalian < 0 ? 0 : kembalian,true));
-        $('#nt-harga').html(FormatCurrency(total_harga,true));
-        $('#nt-dis').html('('+percent_diskon+'%)');
-        $('#nt-diskon-nom').html(FormatCurrency(nominal_diskon,true));
-        $('#nt-ppn').html('('+percent_ppn+'%)');
-        $('#nt-ppn-nom').html(FormatCurrency(nominal_ppn,true));
-        $('#nt-chr').html('('+percent_charge+'%)');
-        $('#nt-charge-nom').html(FormatCurrency(nominal_charge,true));
-        $('#nt-amount').html(FormatCurrency(total_transaksi,true));
-
-        var data = {
-            data_item : data_item,
-            id_lokasi : id_lokasi,
-            id_tipe_bayar : id_tipe_bayar,
-            total_harga : total_harga,
-            diskon_persen : percent_diskon,
-            diskon_nominal : nominal_diskon,
-            ppn_persen : percent_ppn,
-            ppn_nominal : nominal_ppn,
-            charge_persen : percent_charge,
-            charge_nominal : nominal_charge,
-            total_transaksi : total_transaksi,
-            dibayar : dibayar,
-            kembalian : kembalian,
-        };
-        
-        return data;
     }
 
     $('body').on('click','#reset_item',function(){
         swal({
-            text: 'Yakin? Semua item produk akan dihapus?',
+            text: 'Yakin? Transaksi pembayaran akan direset?',
             type: 'warning',
             icon : "warning",
             buttons:{
@@ -487,6 +495,7 @@
             }
         }).then((Delete) => {
             if (Delete) {
+                $('#id_anggota').val('');
                 location.reload();
             } else {
                 swal.close();
@@ -496,11 +505,20 @@
 
     $("body").on("click", "#simpan_item", function (e) {
         e.preventDefault();
-        const data_transaksi = countTransaksi();
-        let validasi = document.getElementById("form-penjualan").reportValidity();
+        let data_transaksi = countTransaksi();
+        let validasi = document.getElementById("form-pembayaran").reportValidity();
         if(validasi){
-            if(arr.length == 0){
-                swal("Warning", 'Produk harus di pilih terlebih dahulu!', {
+            if(!data_transaksi){
+                swal("Warning", 'Tentukan data paket yang ingin dipilih!', {
+                    icon: "info",
+                    buttons: {
+                        confirm: {
+                            className: "btn btn-info",
+                        },
+                    },
+                });
+            }else if(!data_transaksi['id_anggota']){
+                swal("Warning", 'Pastikan data anggota sudah dipilih!', {
                     icon: "info",
                     buttons: {
                         confirm: {
@@ -519,7 +537,7 @@
                 });
             }else{
                 swal({
-                    text: 'Apakah data penjualan sudah yakin untuk disimpan?',
+                    text: 'Apakah data pembayaran sudah yakin untuk disimpan?',
                     type: 'info',
                     icon : "info",
                     buttons:{
@@ -536,7 +554,7 @@
                 }).then((Delete) => {
                     if (Delete) {
                         $.ajax({
-                            url: "transaksi/simpan_penjualan",
+                            url: "transaksi/simpan_pembayaran",
                             method: "POST",
                             data: data_transaksi,
                             dataType: "json",
@@ -550,7 +568,7 @@
                                     $('#nt-nota').html(detail.nonota);
                                     $('#nt-tanggal').html(detail.tanggal);
                                     $('#nt-operator').html(detail.operator);
-                                    $("#print_trans").attr("data-id",detail.id_penjualan);
+                                    $("#print_trans").attr("data-id",detail.id_pembayaran);
                                 }else{
                                     notif(result, message);
                                 }
@@ -570,13 +588,13 @@
     });
 
     $('body').on('click','#print_trans',function(){
-        let id_penjualan = $(this).data('id');
+        let id_pembayaran = $(this).data('id');
         $.ajax({
-            url: "transaksi/list_penjualan",
+            url: "transaksi/list_pembayaran",
             method: "POST",
             dataType: "json",
             data: {
-                id_penjualan: id_penjualan,
+                id_pembayaran: id_pembayaran,
             },
             success: function(json) {
                 PrintNota(json);
@@ -584,7 +602,7 @@
         });
     });
 
-    function HistoryPenjualan(){
+    function HistoryPembayaran(){
         $('#reportrange').daterangepicker({
             startDate: moment(),
             endDate: moment(),
@@ -621,9 +639,9 @@
             var status = $('select[name="filter-status"]').val();
             var lokasi = $('select[name="filter-lokasi"]').val();
             var id_lokasi = lokasi == "" ? null : lokasi;
-            var table_penjualan = $("#datatable-penjualan").DataTable({
+            var table_pembayaran = $("#datatable-pembayaran").DataTable({
                 ajax: {
-                    url: "transaksi/read_penjualan",
+                    url: "transaksi/read_pembayaran",
                     type: "POST",
                     data: { 
                         start_date: start,
@@ -653,7 +671,7 @@
                 ],
                 language: {
                     search: "_INPUT_",
-                    emptyTable: "Belum ada daftar penjualan!",
+                    emptyTable: "Belum ada daftar pembayaran!",
                     infoEmpty: "Tidak ada data untuk ditampilkan!",
                     info: "_START_ to _END_ of _TOTAL_ entries",
                     infoFiltered: ""
@@ -664,13 +682,10 @@
                     { data: "no" },
                     { data: "date_format" },
                     { data: "nonota" },
-                    { data: "nama_item" },
-                    { data: "jml_item" },
-                    { data: "diskon_item" , render: function(data, type, row, meta) {
-                        return data.split('Rp ').join('<sup><font color="#FF0000">Rp</font></sup> ');
-                    }},
-                    { data: "harga_item" , render: function(data, type, row, meta) {
-                        return data.split('Rp ').join('<sup><font color="#FF0000">Rp</font></sup> ');
+                    { data: "nama_anggota" },
+                    { data: "nama_paket" },
+                    { data: "total_harga" , render: function(data, type, row, meta) {
+                        return '<sup><font color="#FF0000">Rp</font></sup> '+FormatCurrency(data);
                     }},
                     { data: "diskon" , render: function(data, type, row, meta) {
                         return '<sup><font color="#FF0000">Rp</font></sup> '+FormatCurrency(data);
@@ -687,18 +702,16 @@
                     { data: "aksi" , render : function ( data, type, row, meta ) {
                         return '<span class="alasan_hapus gone">'+row['alasan_hapus']+'</span>'+
                         '<div style="white-space: nowrap;">'+
-                            '<button data-id="'+data+'" type="button" id="penjualan-print" class="penjualan-print mx-1 btn btn-icon btn-round btn-success btn-sm" title="Print">'+
+                            '<button data-id="'+data+'" type="button" id="pembayaran-print" class="pembayaran-print mx-1 btn btn-icon btn-round btn-success btn-sm" title="Print">'+
                                 '<i class="fa fa-print"></i>'+
                             '</button>'+
-                            '<button data-id="'+data+'" type="button" id="penjualan-remove" class="penjualan-remove mx-1 btn btn-icon btn-round btn-danger btn-sm" title="Remove">'+
+                            '<button data-id="'+data+'" type="button" id="pembayaran-remove" class="pembayaran-remove mx-1 btn btn-icon btn-round btn-danger btn-sm" title="Remove">'+
                                 '<i class="fa fa-trash-alt"></i>'+
                             '</button>'+
                         '</div>';
                     }},
                 ],
                 rowCallback:function(row,data,index){
-                    $('td', row).eq(3).addClass('nowraping');
-                    $('td', row).eq(4).addClass('nowraping');
                     $('td', row).eq(5).addClass('nowraping');
                     $('td', row).eq(6).addClass('nowraping');
                     $('td', row).eq(7).addClass('nowraping');
@@ -710,13 +723,13 @@
                     var sta = $('select[name="filter-status"]').val();
                     if(sta == '1'){
                         $('#text-aksi').html('Aksi');
-                        $('.penjualan-print').removeClass('gone');
-                        $('.penjualan-remove').removeClass('gone');
+                        $('.pembayaran-print').removeClass('gone');
+                        $('.pembayaran-remove').removeClass('gone');
                         $('.alasan_hapus').addClass('gone');
                     }else if(sta == '0'){
                         $('#text-aksi').html('Alasan');
-                        $('.penjualan-print').addClass('gone');
-                        $('.penjualan-remove').addClass('gone');
+                        $('.pembayaran-print').addClass('gone');
+                        $('.pembayaran-remove').addClass('gone');
                         $('.alasan_hapus').removeClass('gone');
                     }
                 }
@@ -731,30 +744,32 @@
                         return true;
                     if (~data[3].toLowerCase().indexOf(src))
                         return true;
+                    if (~data[4].toLowerCase().indexOf(src))
+                        return true;
                         
                     return false;
                 })
-                table_penjualan.draw(); 
+                table_pembayaran.draw(); 
                 $.fn.dataTable.ext.search.pop();
             });
     
             function saveKey(){
                 var src = $('input[name="filter-search"]').val().toLowerCase();
                 if(src != undefined){
-                    $('#datatable-penjualan').DataTable().search(src).draw();
+                    $('#datatable-pembayaran').DataTable().search(src).draw();
                 }
             }
         }
     
-        $("body").on("click", "#penjualan-print", function (e) {
+        $("body").on("click", "#pembayaran-print", function (e) {
             e.preventDefault();
-            let id_penjualan = $(this).data('id');
+            let id_pembayaran = $(this).data('id');
             $.ajax({
-                url: "transaksi/list_penjualan",
+                url: "transaksi/list_pembayaran",
                 method: "POST",
                 dataType: "json",
                 data: {
-                    id_penjualan: id_penjualan,
+                    id_pembayaran: id_pembayaran,
                 },
                 success: function(json) {
                     PrintNota(json);
@@ -762,12 +777,12 @@
             });
         });
         
-        $("body").on("click", "#penjualan-remove", function (e) {
+        $("body").on("click", "#pembayaran-remove", function (e) {
             e.preventDefault();
-            let id_penjualan = $(this).data('id');
-            var data = $("#datatable-penjualan").DataTable().row($(this).parents("tr")).data();
+            let id_pembayaran = $(this).data('id');
+            var data = $("#datatable-pembayaran").DataTable().row($(this).parents("tr")).data();
             var nota = data["nonota"];
-            $('input[name="id_penjualan"]').val(id_penjualan);
+            $('input[name="id_pembayaran"]').val(id_pembayaran);
             $('#alasan-hapus').val('');
             $("#modal-hapus").modal();
             document.getElementById("no-nota").innerHTML = nota;
@@ -779,14 +794,14 @@
             if($("#form-alasan-hapus").valid()){
                 $('#hapus').attr('disabled',true);
                 $("#modal-hapus").modal('hide');
-                var id_penjualan = $('input[name="id_penjualan"]').val();
+                var id_pembayaran = $('input[name="id_pembayaran"]').val();
                 var alasan_hapus = $('#alasan-hapus').val();
                 $.ajax({
-                    url: 'transaksi/remove_penjualan',
+                    url: 'transaksi/remove_pembayaran',
                     method: "POST",
                     dataType: "json",
                     data: {
-                        id_penjualan: id_penjualan,
+                        id_pembayaran: id_pembayaran,
                         alasan_hapus: alasan_hapus,
                     },
                     success: function (json) {
@@ -801,23 +816,8 @@
     }
         
     function PrintNota(transaksi){
-        var detail_list_item = "";
-        const penjualan = transaksi.db_penjualan;
-        const penjualan_item = transaksi.db_penjualan_item;
+        const pembayaran = transaksi.db_pembayaran;
         const base_url = $('input[name="base_url"]').val();
-        for (var i = 0; i < penjualan_item.length; i++) {
-            let diskon = '';
-            if(penjualan_item[i].diskon_nominal_item > 0){
-                diskon = '('+penjualan_item[i].diskon_persen_item+'%)';
-            }
-            detail_list_item += '<tr>'+
-                        '<td colspan="3"><b>'+penjualan_item[i].nama_produk+'</b></td>'+
-                    '</tr>'+
-                    '<tr>'+
-                        '<td colspan="2">'+FormatCurrency(penjualan_item[i].harga_jual_item,true)+' x '+penjualan_item[i].jml_produk_item+' '+diskon+'</td>'+
-                        '<td style="text-align:right;">'+FormatCurrency(penjualan_item[i].subtotal_harga_item,true)+'</td>'+
-                    '</tr>';
-        }
         var printContents = '<style type="text/css">'+
         '                    @page {'+
         '                        size: auto;'+
@@ -833,11 +833,11 @@
         '                    }'+
         '                </style>'+
         '                <table class="p-table" style="width:100%;">'+
-        '                    <tr '+(!penjualan.nota_logo ? 'style="display:none"' : '')+'>'+
-        '                        <td colspan="3" style="text-align:center;"><img src="'+base_url+'assets/img/logo_nota/'+penjualan.nota_logo+'" width="90" height="90"></td>'+
+        '                    <tr '+(!pembayaran.nota_logo ? 'style="display:none"' : '')+'>'+
+        '                        <td colspan="3" style="text-align:center;"><img src="'+base_url+'assets/img/logo_nota/'+pembayaran.nota_logo+'" width="90" height="90"></td>'+
         '                    </tr>'+
-        '                    <tr '+(!penjualan.nota_header ? 'style="display:none"' : '')+'>'+
-        '                        <td colspan="3" style="text-align:center; white-space:pre-wrap;">'+penjualan.nota_header+'</td>'+
+        '                    <tr '+(!pembayaran.nota_header ? 'style="display:none"' : '')+'>'+
+        '                        <td colspan="3" style="text-align:center; white-space:pre-wrap;">'+pembayaran.nota_header+'</td>'+
         '                    </tr>'+
         '                    <tr><td colspan="3"></td></tr>'+
         '                    <tr><td colspan="3"></td></tr>'+
@@ -850,54 +850,65 @@
         '                    <tr>'+
         '                        <td>No.Nota</td>'+
         '                        <td style="text-align:center;">:</td>'+
-        '                        <td style="text-align:right;">'+penjualan.nonota+'</td>'+
+        '                        <td style="text-align:right;">'+pembayaran.nonota+'</td>'+
         '                    </tr>'+
         '                    <tr>'+
         '                        <td>Tanggal</td>'+
         '                        <td style="text-align:center;">:</td>'+
-        '                        <td style="text-align:right;">'+penjualan.tanggal+'</td>'+
+        '                        <td style="text-align:right;">'+pembayaran.tanggal+'</td>'+
         '                    </tr>'+
         '                    <tr>'+
         '                        <td>Waktu</td>'+
         '                        <td style="text-align:center;">:</td>'+
-        '                        <td style="text-align:right;">'+penjualan.waktu+'</td>'+
+        '                        <td style="text-align:right;">'+pembayaran.waktu+'</td>'+
         '                    </tr>'+
         '                    <tr>'+
         '                        <td>Operator</td>'+
         '                        <td style="text-align:center;">:</td>'+
-        '                        <td style="text-align:right;">'+penjualan.operator+'</td>'+
+        '                        <td style="text-align:right;">'+pembayaran.operator+'</td>'+
         '                    </tr>'+
         '                    <tr>'+
         '                        <td>Tipe Pembayaran</td>'+
         '                        <td style="text-align:center;">:</td>'+
-        '                        <td style="text-align:right;">'+penjualan.tipe_bayar+'</td>'+
+        '                        <td style="text-align:right;">'+pembayaran.tipe_bayar+'</td>'+
         '                    </tr>'+
         '                    <tr>'+
         '                        <td colspan="3" style="text-align:center;"><div style="border-bottom: 1.5px dotted #000 !important"></div></td>'+
         '                    </tr>'+
-                                    detail_list_item+
+        '                    <tr>'+
+        '                        <td colspan="3" style="text-align:center;"><div style="margin-top:5px;"></div></td>'+
+        '                    </tr>'+
+        '                    <tr>'+
+        '                        <td colspan="3">'+
+        '                           <p style="margin-bottom:2px;">'+pembayaran.nama_anggota+'</p>'+
+        '                           <h4 style="margin:0;"><b>'+pembayaran.nama_paket+'</b></h4>'+
+        '                           <div style="margin-bottom:3px;">'+FormatCurrency(pembayaran.total_harga,true)+'</div>'+
+        '                           <div>'+'Durasi 1 Hari'+'</div>'+
+        '                           <div>'+'Aktif 13-07-2023 s/d 14-07-2023'+'</div>'+
+        '                       </td>'+
+        '                    </tr>'+
         '                    <tr>'+
         '                        <td colspan="3" style="text-align:center;"><div style="margin-top:5px;"></div></td>'+
         '                    </tr>'+
         '                    <tr>'+
         '                        <td>Subtotal</td>'+
         '                        <td style="text-align:center;">:</td>'+
-        '                        <td style="text-align:right;">'+FormatCurrency(penjualan.total_harga,true)+'</td>'+
+        '                        <td style="text-align:right;">'+FormatCurrency(pembayaran.total_harga,true)+'</td>'+
         '                    </tr>'+
         '                    <tr>'+
-        '                        <td>Diskon ('+penjualan.diskon_persen+'%)</td>'+
+        '                        <td>Diskon ('+pembayaran.diskon_persen+'%)</td>'+
         '                        <td style="text-align:center;">:</td>'+
-        '                        <td style="text-align:right;">'+FormatCurrency(penjualan.diskon_nominal,true)+'</td>'+
+        '                        <td style="text-align:right;">'+FormatCurrency(pembayaran.diskon_nominal,true)+'</td>'+
         '                    </tr>'+
-        '                    <tr '+(penjualan.ppn_nominal > 0 ? '' : 'style="display:none"')+'>'+
-        '                        <td>PPN ('+penjualan.ppn_persen+'%)</td>'+
+        '                    <tr '+(pembayaran.ppn_nominal > 0 ? '' : 'style="display:none"')+'>'+
+        '                        <td>PPN ('+pembayaran.ppn_persen+'%)</td>'+
         '                        <td style="text-align:center;">:</td>'+
-        '                        <td style="text-align:right;">'+FormatCurrency(penjualan.ppn_nominal,true)+'</td>'+
+        '                        <td style="text-align:right;">'+FormatCurrency(pembayaran.ppn_nominal,true)+'</td>'+
         '                    </tr>'+
-        '                    <tr '+(penjualan.charge_nominal > 0 ? '' : 'style="display:none"')+'>'+
-        '                        <td>Charge ('+penjualan.charge_persen+'%)</td>'+
+        '                    <tr '+(pembayaran.charge_nominal > 0 ? '' : 'style="display:none"')+'>'+
+        '                        <td>Charge ('+pembayaran.charge_persen+'%)</td>'+
         '                        <td style="text-align:center;">:</td>'+
-        '                        <td style="text-align:right;">'+FormatCurrency(penjualan.charge_nominal,true)+'</td>'+
+        '                        <td style="text-align:right;">'+FormatCurrency(pembayaran.charge_nominal,true)+'</td>'+
         '                    </tr>'+
         '                    <tr>'+
         '                        <td colspan="3" style="text-align:center;"><div style="border-bottom: 1.5px dotted #000 !important"></div></td>'+
@@ -905,23 +916,23 @@
         '                    <tr>'+
         '                        <td><b>Total Transaksi</b></td>'+
         '                        <td style="text-align:center;">:</td>'+
-        '                        <td style="text-align:right;"><b>'+FormatCurrency(penjualan.total_transaksi,true)+'</b></td>'+
+        '                        <td style="text-align:right;"><b>'+FormatCurrency(pembayaran.total_transaksi,true)+'</b></td>'+
         '                    </tr>'+
         '                    <tr>'+
         '                        <td>Uang Dibayar</td>'+
         '                        <td style="text-align:center;">:</td>'+
-        '                        <td style="text-align:right;">'+FormatCurrency(penjualan.dibayar,true)+'</td>'+
+        '                        <td style="text-align:right;">'+FormatCurrency(pembayaran.dibayar,true)+'</td>'+
         '                    </tr>'+
         '                    <tr>'+
         '                        <td>Uang Kembalian</td>'+
         '                        <td style="text-align:center;">:</td>'+
-        '                        <td style="text-align:right;">'+FormatCurrency(penjualan.kembalian,true)+'</td>'+
+        '                        <td style="text-align:right;">'+FormatCurrency(pembayaran.kembalian,true)+'</td>'+
         '                    </tr>'+
         '                    <tr>'+
         '                        <td colspan="3" style="text-align:center;"><div style="border-bottom: 1.5px dotted #000 !important"></div></td>'+
         '                    </tr>'+
-        '                    <tr '+(!penjualan.nota_header ? 'style="display:none"' : '')+'>'+
-        '                        <td colspan="3" style="text-align:center; white-space:pre-wrap;">'+penjualan.nota_footer+'</td>'+
+        '                    <tr '+(!pembayaran.nota_header ? 'style="display:none"' : '')+'>'+
+        '                        <td colspan="3" style="text-align:center; white-space:pre-wrap;">'+pembayaran.nota_footer+'</td>'+
         '                    </tr>'+
         '                </table>';
     
@@ -956,7 +967,7 @@
                     },
                 },
             });
-            $('#datatable-penjualan').DataTable().ajax.reload();
+            $('#datatable-pembayaran').DataTable().ajax.reload();
             if(reload == 1){
                 setTimeout(() => {
                     window.location.reload();

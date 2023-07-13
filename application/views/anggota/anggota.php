@@ -91,13 +91,13 @@
                                         <table class="mb-0" width="100%">
                                             <tbody class="nowraping">
                                                 <tr>
-                                                    <td style="width:10%;"><b>Nama</b> <span class="text-danger">*</span></td>
-                                                    <td style="width:2%;"><b>&nbsp;:&nbsp;</b></td>
+                                                    <td style="width:10%;">Nama <span class="text-danger">*</span></td>
+                                                    <td style="width:2%;">&nbsp;:&nbsp;</td>
                                                     <td><input type="text" class="form-control form-rm" id="nama_anggota" name="nama_anggota" placeholder="Nama" required></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><b>Gender</b> <span class="text-danger">*</span></td>
-                                                    <td><b>&nbsp;:&nbsp;</b></td>
+                                                    <td>Gender <span class="text-danger">*</span></td>
+                                                    <td>&nbsp;:&nbsp;</td>
                                                     <td>
                                                         <select class="form-control form-rm" name="gender_anggota" id="gender_anggota" style="padding: 0.4rem 0.5rem !important;" required>
                                                             <option value="">Pilih Gender</option>
@@ -107,25 +107,25 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><b>No. Hp</b> <span class="text-danger">*</span></td>
-                                                    <td><b>&nbsp;:&nbsp;</b></td>
+                                                    <td>No. Hp <span class="text-danger">*</span></td>
+                                                    <td>&nbsp;:&nbsp;</td>
                                                     <td><input type="text" class="form-control form-rm" id="telp_anggota" name="telp_anggota" placeholder="No. Hp" required></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><b>Email</b> <span class="text-danger">*</span></td>
-                                                    <td><b>&nbsp;:&nbsp;</b></td>
+                                                    <td>Email <span class="text-danger">*</span></td>
+                                                    <td>&nbsp;:&nbsp;</td>
                                                     <td><input type="email" class="form-control form-rm" id="email_anggota" name="email_anggota" placeholder="Email"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><b>Alamat</b> <span class="text-danger">*</span></td>
-                                                    <td><b>&nbsp;:&nbsp;</b></td>
+                                                    <td>Alamat <span class="text-danger">*</span></td>
+                                                    <td>&nbsp;:&nbsp;</td>
                                                     <td><textarea class="form-control" name="alamat_anggota" id="alamat_anggota" placeholder="Alamat" style="padding: 0.25rem 0.5rem; min-height: 92px;" required></textarea></td>
                                                 </tr>
                                                 <tr class="lok-edit">
                                                     <td>Lokasi Gym <span class="text-danger">*</span></td>
                                                     <td>&nbsp;:&nbsp;</td>
                                                     <td>
-                                                        <select class="form-control form-rm" name="id_lokasi" id="id_lokasi" required style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
+                                                        <select class="form-control form-rm" name="id_lokasi" id="id_lokasi" required style="padding: 0.4rem 0.5rem !important;">
                                                             <option value="">Pilih Lokasi</option>
                                                             <?php foreach ($data_lokasi as $list){ ?>
                                                                 <option value="<?= $list->id_lokasi ?>"><?= $list->nama_lokasi ?></option>

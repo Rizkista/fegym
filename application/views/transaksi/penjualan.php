@@ -16,24 +16,15 @@
     <div id="transaksi">
         <div id="proses-1" class="row">
             <div class="col-md-6">
-                <div class="card <?= ($this->session->userdata('id_posisi') == 3 ? 'gone' : '') ?>">
-                    <div class="card-header p-2">
-                        <div>
-                            <div class="btn-group border-option m-0">
-                                <label class="label-filter">Lokasi: </label>&nbsp;&nbsp;
-                                <select class="form-control" name="pilih-lokasi" id="pilih-lokasi">
-                                    <option value="0">Pilih Lokasi</option>
-                                    <?php foreach ($data_lokasi as $list){ ?>
-                                        <option value="<?= $list->id_lokasi ?>"><?= $list->nama_lokasi ?></option>
-                                    <?php } ?> 
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="card">
                     <div class="card-header p-2">
-                        <div class="btn-group p-1 bg-grey3 btn-full">
+                        <div class="box-bg-grey p-1">
+                            <select class="form-control mb-1 <?= ($this->session->userdata('id_posisi') == 3 ? 'gone' : '') ?>" name="pilih-lokasi" id="pilih-lokasi">
+                                <option value="0">Pilih Lokasi</option>
+                                <?php foreach ($data_lokasi as $list){ ?>
+                                    <option value="<?= $list->id_lokasi ?>"><?= $list->nama_lokasi ?></option>
+                                <?php } ?> 
+                            </select>
                             <input type="text" class="form-control" name="list-search" id="list-search" placeholder="Barcode / Produk">
                         </div>
                     </div>

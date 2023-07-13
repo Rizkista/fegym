@@ -107,6 +107,7 @@
         },
         rowCallback:function(row,data,index){
             $('td', row).eq(2).addClass('nowraping');
+            $('td', row).eq(3).addClass('nowraping');
         },
     });
 

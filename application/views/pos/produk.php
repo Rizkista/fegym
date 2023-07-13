@@ -120,7 +120,7 @@
                                                         <td>Lokasi Gym <span class="text-danger">*</span></td>
                                                         <td>&nbsp;:&nbsp;</td>
                                                         <td colspan="2">
-                                                            <select class="form-control form-rm" name="id_lokasi" id="id_lokasi" style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
+                                                            <select class="form-control form-rm" name="id_lokasi" id="id_lokasi" style="padding: 0.4rem 0.5rem !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
                                                                 <option value="">Pilih Lokasi</option>
                                                                 <?php foreach ($data_lokasi as $list){ ?>
                                                                     <option value="<?= $list->id_lokasi ?>"><?= $list->nama_lokasi ?></option>
@@ -132,7 +132,7 @@
                                                         <td>Kategori Produk <span class="text-danger">*</span></td>
                                                         <td>&nbsp;:&nbsp;</td>
                                                         <td>
-                                                            <select class="form-control form-rm select-katpro kat-select" name="id_kat_produk" id="id_kat_produk" required disabled style="height: 29px !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
+                                                            <select class="form-control form-rm select-katpro kat-select" name="id_kat_produk" id="id_kat_produk" required disabled style="padding: 0.4rem 0.5rem !important; background-color: #fefefe !important; border-color: #dcdcdc !important;">
                                                                 <option value="">Pilih Kategori</option>
                                                             </select>
                                                             <input type="text" class="form-control form-rm select-katpro kat-new gone" name="new_id_kat_produk" id="new_id_kat_produk" placeholder="Tambah Kategori Baru" style="background-color: #fefefe !important; border-color: #dcdcdc !important;">

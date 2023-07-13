@@ -267,4 +267,30 @@ class Master extends CI_Controller {
         echo json_encode($output);
         exit();
 	}
+
+	public function list_paket(){
+		$id_lokasi = ID_POSISI == 3 ? ID_LOKASI : $_POST['id_lokasi'];
+		$paket = $this->m_auth->getListPaket(ID_OFFICE,$id_lokasi);
+		$durasi = [null, 'minute', 'day', 'week', 'month', 'year'];
+		$data = [];
+		foreach ($paket as $list) {
+			$row = [];
+			$row['id_paket_gym'] = $list->id_paket_gym;
+			$row['nama_paket'] = $list->nama_paket;
+			$row['durasi_paket'] = $list->durasi_paket;
+			$row['lama_durasi'] = $list->lama_durasi;
+			$row['harga_paket'] = $list->harga_paket;
+			$row['status_member'] = $list->status_member;
+			$row['tgl_mulai'] = date("Y-m-d H:i:s");
+			$row['tgl_akhir'] = date("Y-m-d H:i:s",strtotime("+".$list->lama_durasi." ".$durasi[$list->durasi_paket]));
+			$row['tgl_paket'] = 
+				$list->durasi_paket == 1 ? 
+				'Aktif '.date("H:i").' s/d '.date("H:i",strtotime("+".$list->lama_durasi." ".$durasi[$list->durasi_paket])): 
+				'Aktif '.date("d-m-Y").' s/d '.date("d-m-Y",strtotime("+".$list->lama_durasi." ".$durasi[$list->durasi_paket]));
+			$row['durasi'] = null;
+			$data[] = $row; 
+		}
+		$output = [ "data" => $data ];
+		echo json_encode($output);
+	}
 }

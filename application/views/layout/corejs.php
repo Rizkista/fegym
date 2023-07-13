@@ -42,18 +42,6 @@
 </script>
 
 <!-- App JS -->
-<?php 
-    $ijincuti = array(
-        'cuti-tahunan',
-        'cuti-menikah',
-        'cuti-melahirkan',
-        'ijin-pribadi',
-        'ijin-duka',
-        'ijin-sakit',
-    );
-    $uri_path = $this->uri->segment(1);
-    $filejs = in_array($uri_path, $ijincuti) ? 'ijin_cuti' : str_replace("-","_",$uri_path);
-
-?>
+<?php $filejs = str_replace("-","_",$this->uri->segment(1)); ?>
 <script src="<?= base_url() ?>assets/app/<?= $filejs ?>.js?v=<?= $vrs ?>"></script>
 <script src="<?= base_url() ?>assets/js/ready.js?v=<?= $vrs ?>"></script>
