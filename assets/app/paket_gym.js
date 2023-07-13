@@ -73,7 +73,7 @@
                 return row['lama_durasi']+' '+'<sup><font color="#FF0000">'+durasi[row['durasi_paket']]+'</font></sup>';
             }},
             { data: "status_member" , render : function ( data, type, row, meta ) {
-                return data == 1 ? 'YA' : 'TIDAK';
+                return data == 1 ? 'AKTIF' : 'TIDAK';
             }},
             { data: "nama_lokasi" },
             { data: "aksi" , render : function ( data, type, row, meta ) {

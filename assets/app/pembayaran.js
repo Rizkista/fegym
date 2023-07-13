@@ -30,6 +30,7 @@
         $('#pilih-anggota').html('<span class="text-grey">Pilih Anggota</span>');
         $('#pilih-paket').html('<span class="text-grey">Pilih Paket</span>');
         $('#id_anggota').val('');
+        $('#id_paket_gym').val('');
         $('#nt-tran-anggota').html('');
         $('#nt-tran-paket').html('');
         $('#nt-tran-harga').html('');
@@ -41,6 +42,8 @@
         $('#tran-durasi').html('');
         $('#tran-tanggal').html('');
         $('#tran-member').html('');
+        $('#tgl_mulai').val('');
+        $('#tgl_akhir').val('');
         list_transaksi();
     });
 
@@ -53,6 +56,18 @@
         $("#modal-paket").modal();
         list_transaksi();
     });
+    
+    $('#tgl_paket').keyup(function(){
+        durasi_tanggal();
+        list_transaksi();
+    });
+
+    Inputmask("datetime", {
+        inputFormat: "dd-mm-yyyy HH:MM",
+        placeholder: "_",
+        leapday: "-02-29",
+        alias: "tt.mm.jjjj"
+    }).mask('#tgl_paket');
 
     function list_transaksi(){
 		const id_posisi = $('input[name="id_posisi"]').val();
@@ -94,7 +109,7 @@
                     return row['lama_durasi']+' '+'<sup><font color="#FF0000">'+durasi[row['durasi_paket']]+'</font></sup>';
                 }},
                 { data: "status_member" , render : function ( data, type, row, meta ) {
-                    return data == 1 ? 'YA' : 'TIDAK';
+                    return data == 1 ? 'AKTIF' : 'TIDAK';
                 }},
             ],
             fnDrawCallback:function(){
@@ -145,7 +160,7 @@
                 }},
                 { data: "telp_anggota" },
                 { data: "status_member" , render : function ( data, type, row, meta ) {
-                    return data == 1 ? 'YA' : 'TIDAK';
+                    return data == 1 ? 'AKTIF' : 'TIDAK';
                 }},
             ],
             fnDrawCallback:function(){
@@ -198,28 +213,24 @@
     let data_paket = [];
     $('#datatable-list-paket tbody').on( 'click', 'tr', function () {
         var list = $('#datatable-list-paket').DataTable().row(this).data();
+        $('#id_paket_gym').val(list['id_paket_gym']);
         data_paket = [{
-            id_paket_gym : list['id_paket_gym'],
-            nama_paket : list['nama_paket'],
             harga_paket : list['harga_paket'],
             durasi_paket : list['durasi_paket'],
             lama_durasi : list['lama_durasi'],
             status_member : list['status_member'],
-            tgl_mulai : list['tgl_mulai'],
-            tgl_akhir : list['tgl_akhir'],
         }];
+        durasi_tanggal();
         countTransaksi();
         const durasi = [null, 'Menit', 'Hari', 'Minggu', 'Bulan', 'Tahun'];
         $('#pilih-paket').html(list['nama_paket']);
         $('#nt-tran-paket').html(list['nama_paket']);
         $('#nt-tran-harga').html(FormatCurrency(list['harga_paket'],true));
         $('#nt-tran-durasi').html('Durasi '+list['lama_durasi']+' '+durasi[list['durasi_paket']]);
-        $('#nt-tran-tanggal').html(list['tgl_paket']);
         $('#tran-paket').html(list['nama_paket']);
         $('#tran-harga').html('<sup><font class="fw-bold">Rp </font></sup>'+FormatCurrency(list['harga_paket']));
         $('#tran-durasi').html('Durasi '+list['lama_durasi']+' '+durasi[list['durasi_paket']]);
-        $('#tran-tanggal').html(list['tgl_paket']);
-        $('#tran-member').html(list['status_member'] == 1 ? 'YA' : 'TIDAK');
+        $('#tran-member').html(list['status_member'] == 1 ? 'AKTIF' : 'TIDAK');
         $('#tran-mtext').html('MEMBER');
         $("#modal-paket").modal('hide');
         $.notify({
@@ -236,6 +247,44 @@
             delay: 2000,
         });
     });
+
+    function durasi_tanggal(){
+        let id_paket_gym = $('#id_paket_gym').val();
+        let tgl_paket = $('#tgl_paket').val();
+        let tanggal = null;
+        if(tgl_paket.search('_') > 0){
+            tanggal = null;
+        }else if(tgl_paket == null || tgl_paket == ""){
+            tanggal = null;
+        }else{
+            tanggal = tgl_paket;
+        }
+
+        if(tanggal != null && id_paket_gym != ""){
+            $.ajax({
+                url: "master/durasi_paket",
+                method: "POST",
+                dataType: "json",
+                data: {
+                    id_paket_gym: id_paket_gym,
+                    tanggal: tanggal
+                },
+                success: function (data) {
+                    if(data.result == 'success'){
+                        $('#nt-tran-tanggal').html(data.tgl_paket);
+                        $('#tran-tanggal').html(data.tgl_paket);
+                        $('#tgl_mulai').val(data.tgl_mulai);
+                        $('#tgl_akhir').val(data.tgl_akhir);
+                    }
+                },
+            });
+        }else{
+            $('#tgl_mulai').val('');
+            $('#tgl_akhir').val('');
+            $('#nt-tran-tanggal').html('');
+            $('#tran-tanggal').html('');
+        }
+    }
 
     $("body").on("click", "#dis1", function () {
         $("#dis1").addClass("choice");
@@ -374,7 +423,6 @@
     function countTransaksi(){
         if(data_paket.length > 0){
             let total_transaksi = 0;
-            let total_harga = 0;
             let percent_diskon = 0;
             let nominal_diskon = 0;
             let percent_ppn = 0;
@@ -384,7 +432,10 @@
             let dibayar = 0;
             let kembalian = 0;
 
-            total_harga = data_paket[0].harga_paket;
+            let total_harga = data_paket[0].harga_paket;
+            let durasi_paket = data_paket[0].durasi_paket;
+            let lama_durasi = data_paket[0].lama_durasi;
+            let status_member = data_paket[0].status_member;
 
             const jenis_diskon = $('#jenis_diskon').val();
             if(jenis_diskon == 1){
@@ -435,6 +486,9 @@
             let id_tipe_bayar = $('#jenis_pembayaran').val();
             let id_lokasi = $('#pilih-lokasi').val();
             let id_anggota = $('#id_anggota').val();
+            let id_paket_gym = $('#id_paket_gym').val();
+            let tgl_mulai = $('#tgl_mulai').val();
+            let tgl_akhir =$('#tgl_akhir').val();
 
             $('#nt-tipe').html(nama_tipe_bayar);
             $('#nt-total').html(FormatCurrency(total_transaksi,true));
@@ -450,15 +504,15 @@
             $('#nt-amount').html(FormatCurrency(total_transaksi,true));
 
             var data = {
-                id_anggota : id_anggota,
                 id_lokasi : id_lokasi,
                 id_tipe_bayar : id_tipe_bayar,
-                id_paket_gym : data_paket[0].id_paket_gym,
-                durasi_paket : data_paket[0].durasi_paket,
-                lama_durasi : data_paket[0].lama_durasi,
-                status_member : data_paket[0].status_member,
-                tgl_mulai : data_paket[0].tgl_mulai,
-                tgl_akhir : data_paket[0].tgl_akhir,
+                id_anggota : id_anggota,
+                id_paket_gym : id_paket_gym,
+                durasi_paket : durasi_paket,
+                lama_durasi : lama_durasi,
+                status_member : status_member,
+                tgl_mulai : tgl_mulai,
+                tgl_akhir : tgl_akhir,
                 total_harga : total_harga,
                 diskon_persen : percent_diskon,
                 diskon_nominal : nominal_diskon,
@@ -519,6 +573,15 @@
                 });
             }else if(!data_transaksi['id_anggota']){
                 swal("Warning", 'Pastikan data anggota sudah dipilih!', {
+                    icon: "info",
+                    buttons: {
+                        confirm: {
+                            className: "btn btn-info",
+                        },
+                    },
+                });
+            }else if(!data_transaksi['tgl_mulai'] && !data_transaksi['tgl_akhir']){
+                swal("Warning", 'Pastikan format tanggal sudah sesuai!', {
                     icon: "info",
                     buttons: {
                         confirm: {
@@ -760,63 +823,64 @@
                 }
             }
         }
+    }
     
-        $("body").on("click", "#pembayaran-print", function (e) {
-            e.preventDefault();
-            let id_pembayaran = $(this).data('id');
+    $("body").on("click", "#pembayaran-print", function (e) {
+        e.preventDefault();
+        let id_pembayaran = $(this).data('id');
+        $.ajax({
+            url: "transaksi/list_pembayaran",
+            method: "POST",
+            dataType: "json",
+            data: {
+                id_pembayaran: id_pembayaran,
+            },
+            success: function(json) {
+                PrintNota(json);
+            },
+        });
+    });
+    
+    $("body").on("click", "#pembayaran-remove", function (e) {
+        e.preventDefault();
+        let id_pembayaran = $(this).data('id');
+        var data = $("#datatable-pembayaran").DataTable().row($(this).parents("tr")).data();
+        var nota = data["nonota"];
+        $('input[name="id_pembayaran"]').val(id_pembayaran);
+        $('#alasan-hapus').val('');
+        $("#modal-hapus").modal();
+        document.getElementById("no-nota").innerHTML = nota;
+        $('#hapus-nota').attr('disabled',false);
+    });
+
+    $("body").on("click", "#hapus", function(e){
+        e.preventDefault();
+        if($("#form-alasan-hapus").valid()){
+            $('#hapus').attr('disabled',true);
+            $("#modal-hapus").modal('hide');
+            var id_pembayaran = $('input[name="id_pembayaran"]').val();
+            var alasan_hapus = $('#alasan-hapus').val();
             $.ajax({
-                url: "transaksi/list_pembayaran",
+                url: 'transaksi/remove_pembayaran',
                 method: "POST",
                 dataType: "json",
                 data: {
                     id_pembayaran: id_pembayaran,
+                    alasan_hapus: alasan_hapus,
                 },
-                success: function(json) {
-                    PrintNota(json);
+                success: function (json) {
+                    let result = json.result;
+                    let message = json.message;
+                    notif(result, message);
+                    $('#hapus').attr('disabled',false);
                 },
             });
-        });
-        
-        $("body").on("click", "#pembayaran-remove", function (e) {
-            e.preventDefault();
-            let id_pembayaran = $(this).data('id');
-            var data = $("#datatable-pembayaran").DataTable().row($(this).parents("tr")).data();
-            var nota = data["nonota"];
-            $('input[name="id_pembayaran"]').val(id_pembayaran);
-            $('#alasan-hapus').val('');
-            $("#modal-hapus").modal();
-            document.getElementById("no-nota").innerHTML = nota;
-            $('#hapus-nota').attr('disabled',false);
-        });
-
-        $("body").on("click", "#hapus", function(e){
-            e.preventDefault();
-            if($("#form-alasan-hapus").valid()){
-                $('#hapus').attr('disabled',true);
-                $("#modal-hapus").modal('hide');
-                var id_pembayaran = $('input[name="id_pembayaran"]').val();
-                var alasan_hapus = $('#alasan-hapus').val();
-                $.ajax({
-                    url: 'transaksi/remove_pembayaran',
-                    method: "POST",
-                    dataType: "json",
-                    data: {
-                        id_pembayaran: id_pembayaran,
-                        alasan_hapus: alasan_hapus,
-                    },
-                    success: function (json) {
-                        let result = json.result;
-                        let message = json.message;
-                        notif(result, message);
-                        $('#hapus').attr('disabled',false);
-                    },
-                });
-            }
-        });
-    }
+        }
+    });
         
     function PrintNota(transaksi){
         const pembayaran = transaksi.db_pembayaran;
+        const durasi = [null, 'Menit', 'Hari', 'Minggu', 'Bulan', 'Tahun'];
         const base_url = $('input[name="base_url"]').val();
         var printContents = '<style type="text/css">'+
         '                    @page {'+
@@ -883,8 +947,8 @@
         '                           <p style="margin-bottom:2px;">'+pembayaran.nama_anggota+'</p>'+
         '                           <h4 style="margin:0;"><b>'+pembayaran.nama_paket+'</b></h4>'+
         '                           <div style="margin-bottom:3px;">'+FormatCurrency(pembayaran.total_harga,true)+'</div>'+
-        '                           <div>'+'Durasi 1 Hari'+'</div>'+
-        '                           <div>'+'Aktif 13-07-2023 s/d 14-07-2023'+'</div>'+
+        '                           <div> Durasi '+pembayaran.lama_durasi+' '+durasi[pembayaran.durasi_paket]+'</div>'+
+        '                           <div> Aktif '+(pembayaran.durasi_paket == 1 ? pembayaran.time_aktif : pembayaran.date_aktif)+'</div>'+
         '                       </td>'+
         '                    </tr>'+
         '                    <tr>'+
@@ -984,4 +1048,5 @@
             });
         }
     }
+
 })(jQuery);

@@ -40,7 +40,7 @@
                                                 <td width="20%;">Lokasi</td>
                                                 <td width="2%;">&nbsp;:&nbsp;</td>
                                                 <td>
-                                                    <select class="form-control form-rm" name="pilih-lokasi" id="pilih-lokasi" style="padding: 0.4rem 0.5rem !important;">
+                                                    <select class="form-control form-rm" name="pilih-lokasi" id="pilih-lokasi" style="padding: 0.4rem 0.5rem !important; height: 35px !important;">
                                                         <option value="0">Pilih Lokasi</option>
                                                         <?php foreach ($data_lokasi as $list){ ?>
                                                             <option value="<?= $list->id_lokasi ?>"><?= $list->nama_lokasi ?></option>
@@ -49,8 +49,15 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td width="20%;">Anggota</td>
-                                                <td width="2%;">&nbsp;:&nbsp;</td>
+                                                <td>Tgl Mulai</td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td>
+                                                    <input type="text" class="form-control input-full" id="tgl_paket" name="tgl_paket" placeholder="dd-mm-yyyy 00:00" value="<?= date("d-m-Y H:i") ?>" style="padding: 0.4rem 0.5rem !important;" required>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Anggota</td>
+                                                <td>&nbsp;:&nbsp;</td>
                                                 <td>
                                                     <div class="btn card-box full-width text-left" id="pilih-anggota" style="padding: 0.4rem 0.5rem !important;">
                                                         <span class="text-grey">Pilih Anggota</span>
@@ -58,8 +65,8 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td width="20%;">Paket Gym</td>
-                                                <td width="2%;">&nbsp;:&nbsp;</td>
+                                                <td>Paket Gym</td>
+                                                <td>&nbsp;:&nbsp;</td>
                                                 <td>
                                                     <div class="btn card-box full-width text-left" id="pilih-paket" style="padding: 0.4rem 0.5rem !important;">
                                                         <span class="text-grey">Pilih Paket</span>
@@ -176,9 +183,15 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card card-dark bg-info-gradient text-white" style="min-height:155px">
-                            <div class="card-body bubble-shadow">
+                        <div class="card card-dark bg-info-gradient text-white" style="min-height:191px">
+                            <div style="font-size:14px; padding:5px; background:#074D848A; text-align:center; margin:8px; color:white; border-radius:5px;">
+                                Detail Transaksi
+                            </div>
+                            <div class="card-body pt-2 bubble-shadow">
                                 <input type="hidden" id="id_anggota">
+                                <input type="hidden" id="id_paket_gym">
+                                <input type="hidden" id="tgl_mulai">
+                                <input type="hidden" id="tgl_akhir">
                                 <p class="text-card mb-2" id="tran-anggota" style="min-height:20px;"><!-- xxx --></p>
                                 <h3 class="fw-bold mb-0" id="tran-paket"><!-- xxx --></h3>
                                 <p class="mt-auto mb-1" id="tran-harga"><!-- xxx --></p>

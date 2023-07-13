@@ -745,60 +745,60 @@
                 }
             }
         }
+    }
     
-        $("body").on("click", "#penjualan-print", function (e) {
-            e.preventDefault();
-            let id_penjualan = $(this).data('id');
+    $("body").on("click", "#penjualan-print", function (e) {
+        e.preventDefault();
+        let id_penjualan = $(this).data('id');
+        $.ajax({
+            url: "transaksi/list_penjualan",
+            method: "POST",
+            dataType: "json",
+            data: {
+                id_penjualan: id_penjualan,
+            },
+            success: function(json) {
+                PrintNota(json);
+            },
+        });
+    });
+    
+    $("body").on("click", "#penjualan-remove", function (e) {
+        e.preventDefault();
+        let id_penjualan = $(this).data('id');
+        var data = $("#datatable-penjualan").DataTable().row($(this).parents("tr")).data();
+        var nota = data["nonota"];
+        $('input[name="id_penjualan"]').val(id_penjualan);
+        $('#alasan-hapus').val('');
+        $("#modal-hapus").modal();
+        document.getElementById("no-nota").innerHTML = nota;
+        $('#hapus-nota').attr('disabled',false);
+    });
+
+    $("body").on("click", "#hapus", function(e){
+        e.preventDefault();
+        if($("#form-alasan-hapus").valid()){
+            $('#hapus').attr('disabled',true);
+            $("#modal-hapus").modal('hide');
+            var id_penjualan = $('input[name="id_penjualan"]').val();
+            var alasan_hapus = $('#alasan-hapus').val();
             $.ajax({
-                url: "transaksi/list_penjualan",
+                url: 'transaksi/remove_penjualan',
                 method: "POST",
                 dataType: "json",
                 data: {
                     id_penjualan: id_penjualan,
+                    alasan_hapus: alasan_hapus,
                 },
-                success: function(json) {
-                    PrintNota(json);
+                success: function (json) {
+                    let result = json.result;
+                    let message = json.message;
+                    notif(result, message);
+                    $('#hapus').attr('disabled',false);
                 },
             });
-        });
-        
-        $("body").on("click", "#penjualan-remove", function (e) {
-            e.preventDefault();
-            let id_penjualan = $(this).data('id');
-            var data = $("#datatable-penjualan").DataTable().row($(this).parents("tr")).data();
-            var nota = data["nonota"];
-            $('input[name="id_penjualan"]').val(id_penjualan);
-            $('#alasan-hapus').val('');
-            $("#modal-hapus").modal();
-            document.getElementById("no-nota").innerHTML = nota;
-            $('#hapus-nota').attr('disabled',false);
-        });
-
-        $("body").on("click", "#hapus", function(e){
-            e.preventDefault();
-            if($("#form-alasan-hapus").valid()){
-                $('#hapus').attr('disabled',true);
-                $("#modal-hapus").modal('hide');
-                var id_penjualan = $('input[name="id_penjualan"]').val();
-                var alasan_hapus = $('#alasan-hapus').val();
-                $.ajax({
-                    url: 'transaksi/remove_penjualan',
-                    method: "POST",
-                    dataType: "json",
-                    data: {
-                        id_penjualan: id_penjualan,
-                        alasan_hapus: alasan_hapus,
-                    },
-                    success: function (json) {
-                        let result = json.result;
-                        let message = json.message;
-                        notif(result, message);
-                        $('#hapus').attr('disabled',false);
-                    },
-                });
-            }
-        });
-    }
+        }
+    });
         
     function PrintNota(transaksi){
         var detail_list_item = "";

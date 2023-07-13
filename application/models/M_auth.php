@@ -10,7 +10,7 @@ class M_auth extends CI_Model {
             WHERE a.status = 1
             AND a.tgl_login > a.tgl_logout 
             AND DATE(a.tgl_login) = '".date("Y-m-d")."'
-            WHERE a.id_office = ".$id_office." 
+            AND a.id_office = ".$id_office." 
             ORDER BY a.tgl_login desc
         ")->result();
         return $query;

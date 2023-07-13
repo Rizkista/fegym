@@ -222,6 +222,16 @@ class Transaksi extends CI_Controller {
 			];
 			$id_pembayaran  = $this->m_main->createIN('db_pembayaran',$data)['result'];
 
+			if($_POST['status_member'] == 1){
+				$anggota = [
+					'status_member' => $_POST['status_member'],
+					'tgl_member' => $_POST['tgl_mulai'],
+					'tgl_expired' => $_POST['tgl_akhir'],
+					'tgl_edit' => date("Y-m-d H:i:s"),
+				];
+				$this->m_main->updateIN('db_anggota','id_anggota',$_POST['id_anggota'],$anggota);
+			}
+
 			$output['detail'] = [
 				'id_pembayaran' => $id_pembayaran,
 				'nonota' => $nonota,
@@ -245,6 +255,8 @@ class Transaksi extends CI_Controller {
 				SELECT a.*, b.nama as operator, c.tipe_bayar,
 				d.nota_logo, d.nota_header, d.nota_footer,
 				e.nama_anggota, f.nama_paket,
+				CONCAT(DATE_FORMAT(a.tgl_mulai,'%d-%m-%Y'),' s/d ',DATE_FORMAT(a.tgl_akhir,'%d-%m-%Y')) as date_aktif, 
+				CONCAT(DATE_FORMAT(a.tgl_mulai,'%H:%i'),' s/d ',DATE_FORMAT(a.tgl_akhir,'%H:%i')) as time_aktif, 
 				DATE_FORMAT(a.tgl_pembayaran,'%d-%m-%Y') as tanggal, 
 				DATE_FORMAT(a.tgl_pembayaran,'%H:%i:%s') as waktu
 				FROM db_pembayaran a 

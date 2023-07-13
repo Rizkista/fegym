@@ -271,7 +271,6 @@ class Master extends CI_Controller {
 	public function list_paket(){
 		$id_lokasi = ID_POSISI == 3 ? ID_LOKASI : $_POST['id_lokasi'];
 		$paket = $this->m_auth->getListPaket(ID_OFFICE,$id_lokasi);
-		$durasi = [null, 'minute', 'day', 'week', 'month', 'year'];
 		$data = [];
 		foreach ($paket as $list) {
 			$row = [];
@@ -281,16 +280,34 @@ class Master extends CI_Controller {
 			$row['lama_durasi'] = $list->lama_durasi;
 			$row['harga_paket'] = $list->harga_paket;
 			$row['status_member'] = $list->status_member;
-			$row['tgl_mulai'] = date("Y-m-d H:i:s");
-			$row['tgl_akhir'] = date("Y-m-d H:i:s",strtotime("+".$list->lama_durasi." ".$durasi[$list->durasi_paket]));
-			$row['tgl_paket'] = 
-				$list->durasi_paket == 1 ? 
-				'Aktif '.date("H:i").' s/d '.date("H:i",strtotime("+".$list->lama_durasi." ".$durasi[$list->durasi_paket])): 
-				'Aktif '.date("d-m-Y").' s/d '.date("d-m-Y",strtotime("+".$list->lama_durasi." ".$durasi[$list->durasi_paket]));
 			$row['durasi'] = null;
 			$data[] = $row; 
 		}
 		$output = [ "data" => $data ];
 		echo json_encode($output);
+	}
+
+	public function durasi_paket(){
+		$durasi = [null, 'minute', 'day', 'week', 'month', 'year'];
+		$paket_gym = $this->m_main->getRow('db_paket_gym','id_paket_gym',$_POST['id_paket_gym']);
+		$tanggal = date_format(date_create($_POST['tanggal']),"Y-m-d H:i:s");
+		if($paket_gym){
+			$output = [
+				"result" => "success",
+				"tgl_mulai" => $tanggal,
+				"tgl_akhir" => date("Y-m-d H:i:s",strtotime($tanggal." +".$paket_gym['lama_durasi']." ".$durasi[$paket_gym['durasi_paket']])),
+				"tgl_paket" => 
+					(
+						$paket_gym['durasi_paket'] == 1 ? 
+						'Aktif '.date_format(date_create($_POST['tanggal']),"H:i").' s/d '.date("H:i",strtotime($tanggal." +".$paket_gym['lama_durasi']." ".$durasi[$paket_gym['durasi_paket']])): 
+						'Aktif '.date_format(date_create($_POST['tanggal']),"d-m-Y").' s/d '.date("d-m-Y",strtotime($tanggal." +".$paket_gym['lama_durasi']." ".$durasi[$paket_gym['durasi_paket']]))
+					)
+
+			];
+		}else{
+			$output['result'] = "error";
+		}
+        echo json_encode($output);
+        exit();
 	}
 }

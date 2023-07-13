@@ -123,7 +123,7 @@
                                                         <td>
                                                             <select class="form-control form-rm" name="status_member" id="status_member" required style="padding: 0.4rem 0.5rem !important;">
                                                                 <option value="">Pilih Status</option>
-                                                                <option value="1">YA</option>
+                                                                <option value="1">AKTIF</option>
                                                                 <option value="0">TIDAK</option>
                                                             </select>
                                                         </td>
