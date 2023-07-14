@@ -9836,7 +9836,7 @@ div.table-responsive
     height: unset;
     padding: 15px;
 }
-.login .wrapper.wrapper-login .left{
+.login .wrapper.wrapper-login .left {
     width: 60%;
     color: #ffffff;
     background-size: cover;
@@ -9847,6 +9847,24 @@ div.table-responsive
 .login .wrapper.wrapper-login .right {
     min-width: 40%;
     padding: 35px;
+    overflow: hidden;
+}
+.container-register {
+    flex-flow: wrap !important;
+    max-width: 55% !important;
+}
+.login .wrapper.wrapper-login .left-register {
+    width: 100%;
+    color: #ffffff;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("../../assets/img/bg-login.png");
+    overflow: hidden;
+}
+.login .wrapper.wrapper-login .right-register {
+    min-width: 100%;
+    margin-top: -53px;
+    padding: 20px;
     overflow: hidden;
 }
 .login .card-login {
@@ -9869,8 +9887,15 @@ div.table-responsive
 }
 .login .forgot-login {
     font-size: 11px;
+    text-align: right;
+    padding: 0 10px;
+}
+.login .information-text {
+    font-size: 11px;
     text-align: center;
-    margin-top: 5px;
+    padding: 0 10px;
+    margin-top: 4px;
+    color: #919191;
 }
 .login .logo-icon-login {
     display: block;
@@ -9879,11 +9904,19 @@ div.table-responsive
 .login .logo-icon-login img {
     height: 40px;
 }
+.login .logo-icon-login-register {
+    display: block;
+    text-align: center;
+    margin: 30px 0 70px;
+}
+.login .logo-icon-login-register img {
+    height: 50px;
+}
 .login .wrapper.wrapper-login .container-login,
 .login .wrapper.wrapper-login .container-signup {
     padding: 0;
     margin: 0 auto;
-    max-width: 70% !important;
+    max-width: 70%;
     background: #FFFFFF;
     border-radius: 15px;
     overflow: hidden;
@@ -9943,7 +9976,8 @@ div.table-responsive
     cursor: pointer;
 }
 .login .custom-control-label {
-    white-space: nowrap;
+    font-size: 11px !important;
+    color: #919191 !important;
 }
 @media screen and (max-width: 767px) {
     .login .wrapper.wrapper-login .container-login,
@@ -9968,7 +10002,7 @@ div.table-responsive
     .login .logo-icon-login {
         text-align: center;
         margin: 50px 0;
-      }
+    }
 }
 @media screen and (max-width: 576px) {
     .dis-i {

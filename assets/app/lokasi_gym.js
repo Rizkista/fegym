@@ -166,7 +166,6 @@
 		$('#alamat_lokasi').val('');
 		$('#nama').val('');
 		$('#email').val('');
-		$('#telp').val('');
 		$('#password').val('');
         $("#password").attr('required', '');
         $('input[name="edit_lokasi"]').attr("type", "hidden");
@@ -210,7 +209,6 @@
 		$('#alamat_lokasi').val(data["alamat_lokasi"]);
 		$('#nama').val(data["nama"]);
 		$('#email').val(data["email"]);
-		$('#telp').val(data["telp"]);
 		$('#password').val('');
         $("#password").removeAttr('required');
 		$('input[name="id_lokasi"]').val(id_lokasi);

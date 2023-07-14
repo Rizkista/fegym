@@ -51,7 +51,6 @@ class Master extends CI_Controller {
 				'id_office' => ID_OFFICE,
 				'nama' => $_POST['nama'],
 				'email' => $_POST['email'],
-				'telp' => $_POST['telp'],
 				'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
 				'pass_view' => $_POST['password'],
 				'tgl_input' => date("Y-m-d H:i:s"),

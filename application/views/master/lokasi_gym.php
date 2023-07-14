@@ -116,11 +116,6 @@
                                                         <td><input type="email" class="form-control form-rm" name="email" id="email" placeholder="Email"></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>No.Hp <span class="text-danger">*</span></td>
-                                                        <td>&nbsp;:&nbsp;</td>
-                                                        <td><input type="text" class="form-control form-rm" id="telp" name="telp" placeholder="No. Hp" required></td>
-                                                    </tr>
-                                                    <tr>
                                                         <td>Password </td>
                                                         <td>&nbsp;:&nbsp;</td>
                                                         <td><input type="text" class="form-control form-rm" id="password" name="password" placeholder="Password"></td>

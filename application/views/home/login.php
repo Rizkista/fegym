@@ -47,11 +47,17 @@
 									</div>
 								</div>
 							</div>
+							<div class="forgot-login">
+								<a href="#" class="link text-base">Lupa Password ?</a>
+							</div>
 							<div class="form-group text-center pb-0 mt-4">
 								<button type="submit" id="login" class="btn btn-login bg-darkblue-gradient text-white">LOGIN</button>
 							</div>
-							<div class="forgot-login">
-								<a href="#" id="lupa_password" class="link text-base">Lupa Password ?</a>
+							<div class="information-text">
+								Belum punya akun ? <a href="<?= base_url() ?>register" class="link text-base">Daftar</a>
+							</div>
+							<div class="information-text mt-0">
+								<a href="<?= base_url() ?>" class="link text-base">Kembali ke beranda</a>
 							</div>
 						</div>
 					</div>
@@ -68,12 +74,6 @@
 	<script src="<?= base_url() ?>assets/js/ready.js"></script>
 
 	<script>
-		$('#lupa_password').on('click', function(){
-			swal("Hubungi admin untuk merubah password",{
-				icon: "info",
-			});
-		});
-		
 		$("#login").on("click", function (e) {
 			e.preventDefault();
 			let email = $('input[name="email"]').val();
@@ -98,8 +98,8 @@
 				});
 			} else{
 				$.ajax({
+					url: "home/aksi_login",
 					type: "POST",
-					url: "home/login",
 					dataType: "json",
 					data: {
 						'email': email,
