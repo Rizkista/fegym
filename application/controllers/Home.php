@@ -30,6 +30,10 @@ class Home extends CI_Controller {
 	public function register(){
 		$this->load->view('home/register');
 	}
+	
+	public function lupa_password(){
+		$this->load->view('home/lupa_password');
+	}
 
 	public function logout(){
 		if($this->session->userdata('id_account')){
@@ -198,4 +202,21 @@ class Home extends CI_Controller {
 		exit();
 	}
 
+	public function aksi_lupa_password(){
+		$account = $this->m_main->getRow('db_account','email',$_POST['email']);
+		if($account){
+			if($account['id_posisi'] != 3){
+				//Aksi kirim email ubah password
+				$output['message'] = "Pemulihan password berhasil dikirm, cek pesan masuk atau spam pada email ".$_POST['email'];
+				$output['result'] = "success";
+			}else{
+				$output['message'] = "Hubungi owner perusahaan untuk me-reset password akun admin Anda!";
+				$output['result'] = "error";
+			}
+		}else{
+			$output['message'] = "Email Anda tidak terdaftar!";
+			$output['result'] = "error";
+		}
+		echo json_encode($output);
+	}
 }

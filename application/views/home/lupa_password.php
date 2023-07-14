@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-	<title>Login Account</title>
+	<title>Lupa Password</title>
 	<meta content="" name="description">
 	<meta content="" name="keywords">
 
@@ -31,33 +31,19 @@
 				</div>
 				<div class="right">
 					<div class="card-login">
-						<h1 class="text-dark-blue text-center mb-1">USER LOGIN</h1>
+						<h1 class="text-dark-blue text-center mb-1">LUPA PASSWORD</h1>
 						<h6 class="text-base text-center mb-5" style="font-size:11px">Gym Management System</h6>
+						<div class="card-sub text-center alert-login m-0 p-2 mb-3" style="font-size:11px">Inputkan email Anda, sistem <br> akan mengirim tautan ke pada Anda.</div>
 						<div class="login-form">
-							<div class="form-group">
+                            <div class="form-group">
 								<label>Email</label>
 								<input type="email" class="form-control input-pill" id="email" name="email" required>
 							</div>
-							<div class="form-group">
-								<label>Password</label>
-								<div class="position-relative">
-								<input type="password" class="form-control input-pill" id="password" name="password" required>
-									<div class="show-password">
-										<i class="flaticon-interface"></i>
-									</div>
-								</div>
-							</div>
-							<div class="forgot-login">
-								<a href="<?= base_url() ?>lupa-password" class="link text-base">Lupa Password ?</a>
-							</div>
 							<div class="form-group text-center pb-0 mt-4">
-								<button type="submit" id="login" class="btn btn-login bg-darkblue-gradient text-white">LOGIN</button>
+								<button type="submit" id="kirim-email" class="btn btn-login bg-darkblue-gradient text-white">Kirim Email</button>
 							</div>
 							<div class="information-text">
-								Belum punya akun ? <a href="<?= base_url() ?>register" class="link text-base">Daftar</a>
-							</div>
-							<div class="information-text mt-0">
-								<a href="<?= base_url() ?>" class="link text-base">Kembali ke beranda</a>
+								<a href="<?= base_url() ?>login" class="link text-base">Kembali ke menu Login</a>
 							</div>
 						</div>
 					</div>
@@ -74,10 +60,9 @@
 	<script src="<?= base_url() ?>assets/js/ready.js"></script>
 
 	<script>
-		$("#login").on("click", function (e) {
+		$("#kirim-email").on("click", function (e) {
 			e.preventDefault();
 			let email = $('input[name="email"]').val();
-			let password = $('input[name="password"]').val();
 			if(email == ""){
 				swal("Gagal","Email tidak boleh kosong!",{
 					icon: "error",
@@ -87,23 +72,13 @@
 						},
 					},
 				});
-			} else if(password == ""){
-				swal("Gagal","Password tidak boleh kosong!",{
-					icon: "error",
-					buttons:{
-						confirm:{
-							className: "btn btn-danger btn-sm",
-						},
-					},
-				});
 			} else{
 				$.ajax({
-					url: "home/aksi_login",
+					url: "home/aksi_lupa_password",
 					type: "POST",
 					dataType: "json",
 					data: {
 						'email': email,
-						'password': password,
 					},
 					success: function(output){
 						let message = output.message;
@@ -119,7 +94,15 @@
 								},
 							});
 						}else{
-							document.location.href = message + 'dashboard';
+							$('input[name="email"]').val('');
+							swal("Berhasil",message,{
+								icon: "success",
+								buttons:{
+									confirm:{
+										className: "btn btn-success",
+									},
+								},
+							});
 						}
 					}
 				});

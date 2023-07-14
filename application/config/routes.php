@@ -8,6 +8,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'home/login';
 $route['logout'] = 'home/logout';
 $route['register'] = 'home/register';
+$route['lupa-password'] = 'home/lupa_password';
 
 $route['dashboard'] = 'menu/dashboard';
 $route['anggota'] = 'menu/anggota';
