@@ -29,6 +29,7 @@ class Menu extends CI_Controller {
 			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
 			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
 			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
+			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
 			$this->load->view('dashboard/dashboard_'.ID_POSISI);
 			$this->load->view('layout/footer');

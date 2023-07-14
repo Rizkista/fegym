@@ -16,6 +16,7 @@
             </li>
         </ul>
     </div>
+    
     <div class="row">
         <div class="col-md-5">
             <div class="row">
@@ -72,6 +73,7 @@
                         <a class="pointer mr-1" id="cc">
                             <i class="far fa-calendar-alt"></i>
                         </a>
+                        <input type="text" class="input-date-hide" id="date-grafik-statistik-pendaftaran" readonly>
                         <b>Statistik Pendaftaran</b>
                     </div>
                     <div id="grafik-statistik-pendaftaran" style="width:100%; height:273px;"></div>

@@ -71,7 +71,7 @@
 			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark2">
 				<div class="container-fluid">
 					<div class="collapse left-nav">
-						<h3 class="fw-bold mb-0" style="margin-top:-4px;"><?= $office['nama_office'] ?></h3>
+						<h3 class="fw-bold mb-0" style="margin-top:-4px;"><?= $office ? $office['nama_office'] : 'Developer Sistem' ?></h3>
 						<h6 class="fw-bold mb-0 text-10-gray mt-1" style="margin-left:1px;" style="margin-top:4px;">
 							<span class="<?= !$lokasi ? 'none' : '' ?> mr-2">
 								<i class="fas fa-map-pin mr-2"></i><?= $lokasi ? $lokasi['nama_lokasi'] : '' ?>
