@@ -3562,7 +3562,7 @@ label.error {
     width: 25px;
     height: 25px;
     line-height: 25px;
-    top: 12px !important;
+    margin-top: -3px;
     border-radius: 50%;
 }
 .alert-danger,
@@ -3573,10 +3573,10 @@ label.error {
 .alert-success,
 .alert-warning {
     color: inherit;
-    background-color: #d0ffd7;
-    -webkit-box-shadow: 1px 1px 14px 0 rgba(110, 50, 128, 0.31);
-    -moz-box-shadow: 1px 1px 14px 0 rgba(110, 50, 128, 0.31);
-    box-shadow: 1px 1px 14px 0 rgba(110, 50, 128, 0.31);
+    margin-bottom: 30px;
+    -webkit-box-shadow: 0 1px 15px 1px rgba(69,65,78,.08);
+    -moz-box-shadow: 0 1px 15px 1px rgba(69,65,78,.08);
+    box-shadow: 0 1px 15px 1px rgba(69,65,78,.08);
 }
 .btn {
     padding: 0.6rem 1rem;
@@ -10267,6 +10267,9 @@ hr {
     padding: 4px;
     font-size: 13px;
     color: #fff;
+}
+.text-12px {
+    font-size: 12px !important;
 }
 .text-10-gray {
     font-size: 10px;

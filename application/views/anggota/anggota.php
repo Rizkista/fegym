@@ -54,13 +54,14 @@
             <table id="datatable-anggota" class="table-responsive display table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th style="width:5%;">No</th>
-                        <th style="width:25%;">Nama</th>
-                        <th style="width:5%;">Gender</th>
+                        <th style="width:2%;">No</th>
+                        <th style="width:5%;">Kode</th>
+                        <th style="width:20%;">Nama</th>
+                        <th style="width:5%;">JK</th>
                         <th style="width:10%;">No.Hp</th>
                         <th style="width:15%;">Email</th>
                         <th style="width:25%;">Alamat</th>
-                        <th style="width:25%;">Member</th>
+                        <th style="width:30%;">Member</th>
                         <th style="width:10%;">Lokasi</th>
                         <th style="width:5%;">Aksi</th>
                     </tr>

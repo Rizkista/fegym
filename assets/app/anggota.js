@@ -16,7 +16,7 @@
         ],
         columnDefs: [
             {
-                "targets": [0,1,2,3,6,7,8],
+                "targets": [0,1,2,3,4,7,8,9],
                 "orderable": false,
                 "visible": true
             },
@@ -63,7 +63,7 @@
                 className: "btn btn-secondary wid-max-select text-white",
                 text: '<i class="fas fa-file-excel mr-2"></i> Excel',
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7],
+                    columns: [0,1,2,3,4,5,6,8],
                 },
                 filename: 'Data Anggota Gim '+$('#filter-lokasi option:selected').text(),
                 title: ''
@@ -78,6 +78,7 @@
         ],
         columns: [
             { data: "No" },
+            { data: "kode_anggota" },
             { data: "nama_anggota" },
             { data: "gender_anggota" },
             { data: "telp_anggota" },
@@ -138,16 +139,16 @@
         var cbg = $('select[name="filter-lokasi"]').val().toLowerCase();
         $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
             if (~data[1].toLowerCase().indexOf(src) && 
-                ~data[10].toLowerCase().indexOf(cbg) &&
-                ~data[9].toLowerCase().indexOf(sta))
+                ~data[11].toLowerCase().indexOf(cbg) &&
+                ~data[10].toLowerCase().indexOf(sta))
                 return true;
-            if (~data[4].toLowerCase().indexOf(src) && 
-                ~data[10].toLowerCase().indexOf(cbg) &&
-                ~data[9].toLowerCase().indexOf(sta))
+            if (~data[2].toLowerCase().indexOf(src) && 
+                ~data[11].toLowerCase().indexOf(cbg) &&
+                ~data[10].toLowerCase().indexOf(sta))
                 return true;
-            if (~data[5].toLowerCase().indexOf(src) && 
-                ~data[10].toLowerCase().indexOf(cbg) &&
-                ~data[9].toLowerCase().indexOf(sta))
+            if (~data[7].toLowerCase().indexOf(src) && 
+                ~data[11].toLowerCase().indexOf(cbg) &&
+                ~data[10].toLowerCase().indexOf(sta))
                 return true;
                 
             return false;

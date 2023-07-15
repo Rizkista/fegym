@@ -23,15 +23,31 @@ class Anggota extends CI_Controller {
 		$data = [];
 		$no = 0;
 		foreach ($anggota as $list) {
+			$sisa = date_diff(date_create(date('Y-m-d H:i:s')),date_create($list->tgl_expired))->format('%R%a');
+			if($list->status_member == 1){
+				$member = 
+				'<span class="text-12px"><i>'.
+				$list->paket_gym.
+				' <sup><b><font color="#F3545D">'.
+				($list->tgl_expired < date('Y-m-d H:i:s') ? 'EXPIRED' : 'AKTIF').
+				'</font></b></sup><br>'.
+				date_format(date_create($list->tgl_member),"d-m-Y").
+				' s/d '.
+				date_format(date_create($list->tgl_expired),"d-m-Y").
+				' (Sisa: '.($sisa > 0 ? $sisa : 0).' Hari)</i></span>';
+			}else{
+				$member = 'TIDAK';
+			}
             $no++;
             $row = [];
             $row['No'] = $no;
+            $row['kode_anggota'] = $list->kode_anggota;
             $row['nama_anggota'] = $list->nama_anggota;
             $row['gender_anggota'] = $list->gender_anggota;
             $row['telp_anggota'] = $list->telp_anggota;
             $row['email_anggota'] = $list->email_anggota;
             $row['alamat_anggota'] = $list->alamat_anggota;
-            $row['status_member'] = $list->status_member == 1 ? 'AKTIF' : 'TIDAK';
+            $row['status_member'] = $member;
             $row['nama_lokasi'] = $list->nama_lokasi;
             $row['id_lokasi'] = $list->id_lokasi;
             $row['status'] = $list->status == 1 ? 'aktif-' : 'hapus-';
@@ -46,9 +62,20 @@ class Anggota extends CI_Controller {
 	public function add_anggota(){
 		$cekData = $this->m_main->cekData('db_anggota','telp_anggota',$_POST['telp_anggota']);
 		if(!$cekData){
+			$kode_office = $this->m_main->getRow('db_office','id_office',ID_OFFICE)['kode_office'];
+			$cek_kode = $this->m_main->runQueryRow('
+				SELECT * 
+				FROM db_anggota 
+				WHERE kode_anggota LIKE "'.$kode_office.'%" 
+				AND id_office = '.ID_OFFICE.' 
+				ORDER BY kode_anggota DESC
+			');
+			$last_kode = $cek_kode ? intval(str_replace($kode_office,'',$cek_kode['kode_anggota'])) : 0;
+			$kode_anggota = $kode_office.sprintf("%06d", ($last_kode+1));
 			$data = [
 				'id_office' => ID_OFFICE,
 				'id_lokasi' => $_POST['id_lokasi'] ? $_POST['id_lokasi'] : (ID_LOKASI != '' ? ID_LOKASI : 1),
+				'kode_anggota' => $kode_anggota,
 				'nama_anggota' => $_POST['nama_anggota'],
 				'gender_anggota' => $_POST['gender_anggota'],
 				'telp_anggota' => $_POST['telp_anggota'],
@@ -138,6 +165,7 @@ class Anggota extends CI_Controller {
 		foreach ($anggota as $list) {
             $row = [];
             $row['id_anggota'] = $list->id_anggota;
+            $row['kode_anggota'] = $list->kode_anggota;
             $row['nama_anggota'] = $list->nama_anggota;
             $row['gender_anggota'] = $list->gender_anggota;
             $row['telp_anggota'] = $list->telp_anggota;

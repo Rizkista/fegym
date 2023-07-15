@@ -551,8 +551,8 @@
                     <table id="datatable-list-anggota" class="table-responsive display table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th style="width:60%;" class="nowraping">Nama Anggota</th>
-                                <th style="width:35%;">No.Hp</th>
+                                <th style="width:20%;">Kode</th>
+                                <th style="width:75%;" class="nowraping">Nama Anggota</th>
                                 <th style="width:10%;">Member</th>
                             </tr>
                         </thead>

@@ -109,6 +109,7 @@ class Home extends CI_Controller {
 						if(!$email_admin){
 							$office = [
 								'id_kategori' => 3,
+								'kode_office' => strtoupper(substr($_POST['nama_office'], 0, 3)),
 								'nama_office' => $_POST['nama_office'],
 								'email_office' => $_POST['email_office'],
 								'telp_office' => $_POST['telp_office'],

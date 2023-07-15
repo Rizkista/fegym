@@ -185,10 +185,10 @@
             dom: 'Brt'+"<'row'<'col-sm-12'p>>",
             language: { emptyTable: "Tidak ada daftar anggota", },
             columns: [
+                { data: "kode_anggota" },
                 { data: "nama_anggota" , render: function(data, type, row, meta) {
                     return data+' ['+row['gender_anggota']+']';
                 }},
-                { data: "telp_anggota" },
                 { data: "status_member" , render : function ( data, type, row, meta ) {
                     return data == 1 ? 'AKTIF' : 'TIDAK';
                 }},
@@ -248,6 +248,7 @@
         if(list != undefined){
             $('#id_paket_gym').val(list['id_paket_gym']);
             data_paket = [{
+                nama_paket : list['nama_paket'],
                 harga_paket : list['harga_paket'],
                 durasi_paket : list['durasi_paket'],
                 lama_durasi : list['lama_durasi'],
@@ -466,6 +467,7 @@
             let dibayar = 0;
             let kembalian = 0;
 
+            let nama_paket = data_paket[0].nama_paket;
             let total_harga = data_paket[0].harga_paket;
             let durasi_paket = data_paket[0].durasi_paket;
             let lama_durasi = data_paket[0].lama_durasi;
@@ -538,6 +540,7 @@
             $('#nt-amount').html(FormatCurrency(total_transaksi,true));
 
             var data = {
+                nama_paket : nama_paket,
                 id_lokasi : id_lokasi,
                 id_tipe_bayar : id_tipe_bayar,
                 id_anggota : id_anggota,

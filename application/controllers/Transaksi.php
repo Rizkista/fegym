@@ -224,6 +224,7 @@ class Transaksi extends CI_Controller {
 
 			if($_POST['status_member'] == 1){
 				$anggota = [
+					'paket_gym' => $_POST['nama_paket'],
 					'status_member' => $_POST['status_member'],
 					'tgl_member' => $_POST['tgl_mulai'],
 					'tgl_expired' => $_POST['tgl_akhir'],
