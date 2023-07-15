@@ -458,21 +458,82 @@
     <div class="modal-dialog modal-xs" role="document">
         <div class="modal-content">
             <div class="card m-0 p-2">
-                <div class="box-bg-grey p-1 mb-2">
+                <div class="box-bg-grey p-1 mb-2 d-flex">
                     <input type="text" class="form-control" name="list-search-paket" id="list-search-paket" placeholder="Cari">
+                    <input class="btn btn-secondary btn-new-data ml-1" type="button" id="new_paket" value="new" readonly>
                 </div>
-                <table id="datatable-list-paket" class="table-responsive display table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width:60%;">Paket</th>
-                            <th style="width:15%;">Harga</th>
-                            <th style="width:15%;">Durasi</th>
-                            <th style="width:15%;">Member</th>
-                        </tr>
-                    </thead>
-                    <tbody class="cursor-cell">
-                    </tbody>
-                </table>
+                <div class="paket-show">
+                    <table id="datatable-list-paket" class="table-responsive display table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width:60%;">Paket</th>
+                                <th style="width:15%;">Harga</th>
+                                <th style="width:15%;">Durasi</th>
+                                <th style="width:15%;">Member</th>
+                            </tr>
+                        </thead>
+                        <tbody class="cursor-cell">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="paket-new none">
+                    <form id="form-paket" novalidate="novalidate" enctype="multipart/form-data" accept-charset="utf-8">
+                        <div class="card-body">
+                            <div class="box-bg-grey">
+                                <div class="table-responsive">
+                                    <table class="mb-0" width="100%">
+                                        <tbody class="nowraping">
+                                            <tr>
+                                                <td width="10%">Nama Paket <span class="text-danger">*</span></td>
+                                                <td width="2%">&nbsp;:&nbsp;</td>
+                                                <td><input type="text" class="form-control form-rm" name="nama_paket" id="nama_paket" placeholder="Nama Paket" required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Harga (IDR) <span class="text-danger">*</span></td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td><input type="text" class="form-control form-rm" name="harga_paket" id="harga_paket" placeholder="0" data-type="currency" required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Durasi Paket <span class="text-danger">*</span></td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td>
+                                                    <select class="form-control form-rm" name="durasi_paket" id="durasi_paket" required style="padding: 0.4rem 0.5rem !important;">
+                                                        <option value="">Pilih Durasi</option>
+                                                        <option value="1">MINUTE</option>
+                                                        <option value="2">DAY</option>
+                                                        <option value="3">WEEK</option>
+                                                        <option value="4">MONTH</option>
+                                                        <option value="5">YEAR</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Lama Durasi <span class="text-danger">*</span></td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td><input type="number" class="form-control form-rm" name="lama_durasi" id="lama_durasi" min="0" placeholder="0" required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Status Member <span class="text-danger">*</span></td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td>
+                                                    <select class="form-control form-rm" name="status_member" id="status_member" required style="padding: 0.4rem 0.5rem !important;">
+                                                        <option value="">Pilih Status</option>
+                                                        <option value="1">AKTIF</option>
+                                                        <option value="0">TIDAK</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="text-right mt-2">
+                                <button class="btn btn-danger btn-sm" type="button" id="back_paket">Kembali</button>
+                                <button class="btn btn-success btn-sm" type="button" id="save_paket">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -482,20 +543,84 @@
     <div class="modal-dialog modal-xs" role="document">
         <div class="modal-content">
             <div class="card m-0 p-2">
-                <div class="box-bg-grey p-1 mb-2">
+                <div class="box-bg-grey p-1 mb-2 d-flex">
                     <input type="text" class="form-control" name="list-search-anggota" id="list-search-anggota" placeholder="Cari">
+                    <input class="btn btn-secondary btn-new-data ml-1" type="button" id="new_anggota" value="new" readonly>
                 </div>
-                <table id="datatable-list-anggota" class="table-responsive display table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width:60%;" class="nowraping">Nama Anggota</th>
-                            <th style="width:35%;">No.Hp</th>
-                            <th style="width:10%;">Member</th>
-                        </tr>
-                    </thead>
-                    <tbody class="cursor-cell">
-                    </tbody>
-                </table>
+                <div class="anggota-show">
+                    <table id="datatable-list-anggota" class="table-responsive display table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width:60%;" class="nowraping">Nama Anggota</th>
+                                <th style="width:35%;">No.Hp</th>
+                                <th style="width:10%;">Member</th>
+                            </tr>
+                        </thead>
+                        <tbody class="cursor-cell">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="anggota-new none">
+                    <form id="form-anggota" novalidate="novalidate" enctype="multipart/form-data" accept-charset="utf-8">
+                        <div class="card-body">
+                            <div class="box-bg-grey">
+                                <div class="table-responsive">
+                                    <table class="mb-0" width="100%">
+                                        <tbody class="nowraping">
+                                            <tr>
+                                                <td style="width:10%;">Nama <span class="text-danger">*</span></td>
+                                                <td style="width:2%;">&nbsp;:&nbsp;</td>
+                                                <td><input type="text" class="form-control form-rm" id="nama_anggota" name="nama_anggota" placeholder="Nama" required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gender <span class="text-danger">*</span></td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td>
+                                                    <select class="form-control form-rm" name="gender_anggota" id="gender_anggota" style="padding: 0.4rem 0.5rem !important;" required>
+                                                        <option value="">Pilih Gender</option>
+                                                        <option value="L">L</option>
+                                                        <option value="P">P</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>No. Hp <span class="text-danger">*</span></td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td><input type="text" class="form-control form-rm" id="telp_anggota" name="telp_anggota" placeholder="No. Hp" required></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td><input type="email" class="form-control form-rm" id="email_anggota" name="email_anggota" placeholder="Email"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Alamat</td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td><textarea class="form-control" name="alamat_anggota" id="alamat_anggota" placeholder="Alamat" style="padding: 0.25rem 0.5rem; min-height: 92px;"></textarea></td>
+                                            </tr>
+                                            <tr class="lok-edit">
+                                                <td>Lokasi Gym <span class="text-danger">*</span></td>
+                                                <td>&nbsp;:&nbsp;</td>
+                                                <td>
+                                                    <select class="form-control form-rm" name="id_lokasi" id="id_lokasi" required style="padding: 0.4rem 0.5rem !important;">
+                                                        <option value="">Pilih Lokasi</option>
+                                                        <?php foreach ($data_lokasi as $list){ ?>
+                                                            <option value="<?= $list->id_lokasi ?>"><?= $list->nama_lokasi ?></option>
+                                                        <?php } ?> 
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="text-right mt-2">
+                                <button class="btn btn-danger btn-sm" type="button" id="back_anggota">Kembali</button>
+                                <button class="btn btn-success btn-sm" type="button" id="save_anggota">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

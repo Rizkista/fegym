@@ -10853,3 +10853,8 @@ hr {
 .card-success-2{
     background: #35cd3a29;
 }
+.btn-new-data {
+    padding: 0.55rem 1rem;
+    border-radius: 0.25rem;
+    border-color: #dcdcdc !important;
+}

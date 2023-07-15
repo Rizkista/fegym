@@ -60,7 +60,7 @@
                         <th style="width:10%;">No.Hp</th>
                         <th style="width:15%;">Email</th>
                         <th style="width:25%;">Alamat</th>
-                        <th style="width:5%;">Member</th>
+                        <th style="width:25%;">Member</th>
                         <th style="width:10%;">Lokasi</th>
                         <th style="width:5%;">Aksi</th>
                     </tr>
@@ -112,14 +112,14 @@
                                                     <td><input type="text" class="form-control form-rm" id="telp_anggota" name="telp_anggota" placeholder="No. Hp" required></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Email <span class="text-danger">*</span></td>
+                                                    <td>Email</td>
                                                     <td>&nbsp;:&nbsp;</td>
                                                     <td><input type="email" class="form-control form-rm" id="email_anggota" name="email_anggota" placeholder="Email"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Alamat <span class="text-danger">*</span></td>
+                                                    <td>Alamat</td>
                                                     <td>&nbsp;:&nbsp;</td>
-                                                    <td><textarea class="form-control" name="alamat_anggota" id="alamat_anggota" placeholder="Alamat" style="padding: 0.25rem 0.5rem; min-height: 92px;" required></textarea></td>
+                                                    <td><textarea class="form-control" name="alamat_anggota" id="alamat_anggota" placeholder="Alamat" style="padding: 0.25rem 0.5rem; min-height: 92px;"></textarea></td>
                                                 </tr>
                                                 <tr class="lok-edit">
                                                     <td>Lokasi Gym <span class="text-danger">*</span></td>

@@ -49,11 +49,41 @@
 
     $('#pilih-anggota').on('click',function(){
         $("#modal-anggota").modal();
+		const id_posisi = $('input[name="id_posisi"]').val();
+        if(id_posisi == 3){
+            $(".lok-edit").addClass('gone');
+            $("#id_lokasi").removeAttr('required');
+        }else{
+            $(".lok-edit").removeClass('gone');
+            $("#id_lokasi").attr('required', '');
+        }
+        $(".anggota-show").removeClass('none');
+        $(".anggota-new").addClass('none');
+		$('#id_lokasi').val('');
+		$('#nama_anggota').val('');
+        $('#gender_anggota').val('');
+		$('#telp_anggota').val('');
+		$('#email_anggota').val('');
+		$('#alamat_anggota').val('');
         list_transaksi();
     });
 
     $('#pilih-paket').on('click',function(){
         $("#modal-paket").modal();
+		const id_posisi = $('input[name="id_posisi"]').val();
+        const id_lokasi = $('#pilih-lokasi').val();
+        if(id_posisi != 3 && id_lokasi == 0){
+            $("#new_paket").prop('disabled', true);
+        }else{
+            $("#new_paket").prop('disabled', false);
+        }
+        $(".paket-show").removeClass('none');
+        $(".paket-new").addClass('none');
+		$('#nama_paket').val('');
+		$('#harga_paket').val('');
+		$('#durasi_paket').val('');
+		$('#lama_durasi').val('');
+		$('#status_member').val('');
         list_transaksi();
     });
     
@@ -153,7 +183,7 @@
                 }
             ],
             dom: 'Brt'+"<'row'<'col-sm-12'p>>",
-            language: { emptyTable: id_posisi != 3 && id_lokasi == 0 ? "Pilih lokasi terlebih dahulu" : "Tidak ada daftar paket gym", },
+            language: { emptyTable: "Tidak ada daftar anggota", },
             columns: [
                 { data: "nama_anggota" , render: function(data, type, row, meta) {
                     return data+' ['+row['gender_anggota']+']';
@@ -190,62 +220,66 @@
 
     $('#datatable-list-anggota tbody').on( 'click', 'tr', function () {
         var list = $('#datatable-list-anggota').DataTable().row(this).data();
-        $('#id_anggota').val(list['id_anggota']);
-        $('#pilih-anggota').html(list['nama_anggota']);
-        $('#tran-anggota').html('Anggota : '+list['nama_anggota']);
-        $('#nt-tran-anggota').html(list['nama_anggota']);
-        $("#modal-anggota").modal('hide');
-        $.notify({
-            icon: 'fa fa-check',
-            title: 'Success',
-            message: 'Anggota atas nama "'+list['nama_anggota']+'" berhasil dipilih.',
-        },{
-            type: 'success',
-            placement: {
-                from: 'top',
-                align: 'right'
-            },
-            time: 500,
-            delay: 2000,
-        });
+        if(list != undefined){
+            $('#id_anggota').val(list['id_anggota']);
+            $('#pilih-anggota').html(list['nama_anggota']);
+            $('#tran-anggota').html('Anggota : '+list['nama_anggota']);
+            $('#nt-tran-anggota').html(list['nama_anggota']);
+            $("#modal-anggota").modal('hide');
+            $.notify({
+                icon: 'fa fa-check',
+                title: 'Success',
+                message: 'Anggota atas nama "'+list['nama_anggota']+'" berhasil dipilih.',
+            },{
+                type: 'success',
+                placement: {
+                    from: 'top',
+                    align: 'right'
+                },
+                time: 500,
+                delay: 2000,
+            });
+        }
     });
 
     let data_paket = [];
     $('#datatable-list-paket tbody').on( 'click', 'tr', function () {
         var list = $('#datatable-list-paket').DataTable().row(this).data();
-        $('#id_paket_gym').val(list['id_paket_gym']);
-        data_paket = [{
-            harga_paket : list['harga_paket'],
-            durasi_paket : list['durasi_paket'],
-            lama_durasi : list['lama_durasi'],
-            status_member : list['status_member'],
-        }];
-        durasi_tanggal();
-        countTransaksi();
-        const durasi = [null, 'Menit', 'Hari', 'Minggu', 'Bulan', 'Tahun'];
-        $('#pilih-paket').html(list['nama_paket']);
-        $('#nt-tran-paket').html(list['nama_paket']);
-        $('#nt-tran-harga').html(FormatCurrency(list['harga_paket'],true));
-        $('#nt-tran-durasi').html('Durasi '+list['lama_durasi']+' '+durasi[list['durasi_paket']]);
-        $('#tran-paket').html(list['nama_paket']);
-        $('#tran-harga').html('<sup><font class="fw-bold">Rp </font></sup>'+FormatCurrency(list['harga_paket']));
-        $('#tran-durasi').html('Durasi '+list['lama_durasi']+' '+durasi[list['durasi_paket']]);
-        $('#tran-member').html(list['status_member'] == 1 ? 'AKTIF' : 'TIDAK');
-        $('#tran-mtext').html('MEMBER');
-        $("#modal-paket").modal('hide');
-        $.notify({
-            icon: 'fa fa-check',
-            title: 'Success',
-            message: 'Paket gym "'+list['nama_paket']+'" berhasil dipilih.',
-        },{
-            type: 'success',
-            placement: {
-                from: 'top',
-                align: 'right'
-            },
-            time: 500,
-            delay: 2000,
-        });
+        if(list != undefined){
+            $('#id_paket_gym').val(list['id_paket_gym']);
+            data_paket = [{
+                harga_paket : list['harga_paket'],
+                durasi_paket : list['durasi_paket'],
+                lama_durasi : list['lama_durasi'],
+                status_member : list['status_member'],
+            }];
+            durasi_tanggal();
+            countTransaksi();
+            const durasi = [null, 'Menit', 'Hari', 'Minggu', 'Bulan', 'Tahun'];
+            $('#pilih-paket').html(list['nama_paket']);
+            $('#nt-tran-paket').html(list['nama_paket']);
+            $('#nt-tran-harga').html(FormatCurrency(list['harga_paket'],true));
+            $('#nt-tran-durasi').html('Durasi '+list['lama_durasi']+' '+durasi[list['durasi_paket']]);
+            $('#tran-paket').html(list['nama_paket']);
+            $('#tran-harga').html('<sup><font class="fw-bold">Rp </font></sup>'+FormatCurrency(list['harga_paket']));
+            $('#tran-durasi').html('Durasi '+list['lama_durasi']+' '+durasi[list['durasi_paket']]);
+            $('#tran-member').html(list['status_member'] == 1 ? 'AKTIF' : 'TIDAK');
+            $('#tran-mtext').html('MEMBER');
+            $("#modal-paket").modal('hide');
+            $.notify({
+                icon: 'fa fa-check',
+                title: 'Success',
+                message: 'Paket gym "'+list['nama_paket']+'" berhasil dipilih.',
+            },{
+                type: 'success',
+                placement: {
+                    from: 'top',
+                    align: 'right'
+                },
+                time: 500,
+                delay: 2000,
+            });
+        }
     });
 
     function durasi_tanggal(){
@@ -634,6 +668,9 @@
                                     $("#print_trans").attr("data-id",detail.id_pembayaran);
                                 }else{
                                     notif(result, message);
+                                    if(result == 'success'){
+                                        $('#datatable-pembayaran').DataTable().ajax.reload();
+                                    }
                                 }
                             },
                         });
@@ -872,7 +909,98 @@
                     let result = json.result;
                     let message = json.message;
                     notif(result, message);
+                    if(result == 'success'){
+                        $('#datatable-pembayaran').DataTable().ajax.reload();
+                    }
                     $('#hapus').attr('disabled',false);
+                },
+            });
+        }
+    });
+
+    $("#new_anggota").on("click", function(){
+        $(this).prop('disabled', true);
+        $(".anggota-show").addClass('none');
+        $(".anggota-new").removeClass('none');
+		$('#id_lokasi').val('');
+		$('#nama_anggota').val('');
+        $('#gender_anggota').val('');
+		$('#telp_anggota').val('');
+		$('#email_anggota').val('');
+		$('#alamat_anggota').val('');
+    });
+    $("#back_anggota").on("click", function(){
+        $("#new_anggota").prop('disabled', false);
+        $(".anggota-show").removeClass('none');
+        $(".anggota-new").addClass('none');
+    });
+    $("#save_anggota").on("click", function(){
+        let validasi = document.getElementById("form-anggota").reportValidity();
+        if (validasi) {
+            $('#save_anggota').prop('disabled', true);
+            var formData = new FormData(document.querySelector("#form-anggota"));
+            $.ajax({
+                url: "anggota/add_anggota",
+                method: "POST",
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (json) {
+                    let result = json.result;
+                    let message = json.message;
+                    notif(result, message);
+                    if(result == 'success'){
+                        $("#new_anggota").prop('disabled', false);
+                        $(".anggota-show").removeClass('none');
+                        $(".anggota-new").addClass('none');
+                        $('#datatable-list-anggota').DataTable().ajax.reload();
+                    }
+                    $('#save_anggota').prop('disabled', false);
+                },
+            });
+        }
+    });
+
+    $("#new_paket").on("click", function(){
+        $(this).prop('disabled', true);
+        $(".paket-show").addClass('none');
+        $(".paket-new").removeClass('none');
+		$('#nama_paket').val('');
+		$('#harga_paket').val('');
+		$('#durasi_paket').val('');
+		$('#lama_durasi').val('');
+		$('#status_member').val('');
+    });
+    $("#back_paket").on("click", function(){
+        $("#new_paket").prop('disabled', false);
+        $(".paket-show").removeClass('none');
+        $(".paket-new").addClass('none');
+    });
+    $("#save_paket").on("click", function(){
+        let validasi = document.getElementById("form-paket").reportValidity();
+        if (validasi) {
+            $('#save_paket').prop('disabled', true);
+            var formData = new FormData(document.querySelector("#form-paket"));
+            formData.append("id_lokasi", $('#pilih-lokasi').val());
+            $.ajax({
+                url: "master/add_paket",
+                method: "POST",
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (json) {
+                    let result = json.result;
+                    let message = json.message;
+                    notif(result, message);
+                    if(result == 'success'){
+                        $("#new_paket").prop('disabled', false);
+                        $(".paket-show").removeClass('none');
+                        $(".paket-new").addClass('none');
+                        $('#datatable-list-paket').DataTable().ajax.reload();
+                    }
+                    $('#save_paket').prop('disabled', false);
                 },
             });
         }
@@ -1031,7 +1159,6 @@
                     },
                 },
             });
-            $('#datatable-pembayaran').DataTable().ajax.reload();
             if(reload == 1){
                 setTimeout(() => {
                     window.location.reload();

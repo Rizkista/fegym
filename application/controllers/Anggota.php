@@ -31,7 +31,7 @@ class Anggota extends CI_Controller {
             $row['telp_anggota'] = $list->telp_anggota;
             $row['email_anggota'] = $list->email_anggota;
             $row['alamat_anggota'] = $list->alamat_anggota;
-            $row['status_member'] = $list->status_member == 1 ? 'Aktif' : 'Tidak';
+            $row['status_member'] = $list->status_member == 1 ? 'AKTIF' : 'TIDAK';
             $row['nama_lokasi'] = $list->nama_lokasi;
             $row['id_lokasi'] = $list->id_lokasi;
             $row['status'] = $list->status == 1 ? 'aktif-' : 'hapus-';

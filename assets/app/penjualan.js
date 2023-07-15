@@ -101,7 +101,9 @@
     const arr = [];
     $('#datatable-list-produk tbody').on( 'click', 'tr', function () {
         var list = $('#datatable-list-produk').DataTable().row(this).data();
-        itemBuySelected(list);
+        if(list != undefined){
+            itemBuySelected(list);
+        }
     });
     
     on_scanner();

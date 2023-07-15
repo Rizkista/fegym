@@ -184,6 +184,7 @@
             $("#id_lokasi").attr('required', '');
         }
         document.getElementById("text-paket").innerHTML = "Tambah Paket Gym";
+		$('#id_lokasi').val('');
 		$('#nama_paket').val('');
 		$('#harga_paket').val('');
 		$('#durasi_paket').val('');
