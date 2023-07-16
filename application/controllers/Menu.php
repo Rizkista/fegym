@@ -19,7 +19,11 @@ class Menu extends CI_Controller {
     }
 
 	public function error_404(){
-		header("Location:".base_url());
+		if($this->session->userdata('email')){
+			header("Location:".base_url().'dashboard');
+		}else {
+			header("Location:".base_url());
+		}
 	}
 	
 	public function dashboard(){

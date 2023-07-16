@@ -17,9 +17,6 @@ class Home extends CI_Controller {
 	}
 	
 	public function login(){
-		$this->form_validation->set_rules('email', 'Email', 'trim|required');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');
-
 		if($this->session->userdata('email')){
 			redirect('dashboard');
 		}else {
