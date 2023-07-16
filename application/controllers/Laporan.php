@@ -229,4 +229,75 @@ class Laporan extends CI_Controller {
 		echo json_encode($output);
 	}
 
+	public function read_rekap_kasir_paket(){
+		$start_date = $_POST['start_date'];
+		$end_date = $_POST['end_date'];
+		$id_lokasi = $_POST['id_lokasi'];
+		
+		$transaksi = $this->m_main->runQueryRow('
+			SELECT 
+				SUM(total_harga) as tarif, 
+				SUM(total_transaksi) as total, 
+				SUM(diskon_nominal) as diskon,
+				SUM(ppn_nominal) as ppn,
+				SUM(charge_nominal) as charge
+			FROM db_pembayaran a
+			WHERE status = 1
+			AND id_office = '.ID_OFFICE.'
+            '.($id_lokasi != null ? 'AND id_lokasi = '.$id_lokasi : '').'
+            AND DATE_FORMAT(tgl_pembayaran,"%Y-%m-%d") >= "'.$start_date.'" 
+            AND DATE_FORMAT(tgl_pembayaran,"%Y-%m-%d") <= "'.$end_date.'"
+		');
+		
+		$batal_nota = $this->m_main->runQueryRow('
+			SELECT SUM(total_transaksi) as batal_nota
+			FROM db_pembayaran
+			WHERE status = 0
+			AND id_office = '.ID_OFFICE.'
+			'.($id_lokasi != null ? 'AND id_lokasi = '.$id_lokasi : '').'
+			AND DATE_FORMAT(tgl_pembayaran,"%Y-%m-%d") >= "'.$start_date.'" 
+			AND DATE_FORMAT(tgl_pembayaran,"%Y-%m-%d") <= "'.$end_date.'"
+		');
+		
+		$data = [];
+		$row = [];
+		$row['deskripsi'] = 'Total Harga';
+		$row['amount'] = 'Rp '.number_format(intval($transaksi ? $transaksi['tarif'] : 0),0,',','.');
+		$data[] = $row;
+		$row['deskripsi'] = 'Total Diskon';
+		$row['amount'] = 'Rp '.number_format(intval($transaksi ? $transaksi['diskon'] : 0),0,',','.');
+		$data[] = $row;
+		$row['deskripsi'] = 'Total PPN';
+		$row['amount'] = 'Rp '.number_format(intval($transaksi ? $transaksi['ppn'] : 0),0,',','.');
+		$data[] = $row;
+		$row['deskripsi'] = 'Total Charge';
+		$row['amount'] = 'Rp '.number_format(intval($transaksi ? $transaksi['charge'] : 0),0,',','.');
+		$data[] = $row;
+		$row['deskripsi'] = '<b>Total Transaksi Bersih</b>';
+		$row['amount'] = '<b>Rp '.number_format(intval($transaksi ? $transaksi['total'] : 0),0,',','.').'</b>';
+		$data[] = $row;
+		$jenis_bayar = $this->m_main->getResult('db_tipe_bayar','status','1');
+		foreach ($jenis_bayar as $list) {
+			$tipe = $this->m_main->runQueryRow('
+				SELECT SUM(total_transaksi) as total
+				FROM db_pembayaran
+				WHERE status = 1
+				AND id_office = '.ID_OFFICE.'
+				AND id_tipe_bayar = '.$list->id_tipe_bayar.'
+				'.($id_lokasi != null ? 'AND id_lokasi = '.$id_lokasi : '').'
+				AND DATE_FORMAT(tgl_pembayaran,"%Y-%m-%d") >= "'.$start_date.'" 
+				AND DATE_FORMAT(tgl_pembayaran,"%Y-%m-%d") <= "'.$end_date.'"
+			');
+			$row['deskripsi'] = 'Total '.$list->tipe_bayar;
+			$row['amount'] = 'Rp '.number_format(intval($tipe ? $tipe['total'] : 0),0,',','.');
+			$data[] = $row;
+		}
+		$row['deskripsi'] = 'Total Batal Nota';
+		$row['amount'] = 'Rp '.number_format(intval($batal_nota ? $batal_nota['batal_nota'] : 0),0,',','.');
+		$data[] = $row;
+
+
+		echo json_encode($data);
+	}
+
 }

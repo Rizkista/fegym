@@ -10861,3 +10861,17 @@ hr {
     border-radius: 0.25rem;
     border-color: #dcdcdc !important;
 }
+
+.table-kasir {
+    line-height: 1.15 !important;
+    width: 100%;
+}
+.table-kasir th {
+    border-bottom: 2px solid #55626f; 
+    padding: 10px;
+}
+.table-kasir td {
+    border-bottom: thin solid #e0e0e0; 
+    padding: 10px;
+
+}
