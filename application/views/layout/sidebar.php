@@ -23,13 +23,31 @@
                     'paket-gym',
                     'lokasi-gym',
                 );
-                $laporan = array(
-                    'laporan-pembayaran-gym',
-                    'laporan-penjualan-produk',
-                );
                 $pengaturan = array(
                     'akun-saya',
                     'konfigurasi',
+                );
+                $laporan = array(
+                    'pembayaran-paket',
+                    'rekap-total-paket',
+                    'laporan-kasir-paket',
+                    'rugi-laba-paket',
+                    'penjualan-produk',
+                    'rekap-total-produk',
+                    'laporan-kasir-produk',
+                    'rugi-laba-produk',
+                );
+                $bayar = array(
+                    'pembayaran-paket',
+                    'rekap-total-paket',
+                    'laporan-kasir-paket',
+                    'rugi-laba-paket',
+                );
+                $jual = array(
+                    'penjualan-produk',
+                    'rekap-total-produk',
+                    'laporan-kasir-produk',
+                    'rugi-laba-produk',
                 );
             ?> 
             <ul class="nav">
@@ -71,7 +89,7 @@
                             <p>Point Of Sale</p>
                             <span class="caret"></span>
                         </a>
-                        <div id="pos" <?= in_array($uri_path, $pos) ? 'class="collapse show"' : 'class="collapse"' ?>>
+                        <div id="pos" class="collapse <?= in_array($uri_path, $pos) ? 'show' : ''?>">
                             <ul class="nav nav-collapse">
                                 <li class="<?= $uri_path == "produk"? 'active' : '' ?>">
                                     <a href="<?= base_url('produk') ?>">
@@ -130,7 +148,66 @@
                         </a>
                         <div id="laporan" class="collapse <?= in_array($uri_path, $laporan) ? 'show' : '' ?>">
                             <ul class="nav nav-collapse">
-                                
+                                <li>
+                                    <a data-toggle="collapse" href="#bayar" class="collapsed" aria-expanded="false">
+                                        <span class="sub-item">Pembayaran</span>
+                                        <span class="caret"></span>
+                                    </a>
+                                    <div id="bayar" class="collapse <?= in_array($uri_path, $bayar) ? 'show' : '' ?>">
+                                        <ul class="nav nav-collapse subnav">
+                                            <li class="<?= $uri_path == "pembayaran-paket"? 'active' : '' ?>">
+                                                <a href="<?= base_url('pembayaran-paket') ?>">
+                                                    <span class="sub-item">Pembayaran Paket</span>
+                                                </a>
+                                            </li>
+                                            <li class="<?= $uri_path == "rekap-total-paket"? 'active' : '' ?>">
+                                                <a href="<?= base_url('rekap-total-paket') ?>">
+                                                    <span class="sub-item">Rekap Total Paket</span>
+                                                </a>
+                                            </li>
+                                            <li class="<?= $uri_path == "laporan-kasir-paket"? 'active' : '' ?>">
+                                                <a href="<?= base_url('laporan-kasir-paket') ?>">
+                                                    <span class="sub-item">Laporan Kasir Paket</span>
+                                                </a>
+                                            </li>
+                                            <li class="<?= $uri_path == "rugi-laba-paket"? 'active' : '' ?>">
+                                                <a href="<?= base_url('rugi-laba-paket') ?>">
+                                                    <span class="sub-item">Rugi Laba Paket</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a data-toggle="collapse" href="#jual" class="collapsed" aria-expanded="false">
+                                        <span class="sub-item">Penjualan</span>
+                                        <span class="caret"></span>
+                                    </a>
+                                    <div id="jual" class="collapse <?= in_array($uri_path, $jual) ? 'show' : '' ?>">
+                                        <ul class="nav nav-collapse subnav">
+                                            <li class="<?= $uri_path == "penjualan-produk"? 'active' : '' ?>">
+                                                <a href="<?= base_url('penjualan-produk') ?>">
+                                                    <span class="sub-item">Penjualan Produk</span>
+                                                </a>
+                                            </li>
+                                            <li class="<?= $uri_path == "rekap-total-produk"? 'active' : '' ?>">
+                                                <a href="<?= base_url('rekap-total-produk') ?>">
+                                                    <span class="sub-item">Rekap Total Produk</span>
+                                                </a>
+                                            </li>
+                                            <li class="<?= $uri_path == "laporan-kasir-produk"? 'active' : '' ?>">
+                                                <a href="<?= base_url('laporan-kasir-produk') ?>">
+                                                    <span class="sub-item">Laporan Kasir Produk</span>
+                                                </a>
+                                            </li>
+                                            <li class="<?= $uri_path == "rugi-laba-produk"? 'active' : '' ?>">
+                                                <a href="<?= base_url('rugi-laba-produk') ?>">
+                                                    <span class="sub-item">Rugi Laba Produk</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </li>

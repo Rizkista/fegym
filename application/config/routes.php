@@ -21,10 +21,18 @@ $route['stok-keluar'] = 'menu/stok_keluar';
 $route['stok-opname'] = 'menu/stok_opname';
 $route['paket-gym'] = 'menu/paket_gym';
 $route['lokasi-gym'] = 'menu/lokasi_gym';
-$route['laporan-pembayaran-gym'] = 'menu/laporan_pembayaran_gym';
-$route['laporan-penjualan-produk'] = 'menu/laporan_penjualan_produk';
 $route['akun-saya'] = 'menu/akun_saya';
 $route['konfigurasi'] = 'menu/konfigurasi';
+
+$route['pembayaran-paket'] = 'menu/pembayaran_paket';
+$route['rekap-total-paket'] = 'menu/rekap_total_paket';
+$route['laporan-kasir-paket'] = 'menu/laporan_kasir_paket';
+$route['rugi-laba-paket'] = 'menu/rugi_laba_paket';
+$route['penjualan-produk'] = 'menu/penjualan_produk';
+$route['rekap-total-produk'] = 'menu/rekap_total_produk';
+$route['laporan-kasir-produk'] = 'menu/laporan_kasir_produk';
+$route['rugi-laba-produk'] = 'menu/rugi_laba_produk';
+
 
 
 $route['account'] = 'menu/account';
