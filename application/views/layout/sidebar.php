@@ -28,23 +28,23 @@
                     'konfigurasi',
                 );
                 $laporan = array(
-                    'pembayaran-paket',
+                    'pendapatan-paket',
                     'rekap-total-paket',
                     'laporan-kasir-paket',
                     'rugi-laba-paket',
-                    'penjualan-produk',
+                    'pendapatan-produk',
                     'rekap-total-produk',
                     'laporan-kasir-produk',
                     'rugi-laba-produk',
                 );
                 $bayar = array(
-                    'pembayaran-paket',
+                    'pendapatan-paket',
                     'rekap-total-paket',
                     'laporan-kasir-paket',
                     'rugi-laba-paket',
                 );
                 $jual = array(
-                    'penjualan-produk',
+                    'pendapatan-produk',
                     'rekap-total-produk',
                     'laporan-kasir-produk',
                     'rugi-laba-produk',
@@ -155,9 +155,9 @@
                                     </a>
                                     <div id="bayar" class="collapse <?= in_array($uri_path, $bayar) ? 'show' : '' ?>">
                                         <ul class="nav nav-collapse subnav">
-                                            <li class="<?= $uri_path == "pembayaran-paket"? 'active' : '' ?>">
-                                                <a href="<?= base_url('pembayaran-paket') ?>">
-                                                    <span class="sub-item">Pembayaran Paket</span>
+                                            <li class="<?= $uri_path == "pendapatan-paket"? 'active' : '' ?>">
+                                                <a href="<?= base_url('pendapatan-paket') ?>">
+                                                    <span class="sub-item">Pendapatan Paket</span>
                                                 </a>
                                             </li>
                                             <li class="<?= $uri_path == "rekap-total-paket"? 'active' : '' ?>">
@@ -185,9 +185,9 @@
                                     </a>
                                     <div id="jual" class="collapse <?= in_array($uri_path, $jual) ? 'show' : '' ?>">
                                         <ul class="nav nav-collapse subnav">
-                                            <li class="<?= $uri_path == "penjualan-produk"? 'active' : '' ?>">
-                                                <a href="<?= base_url('penjualan-produk') ?>">
-                                                    <span class="sub-item">Penjualan Produk</span>
+                                            <li class="<?= $uri_path == "pendapatan-produk"? 'active' : '' ?>">
+                                                <a href="<?= base_url('pendapatan-produk') ?>">
+                                                    <span class="sub-item">Pendapatan Produk</span>
                                                 </a>
                                             </li>
                                             <li class="<?= $uri_path == "rekap-total-produk"? 'active' : '' ?>">
