@@ -17,7 +17,112 @@ class Laporan extends CI_Controller {
 		define('ID_LOKASI',$this->session->userdata('id_lokasi'));
     }
 
-	//================= REKAP TOTAL PAKET
+	//================= PEMBAYARAN
+	public function read_pendapatan_paket(){
+		$start_date = $_POST['start_date'];
+		$end_date = $_POST['end_date'];
+		$id_lokasi = $_POST['id_lokasi'];
+
+		$laporan = $this->m_main->runQueryResult('
+			SELECT a.*, b.nama_paket, c.nama_lokasi, e.nama_anggota, d.tipe_bayar,
+			DATE_FORMAT(a.tgl_pembayaran,"%d\%m\%Y %H:%i:%s") as tanggal
+			FROM db_pembayaran a
+			JOIN db_paket_gym b ON a.id_paket_gym = b.id_paket_gym
+			JOIN db_lokasi c ON a.id_lokasi = c.id_lokasi
+			JOIN db_tipe_bayar d ON a.id_tipe_bayar = d.id_tipe_bayar
+			JOIN db_anggota e ON a.id_anggota = e.id_anggota
+			WHERE a.status = 1
+			AND a.id_office = '.ID_OFFICE.'
+            '.($id_lokasi != null ? 'AND a.id_lokasi = '.$id_lokasi : '').'
+            AND DATE_FORMAT(a.tgl_pembayaran,"%Y-%m-%d") >= "'.$start_date.'" 
+            AND DATE_FORMAT(a.tgl_pembayaran,"%Y-%m-%d") <= "'.$end_date.'"
+			ORDER BY a.id_lokasi ASC, a.nonota DESC
+		');
+		$data = [];
+		$bylok = [];
+		$no = 0;
+		foreach ($laporan as $list) {
+			$no++;
+			$row = [];
+			$row['no'] = $no;
+			$row['nama_lokasi'] = $list->nama_lokasi;
+			$row['nonota'] = $list->nonota;
+			$row['tanggal'] = $list->tanggal;
+			$row['nama_anggota'] = $list->nama_anggota;
+			$row['nama_paket'] = $list->nama_paket;
+			$row['tipe_bayar'] = $list->tipe_bayar;
+			$row['tarif'] = 'Rp '.number_format(intval($list->total_harga),0,',','.');
+			$row['diskon'] = 'Rp '.number_format(intval($list->diskon_nominal),0,',','.');
+			$row['ppn'] = 'Rp '.number_format(intval($list->ppn_nominal),0,',','.');
+			$row['charge'] = 'Rp '.number_format(intval($list->charge_nominal),0,',','.');
+			$row['total'] = 'Rp '.number_format(intval($list->total_transaksi),0,',','.');
+			$data[] = $row;
+			
+			if(!array_key_exists($list->id_lokasi, $bylok)){
+				$bylok[$list->id_lokasi]['nama_lokasi'] = $list->nama_lokasi;
+				$bylok[$list->id_lokasi]['jumlah'] = 1;
+				$bylok[$list->id_lokasi]['tarif'] = $list->total_harga;
+				$bylok[$list->id_lokasi]['diskon'] = $list->diskon_nominal;
+				$bylok[$list->id_lokasi]['ppn'] = $list->ppn_nominal;
+				$bylok[$list->id_lokasi]['charge'] = $list->charge_nominal;
+				$bylok[$list->id_lokasi]['total'] = $list->total_transaksi;
+			}else{
+				$bylok[$list->id_lokasi]['jumlah'] += 1;
+				$bylok[$list->id_lokasi]['tarif'] += $list->total_harga;
+				$bylok[$list->id_lokasi]['diskon'] += $list->diskon_nominal;
+				$bylok[$list->id_lokasi]['ppn'] += $list->ppn_nominal;
+				$bylok[$list->id_lokasi]['charge'] += $list->charge_nominal;
+				$bylok[$list->id_lokasi]['total'] += $list->total_transaksi;
+			}
+		}
+
+		$summary = [];
+		$cek_lok = 0;
+		$t_jumlah = 0;
+		$t_tarif = 0;
+		$t_diskon = 0;
+		$t_ppn = 0;
+		$t_charge = 0;
+		$t_total = 0;
+		foreach($bylok as $list){
+			$cek_lok++;
+			$sum = [];
+			$sum['nama_lokasi'] = $list['nama_lokasi'];
+			$sum['jumlah'] = number_format(intval($list['jumlah']),0,',','.');
+			$sum['tarif'] = 'Rp '.number_format(intval($list['tarif']),0,',','.');
+			$sum['diskon'] = 'Rp '.number_format(intval($list['diskon']),0,',','.');
+			$sum['ppn'] = 'Rp '.number_format(intval($list['ppn']),0,',','.');
+			$sum['charge'] = 'Rp '.number_format(intval($list['charge']),0,',','.');
+			$sum['total'] = 'Rp '.number_format(intval($list['total']),0,',','.');
+			$summary[] = $sum;
+
+			$t_jumlah += $list['jumlah'];
+			$t_tarif += $list['tarif'];
+			$t_diskon += $list['diskon'];
+			$t_ppn += $list['ppn'];
+			$t_charge += $list['charge'];
+			$t_total += $list['total'];
+		}
+		if($cek_lok > 1){
+			$sum = [];
+			$sum['nama_lokasi'] = "Total Seluruh Lokasi";
+			$sum['jumlah'] = number_format(intval($t_jumlah),0,',','.');
+			$sum['tarif'] = 'Rp '.number_format(intval($t_tarif),0,',','.');
+			$sum['diskon'] = 'Rp '.number_format(intval($t_diskon),0,',','.');
+			$sum['ppn'] = 'Rp '.number_format(intval($t_ppn),0,',','.');
+			$sum['charge'] = 'Rp '.number_format(intval($t_charge),0,',','.');
+			$sum['total'] = 'Rp '.number_format(intval($t_total),0,',','.');
+			$summary[] = $sum;
+		}
+		
+		$output = [
+			"data" => $data,
+			"summary" => $summary,
+			"tanggal" => date_format(date_create($start_date),"d F Y").' - '.date_format(date_create($end_date),"d F Y"),
+		];
+		echo json_encode($output);
+	}
+
 	public function read_rekap_total_paket(){
 		$start_date = $_POST['start_date'];
 		$end_date = $_POST['end_date'];

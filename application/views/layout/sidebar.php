@@ -30,24 +30,22 @@
                 $laporan = array(
                     'pendapatan-paket',
                     'rekap-total-paket',
-                    'laporan-kasir-paket',
-                    'rugi-laba-paket',
+                    'rekap-kasir-paket',
                     'pendapatan-produk',
                     'rekap-total-produk',
-                    'laporan-kasir-produk',
-                    'rugi-laba-produk',
+                    'rekap-kasir-produk',
                 );
                 $bayar = array(
                     'pendapatan-paket',
                     'rekap-total-paket',
                     'laporan-kasir-paket',
-                    'rugi-laba-paket',
+                    'rekap-kasir-paket',
                 );
                 $jual = array(
                     'pendapatan-produk',
                     'rekap-total-produk',
                     'laporan-kasir-produk',
-                    'rugi-laba-produk',
+                    'rekap-kasir-produk',
                 );
             ?> 
             <ul class="nav">
@@ -165,14 +163,9 @@
                                                     <span class="sub-item">Rekap Total Paket</span>
                                                 </a>
                                             </li>
-                                            <li class="<?= $uri_path == "laporan-kasir-paket"? 'active' : '' ?>">
-                                                <a href="<?= base_url('laporan-kasir-paket') ?>">
-                                                    <span class="sub-item">Laporan Kasir Paket</span>
-                                                </a>
-                                            </li>
-                                            <li class="<?= $uri_path == "rugi-laba-paket"? 'active' : '' ?>">
-                                                <a href="<?= base_url('rugi-laba-paket') ?>">
-                                                    <span class="sub-item">Rugi Laba Paket</span>
+                                            <li class="<?= $uri_path == "rekap-kasir-paket"? 'active' : '' ?>">
+                                                <a href="<?= base_url('rekap-kasir-paket') ?>">
+                                                    <span class="sub-item">Rekap Kasir Paket</span>
                                                 </a>
                                             </li>
                                         </ul>
@@ -195,14 +188,9 @@
                                                     <span class="sub-item">Rekap Total Produk</span>
                                                 </a>
                                             </li>
-                                            <li class="<?= $uri_path == "laporan-kasir-produk"? 'active' : '' ?>">
-                                                <a href="<?= base_url('laporan-kasir-produk') ?>">
-                                                    <span class="sub-item">Laporan Kasir Produk</span>
-                                                </a>
-                                            </li>
-                                            <li class="<?= $uri_path == "rugi-laba-produk"? 'active' : '' ?>">
-                                                <a href="<?= base_url('rugi-laba-produk') ?>">
-                                                    <span class="sub-item">Rugi Laba Produk</span>
+                                            <li class="<?= $uri_path == "rekap-kasir-produk"? 'active' : '' ?>">
+                                                <a href="<?= base_url('rekap-kasir-produk') ?>">
+                                                    <span class="sub-item">Rekap Kasir Produk</span>
                                                 </a>
                                             </li>
                                         </ul>

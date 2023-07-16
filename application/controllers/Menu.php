@@ -79,7 +79,7 @@ class Menu extends CI_Controller {
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$data['data_payment'] = $this->m_main->getResultData('db_tipe_bayar','status = 1','id_tipe_bayar asc');
 			$this->load->view('layout/header', $data);
-			$this->load->view('transaksi/pembayaran');
+			$this->load->view('kasir/pembayaran');
 			$this->load->view('layout/footer');
 		}else{
 			redirect('logout');
@@ -96,7 +96,7 @@ class Menu extends CI_Controller {
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$data['data_payment'] = $this->m_main->getResultData('db_tipe_bayar','status = 1','id_tipe_bayar asc');
 			$this->load->view('layout/header', $data);
-			$this->load->view('transaksi/penjualan');
+			$this->load->view('kasir/penjualan');
 			$this->load->view('layout/footer');
 		}else{
 			redirect('logout');
@@ -281,32 +281,16 @@ class Menu extends CI_Controller {
 		}
 	}
 
-	public function laporan_kasir_paket(){
+	public function rekap_kasir_paket(){
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
-			$data['title'] = 'Laporan Kasir Paket';
+			$data['title'] = 'Rekap Kasir Paket';
 			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
 			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
 			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
-			$this->load->view('laporan/pembayaran/laporan_kasir_paket');
-			$this->load->view('layout/footer');
-		}else{
-			redirect('logout');
-		}
-	}
-
-	public function rugi_laba_paket(){
-		if(EMAIL){
-			$data['vrs'] = U_VERSI; 
-			$data['title'] = 'Rugi Laba Paket';
-			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
-			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
-			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
-			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
-			$this->load->view('layout/header', $data);
-			$this->load->view('laporan/pembayaran/rugi_laba_paket');
+			$this->load->view('laporan/pembayaran/rekap_kasir_paket');
 			$this->load->view('layout/footer');
 		}else{
 			redirect('logout');
@@ -345,32 +329,16 @@ class Menu extends CI_Controller {
 		}
 	}
 
-	public function laporan_kasir_produk(){
+	public function rekap_kasir_produk(){
 		if(EMAIL){
 			$data['vrs'] = U_VERSI; 
-			$data['title'] = 'Laporan Kasir Produk';
+			$data['title'] = 'Rekap Kasir Produk';
 			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
 			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
 			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
 			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
 			$this->load->view('layout/header', $data);
-			$this->load->view('laporan/penjualan/laporan_kasir_produk');
-			$this->load->view('layout/footer');
-		}else{
-			redirect('logout');
-		}
-	}
-
-	public function rugi_laba_produk(){
-		if(EMAIL){
-			$data['vrs'] = U_VERSI; 
-			$data['title'] = 'Rugi Laba Produk';
-			$data['account'] = $this->m_main->getRow('db_account','id_account',ID_ACCOUNT);
-			$data['office'] = $this->m_main->getRow('db_office','id_office',ID_OFFICE);
-			$data['lokasi'] = $this->m_main->getRow('db_lokasi','id_lokasi',ID_LOKASI);
-			$data['data_lokasi'] = $this->m_main->getResultData('db_lokasi','status = 1 AND id_office = '.ID_OFFICE,'nama_lokasi asc');
-			$this->load->view('layout/header', $data);
-			$this->load->view('laporan/penjualan/rugi_laba_produk');
+			$this->load->view('laporan/penjualan/rekap_kasir_produk');
 			$this->load->view('layout/footer');
 		}else{
 			redirect('logout');

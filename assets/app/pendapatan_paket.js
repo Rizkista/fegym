@@ -31,9 +31,9 @@
         var lokasi = $('select[name="filter-lokasi"]').val();
         var id_lokasi = lokasi == "" ? null : lokasi;
 
-        var main_tabel = $("#tabel-rekap-total-paket").DataTable({
+        var main_tabel = $("#tabel-pendapatan-paket").DataTable({
             ajax: {
-                url: "laporan/read_rekap_total_paket",
+                url: "laporan/read_pendapatan_paket",
                 type: "POST",
                 data:function(data){
                    data.start_date = start_date;
@@ -85,10 +85,10 @@
                     className: "btn btn-secondary wid-max-select text-white",
                     text: '<i class="fas fa-file-excel mr-2"></i> Excel',
                     exportOptions: {
-                        columns: [0,1,2,3,4,5,6,7,8],
+                        columns: [0,1,2,3,4,5,6,7,8,9,10,11],
                         format: {
                             body: function ( data, row, column, node ) {
-                                const nominal = [4,5,6,7,8];
+                                const nominal = [7,8,9,10,11];
                                 return nominal.includes(column) ? data.replace(/[Rp,. ]/g, '') : data;
                             }
                         }
@@ -106,8 +106,11 @@
             columns: [
                 { data: "no" },
                 { data: "nama_lokasi" },
+                { data: "nonota" },
+                { data: "tanggal" },
+                { data: "nama_anggota" },
                 { data: "nama_paket" },
-                { data: "jumlah" },
+                { data: "tipe_bayar" },
                 { data: "tarif" },
                 { data: "diskon" },
                 { data: "ppn" },
@@ -115,17 +118,16 @@
                 { data: "total" },
             ],
             rowCallback:function(row,data,index){
-                $('td', row).eq(3).addClass('nowraping text-right');
-                $('td', row).eq(4).addClass('nowraping text-right');
-                $('td', row).eq(5).addClass('nowraping text-right');
-                $('td', row).eq(6).addClass('nowraping text-right');
                 $('td', row).eq(7).addClass('nowraping text-right');
-                $('td', row).eq(8).addClass('nowraping text-right fw-bold');
+                $('td', row).eq(8).addClass('nowraping text-right');
+                $('td', row).eq(9).addClass('nowraping text-right');
+                $('td', row).eq(10).addClass('nowraping text-right');
+                $('td', row).eq(11).addClass('nowraping text-right fw-bold');
             },
         });
 
         $.ajax({
-            url: "laporan/read_rekap_total_paket",
+            url: "laporan/read_pendapatan_paket",
             method: "POST",
             dataType: "json",
             data: {
@@ -134,7 +136,7 @@
                 id_lokasi : id_lokasi,
             },
             beforeSend: function() {
-                $("#summary-rekap-total-paket tbody").html(
+                $("#summary-pendapatan-paket tbody").html(
                     '<td colspan="7" style="margin:2px; width:100%; font-size:14px; height:40px; background-color:#f4f4f4;">'+
                         '<center>'+
                             '<span class="mt-2 fa-stack fa-lg"><i class="fa fa-spinner fa-spin fa-stack-2x fa-fw"></i></span>'+
@@ -160,11 +162,11 @@
                         '</tr>';
                 }
                 if (summary == 0) {
-                    $("#summary-rekap-total-paket tbody").html(
+                    $("#summary-pendapatan-paket tbody").html(
                         '<tr><td colspan="7" style="margin:2px; width:100%; font-size:14px; background-color:#f4f4f4;"><center>Data tidak ditemukan!</center></td></tr>'
                     );
                 } else {
-                    $("#summary-rekap-total-paket tbody").html(tabel);
+                    $("#summary-pendapatan-paket tbody").html(tabel);
                 }
             },
         });

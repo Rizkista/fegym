@@ -13,18 +13,18 @@ class Home extends CI_Controller {
     }
 
 	public function index(){
+		$this->load->view('home/beranda');
+	}
+	
+	public function login(){
 		$this->form_validation->set_rules('email', 'Email', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
 
 		if($this->session->userdata('email')){
 			redirect('dashboard');
 		}else {
-			$this->load->view('home/beranda');
+			$this->load->view('home/login');
 		}
-	}
-	
-	public function login(){
-		$this->load->view('home/login');
 	}
 	
 	public function register(){

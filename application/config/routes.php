@@ -26,13 +26,10 @@ $route['konfigurasi'] = 'menu/konfigurasi';
 
 $route['pendapatan-paket'] = 'menu/pendapatan_paket';
 $route['rekap-total-paket'] = 'menu/rekap_total_paket';
-$route['laporan-kasir-paket'] = 'menu/laporan_kasir_paket';
-$route['rugi-laba-paket'] = 'menu/rugi_laba_paket';
+$route['rekap-kasir-paket'] = 'menu/rekap_kasir_paket';
 $route['pendapatan-produk'] = 'menu/pendapatan_produk';
 $route['rekap-total-produk'] = 'menu/rekap_total_produk';
-$route['laporan-kasir-produk'] = 'menu/laporan_kasir_produk';
-$route['rugi-laba-produk'] = 'menu/rugi_laba_produk';
-
+$route['rekap-kasir-produk'] = 'menu/rekap_kasir_produk';
 
 
 $route['account'] = 'menu/account';
