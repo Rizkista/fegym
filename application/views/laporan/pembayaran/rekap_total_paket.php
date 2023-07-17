@@ -46,23 +46,21 @@
     
     <div class="card">
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover" id="tabel-rekap-total-paket">
-                    <thead>
-                        <tr>
-                            <th class="nowraping" width="5%">No</th>
-                            <th class="nowraping" width="15%">Lokasi</th>
-                            <th class="nowraping" width="25%">Nama Paket</th>
-                            <th class="nowraping text-right" width="5%">Qty</th>
-                            <th class="nowraping text-right" width="10%">Tarif</th>
-                            <th class="nowraping text-right" width="10%">Diskon</th>
-                            <th class="nowraping text-right" width="10%">PPN</th>
-                            <th class="nowraping text-right" width="10%">Charge</th>
-                            <th class="nowraping text-right" width="10%">Total</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+            <table class="table-responsive display table table-striped table-hover" id="tabel-rekap-total-paket">
+                <thead>
+                    <tr>
+                        <th class="nowraping" width="5%">No</th>
+                        <th class="nowraping" width="20%">Lokasi</th>
+                        <th class="nowraping" width="30%">Nama Paket</th>
+                        <th class="nowraping text-right" width="5%">Qty</th>
+                        <th class="nowraping text-right" width="10%">Tarif</th>
+                        <th class="nowraping text-right" width="10%">Diskon</th>
+                        <th class="nowraping text-right" width="10%">PPN</th>
+                        <th class="nowraping text-right" width="10%">Charge</th>
+                        <th class="nowraping text-right" width="10%">Total</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 
@@ -71,23 +69,21 @@
             <div class="card-sub text-center p-2">
                 <span id="tgl-show">-</span>
             </div>
-            <div class="table-responsive">
-                <table class="table display table-striped table-hover no-footer dataTable" id="summary-rekap-total-paket">
-                    <thead>
-                        <tr>
-                            <th width="28%" class="nowraping">Nama Lokasi</th>
-                            <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Paket</th>
-                            <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Tarif</th>
-                            <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Diskon</th>
-                            <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total PPN</th>
-                            <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Charge</th>
-                            <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Transaksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+            <table class="table-responsive table display table-striped table-hover no-footer dataTable" id="summary-rekap-total-paket">
+                <thead>
+                    <tr>
+                        <th width="35%" class="nowraping">Nama Lokasi</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Paket</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Tarif</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Diskon</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total PPN</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Charge</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Transaksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
 
