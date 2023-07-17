@@ -44,4 +44,49 @@
         </div>
     </div>
     
+    <div class="card">
+        <div class="card-body">
+            <table class="table-responsive display table table-striped table-hover" id="tabel-rekap-total-produk">
+                <thead>
+                    <tr>
+                        <th class="nowraping" width="5%">No</th>
+                        <th class="nowraping" width="15%">Lokasi</th>
+                        <th class="nowraping" width="25%">Nama Produk</th>
+                        <th class="nowraping text-right" width="5%">Qty</th>
+                        <th class="nowraping text-right" width="10%">Harga</th>
+                        <th class="nowraping text-right" width="10%">Diskon Produk</th>
+                        <th class="nowraping text-right" width="10%">Diskon Transaksi</th>
+                        <th class="nowraping text-right" width="10%">PPN</th>
+                        <th class="nowraping text-right" width="10%">Charge</th>
+                        <th class="nowraping text-right" width="10%">Total</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card-sub text-center p-2">
+                <span id="tgl-show">-</span>
+            </div>
+            <table class="table-responsive table display table-striped table-hover no-footer dataTable" id="summary-rekap-total-produk">
+                <thead>
+                    <tr>
+                        <th width="35%" class="nowraping">Nama Lokasi</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Item</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Harga</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Diskon Produk</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Diskon Transaksi</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total PPN</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Charge</th>
+                        <th width="12%" class="border-left-0 border-right-0 text-right nowraping">Total Transaksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>

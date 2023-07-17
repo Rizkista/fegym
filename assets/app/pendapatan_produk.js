@@ -31,9 +31,9 @@
         var lokasi = $('select[name="filter-lokasi"]').val();
         var id_lokasi = lokasi == "" ? null : lokasi;
 
-        var main_tabel = $("#tabel-rekap-total-paket").DataTable({
+        var main_tabel = $("#tabel-pendapatan-produk").DataTable({
             ajax: {
-                url: "laporan/read_rekap_total_paket",
+                url: "laporan/read_pendapatan_produk",
                 type: "POST",
                 data:function(data){
                    data.start_date = start_date;
@@ -85,10 +85,10 @@
                     className: "btn btn-secondary wid-max-select text-white",
                     text: '<i class="fas fa-file-excel mr-2"></i> Excel',
                     exportOptions: {
-                        columns: [0,1,2,3,4,5,6,7,8],
+                        columns: [0,1,2,3,4,5,6,7,8,9,10],
                         format: {
                             body: function ( data, row, column, node ) {
-                                const nominal = [3,4,5,6,7,8];
+                                const nominal = [5,6,7,8,9,10];
                                 return nominal.includes(column) ? data.replace(/[Rp,. ]/g, '') : data;
                             }
                         }
@@ -106,26 +106,28 @@
             columns: [
                 { data: "no" },
                 { data: "nama_lokasi" },
-                { data: "nama_paket" },
-                { data: "jumlah" },
-                { data: "tarif" },
-                { data: "diskon" },
+                { data: "nonota" },
+                { data: "tanggal" },
+                { data: "tipe_bayar" },
+                { data: "harga" },
+                { data: "diskon_produk" },
+                { data: "diskon_transaksi" },
                 { data: "ppn" },
                 { data: "charge" },
                 { data: "total" },
             ],
             rowCallback:function(row,data,index){
-                $('td', row).eq(3).addClass('nowraping text-right');
-                $('td', row).eq(4).addClass('nowraping text-right');
                 $('td', row).eq(5).addClass('nowraping text-right');
                 $('td', row).eq(6).addClass('nowraping text-right');
                 $('td', row).eq(7).addClass('nowraping text-right');
-                $('td', row).eq(8).addClass('nowraping text-right fw-bold');
+                $('td', row).eq(8).addClass('nowraping text-right');
+                $('td', row).eq(9).addClass('nowraping text-right');
+                $('td', row).eq(10).addClass('nowraping text-right');
             },
         });
 
         $.ajax({
-            url: "laporan/read_rekap_total_paket",
+            url: "laporan/read_pendapatan_produk",
             method: "POST",
             dataType: "json",
             data: {
@@ -134,8 +136,8 @@
                 id_lokasi : id_lokasi,
             },
             beforeSend: function() {
-                $("#summary-rekap-total-paket tbody").html(
-                    '<td colspan="7" style="margin:2px; width:100%; font-size:14px; height:40px; background-color:#f4f4f4;">'+
+                $("#summary-pendapatan-produk tbody").html(
+                    '<td colspan="8" style="margin:2px; width:100%; font-size:14px; height:40px; background-color:#f4f4f4;">'+
                         '<center>'+
                             '<span class="mt-2 fa-stack fa-lg"><i class="fa fa-spinner fa-spin fa-stack-2x fa-fw"></i></span>'+
                             '<p class="mt-3 mb-2">Data sedang di proses</p>'+
@@ -152,19 +154,20 @@
                         '<tr>'+
                             '<td class="'+fw_bold+'">'+ summary[i].nama_lokasi +'</td>' +
                             '<td class="border-left-0 border-right-0 text-right text-danger nowraping '+fw_bold+'">'+ summary[i].jumlah +'</td>'+
-                            '<td class="border-left-0 border-right-0 text-right text-danger nowraping '+fw_bold+'">'+ summary[i].tarif +'</td>'+
-                            '<td class="border-left-0 border-right-0 text-right text-danger nowraping '+fw_bold+'">'+ summary[i].diskon +'</td>'+
+                            '<td class="border-left-0 border-right-0 text-right text-danger nowraping '+fw_bold+'">'+ summary[i].harga +'</td>'+
+                            '<td class="border-left-0 border-right-0 text-right text-danger nowraping '+fw_bold+'">'+ summary[i].diskon_produk +'</td>'+
+                            '<td class="border-left-0 border-right-0 text-right text-danger nowraping '+fw_bold+'">'+ summary[i].diskon_transaksi +'</td>'+
                             '<td class="border-left-0 border-right-0 text-right text-danger nowraping '+fw_bold+'">'+ summary[i].ppn +'</td>'+
                             '<td class="border-left-0 border-right-0 text-right text-danger nowraping '+fw_bold+'">'+ summary[i].charge +'</td>'+
                             '<td class="border-left-0 border-right-0 text-right text-danger nowraping fw-bold">'+ summary[i].total +'</td>'+
                         '</tr>';
                 }
                 if (summary == 0) {
-                    $("#summary-rekap-total-paket tbody").html(
-                        '<tr><td colspan="7" style="margin:2px; width:100%; font-size:14px; background-color:#f4f4f4;"><center>Data tidak ditemukan!</center></td></tr>'
+                    $("#summary-pendapatan-produk tbody").html(
+                        '<tr><td colspan="8" style="margin:2px; width:100%; font-size:14px; background-color:#f4f4f4;"><center>Data tidak ditemukan!</center></td></tr>'
                     );
                 } else {
-                    $("#summary-rekap-total-paket tbody").html(tabel);
+                    $("#summary-pendapatan-produk tbody").html(tabel);
                 }
             },
         });

@@ -34,7 +34,7 @@
         $('#info-lokasi').html($('#filter-lokasi option:selected').text());
         
         $.ajax({
-            url: "laporan/read_rekap_kasir_paket",
+            url: "laporan/read_rekap_kasir_produk",
             method: "POST",
             dataType: "json",
             data: {
@@ -43,7 +43,7 @@
                 id_lokasi : id_lokasi,
             },
             beforeSend: function() {
-                $("#tabel-rekap-kasir-paket tbody").html(
+                $("#tabel-rekap-kasir-produk tbody").html(
                     '<td colspan="2" style="margin:2px; width:100%; font-size:14px; height:40px; background-color:#f4f4f4;">'+
                         '<center>'+
                             '<span class="mt-2 fa-stack fa-lg"><i class="fa fa-spinner fa-spin fa-stack-2x fa-fw"></i></span>'+
@@ -60,7 +60,7 @@
                             '<td class="text-right">'+ list[i].amount +'</td>'+
                         '</tr>';
                 }
-                $("#tabel-rekap-kasir-paket tbody").html(tabel);
+                $("#tabel-rekap-kasir-produk tbody").html(tabel);
             },
         });
     }

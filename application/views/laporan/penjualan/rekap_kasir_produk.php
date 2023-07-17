@@ -44,4 +44,34 @@
         </div>
     </div>
     
+    <div class="card">
+        <div class="card-header">
+            <div class="card-head-row">
+                <div class="card-title">
+                    <span class="fw-bold">Lokasi : <span id="info-lokasi"></span></span>
+                    <p class="mb-0 text-grey normal-line" id="tgl-show">16 July 2023 - 16 July 2023</p>
+                </div>
+                <div class="card-tools">
+                    <button class="dt-button btn btn-secondary wid-max-select text-white m-0" type="button" id="export-excel">
+                        <span><i id="icon" class="fas fa-file-excel mr-2"></i> Excel</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table-hover table-kasir" id="tabel-rekap-kasir-produk">
+                    <thead>
+                        <tr>
+                            <th class="text-left">DESKRIPSI</th>
+                            <th class="text-right">AMOUNT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
 </div>

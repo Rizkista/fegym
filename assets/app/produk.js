@@ -199,6 +199,7 @@
             $("#id_lokasi").removeAttr('required');
             produkByLok(null);
         }else{
+            $('.select-katpro').attr('disabled', true);
             $(".lok-edit").removeClass('gone');
             $("#id_lokasi").attr('required', '');
             $('#id_lokasi').change(function() {
@@ -215,6 +216,10 @@
             });
         }
         document.getElementById("text-produk").innerHTML = "Tambah Produk";
+        $(".kat-new").addClass('gone');
+        $(".kat-new").removeAttr('required');
+        $(".kat-select").removeClass('gone');
+        $(".kat-select").attr('required', '');
 		$('#barcode_produk').val('');
 		$('#nama_produk').val('');
 		$('#harga_beli').val('');
@@ -325,6 +330,10 @@
                 id_lokasi: id_lokasi,
             },
             success: function (data) {
+                $('#id_kat_produk').empty().append($('<option>', {
+                    value: '',
+                    text: 'Pilih Produk'
+                }));
                 $('.select-katpro').attr('disabled', false);
                 if(data.length > 0){
                     for(var i=0; i<data.length; i++) {
