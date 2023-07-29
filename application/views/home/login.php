@@ -31,7 +31,7 @@
 				</div>
 				<div class="right">
 					<div class="card-login">
-						<h1 class="text-dark-blue text-center mb-1">USER LOGIN</h1>
+						<h1 class="text-dark-blue text-center mb-1">USER SIGN IN</h1>
 						<h6 class="text-base text-center mb-5" style="font-size:11px">Gym Management System</h6>
 						<div class="login-form">
 							<div class="form-group">
