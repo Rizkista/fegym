@@ -67,10 +67,10 @@
     <div class="container">
         <div class="row banner-text mt-3">
             <div class="col-md-8 col-lg-8">
-                <h1 class="iq-font-white iq-tw-8" data-animation="animated fadeInLeft">
+                <h1 class="iq-font-white iq-tw-8 wow fadeInLeft">
                     <small class="iq-font-white iq-tw-6">Gym Management & Point Of Sales (FeGym)</small>Sistem Gym Terbaik
                 </h1>
-                <a class="button button-icon iq-mr-15 re4-mt-20" href="#">Start A 30-Day Free Trial</a>
+                <a class="button button-icon iq-mr-15 re4-mt-20 wow fadeInRight" href="#">Start A 30-Day Free Trial</a>
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
                     <h2 class="heading-left iq-tw-6 iq-mt-40">Simple Software</h2>
                     <div class="lead iq-tw-6 iq-mb-20">Sederhanakan Operasi Gym Anda dengan FeGym yang selalu siap berinovasi untuk kebutuhan Gym Anda.</div>
                     <p>Dapatkan wawasan berharga tentang performa gym dengan analitik dan pelaporan real-time, serta buat keputusan berdasarkan data. Dengan perangkat lunak kami yang simple dan memiliki fitur canggih, Anda dapat merampingkan operasi gym Anda dan meningkatkan efisiensi.</p>
-                    <a class="button iq-mt-25" href="#">Free Trial</a>
+                    <a class="button iq-mt-25 wow fadeInRight" href="#">Free Trial</a>
                 </div>
             </div>
         </div>
@@ -97,57 +97,45 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="heading-title">
+                    <div class="no-margin heading-title iq-pb-20">
                         <h2 class="title iq-tw-6">Fitur Unggulan</h2>
                         <div class="divider"></div>
-                        <p>FeGym dirancang agar mudah digunakan, dapat disesuaikan, dan menawarkan berbagai fitur untuk manajemen gym yang efisien. Selain itu, FeGym selalu diperbarui dengan fitur-fitur terbaru.</p>
+                        <p class="iq-mb-0">FeGym dirancang agar mudah digunakan, dapat disesuaikan, dan menawarkan berbagai fitur untuk manajemen gym yang efisien. Selain itu, FeGym selalu diperbarui dengan fitur-fitur terbaru.</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="iq-fancy-box-02 iq-mt-100 wow fadeInLeft" data-wow-duration="1s">
+                    <div class="iq-fancy-box-02 iq-mt-50 wow fadeInLeft" data-wow-duration="1s">
                         <div class="iq-icon green-bg">
                             <i aria-hidden="true" class="ion-ios-checkmark-outline"></i>
                         </div>
                         <div class="fancy-content">
                             <h5 class="iq-tw-6">Works on Any Device</h5>
-                            <p>Kelola bisnis Anda dari komputer Anda, atau saat bepergian dari perangkat seluler apa pun.</p>
+                            <p>Miliki fleksibilitas untuk mengatur Gym Anda dari komputer maupun perangkat seluler apa pun.</p>
                         </div>
                     </div>
-                    <div class="iq-fancy-box-02 iq-mt-60 wow fadeInLeft" data-wow-duration="1s">
+                    <div class="iq-fancy-box-02 iq-mt-50 wow fadeInRight" data-wow-duration="1s">
                         <div class="iq-icon green-bg">
                             <i aria-hidden="true" class="ion-ios-heart-outline"></i>
                         </div>
                         <div class="fancy-content">
                             <h5 class="iq-tw-6">Easy to Use</h5>
-                            <p>Dengan antarmuka yang simpel, Anda dapat dengan mudah mengelola Gym tanpa kesulitan.</p>
+                            <p>Dengan antarmuka simpel, Anda dapat dengan mudah mengelola data Gym dengan akurat tanpa kesulitan.</p>
                         </div>
                     </div>
-                    <div class="iq-fancy-box-02 iq-mt-60 wow fadeInLeft" data-wow-duration="1s">
-                        <div class="iq-icon green-bg">
-                            <i aria-hidden="true" class="ion-ios-copy-outline"></i>
-                        </div>
-                        <div class="fancy-content">
-                            <h5 class="iq-tw-6">Real-Time Report</h5>
-                            <p>FeGym dilengkapi dengan report online dan secara real-time untuk memudahkan Owner memantau transaksi.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 text-center hidden-sm hidden-xs">
-                    <img src="<?= base_url() ?>beranda/images/mobile.png" class="img-responsive center-block wow fadeInUp" data-wow-duration="1s" alt="#">
                 </div>
                 <div class="col-md-4">
-                    <div class="iq-fancy-box-02 iq-mt-100 wow fadeInRight" data-wow-duration="1s">
+                    <div class="iq-fancy-box-02 iq-mt-50 wow fadeInLeft" data-wow-duration="1s">
                         <div class="iq-icon green-bg">
                             <i aria-hidden="true" class="ion-ios-color-wand-outline"></i>
                         </div>
                         <div class="fancy-content">
                             <h5 class="iq-tw-6">Multiple Location</h5>
-                            <p>Pantau transaksi dan stok barang dari seluruh cabang kapanpun dan dari manapun.</p>
+                            <p>Pantau transaksi dan stok barang dari seluruh cabang Gym Anda kapanpun dan dari manapun.</p>
                         </div>
                     </div>
-                    <div class="iq-fancy-box-02 iq-mt-60 wow fadeInRight" data-wow-duration="1s">
+                    <div class="iq-fancy-box-02 iq-mt-50 wow fadeInRight" data-wow-duration="1s">
                         <div class="iq-icon green-bg">
                             <i aria-hidden="true" class="ion-ios-monitor-outline"></i>
                         </div>
@@ -156,13 +144,24 @@
                             <p>Kelola keanggotaan bebas dari kertas dengan pendaftaran online dan informasi masa berlaku member Gym.</p>
                         </div>
                     </div>
-                    <div class="iq-fancy-box-02 iq-mt-60 wow fadeInRight" data-wow-duration="1s">
+                </div>
+                <div class="col-md-4">
+                    <div class="iq-fancy-box-02 iq-mt-50 wow fadeInLeft" data-wow-duration="1s">
+                        <div class="iq-icon green-bg">
+                            <i aria-hidden="true" class="ion-ios-copy-outline"></i>
+                        </div>
+                        <div class="fancy-content">
+                            <h5 class="iq-tw-6">Real-Time Report</h5>
+                            <p>FeGym dilengkapi dengan report online dan secara real-time untuk memudahkan Owner memantau transaksi.</p>
+                        </div>
+                    </div>
+                    <div class="iq-fancy-box-02 iq-mt-50 wow fadeInRight" data-wow-duration="1s">
                         <div class="iq-icon green-bg">
                             <i aria-hidden="true" class="ion-ios-plus-outline"></i>
                         </div>
                         <div class="fancy-content">
                             <h5 class="iq-tw-6">And Many More</h5>
-                            <p>Masih banyak fitur-fitur yang pastinya akan membantu kegiatan usaha Gym Anda menjadi lebih mudah dan efisien.</p>
+                            <p>Masih banyak fitur-fitur yang pastinya akan membantu kegiatan usaha Gym Anda menjadi lebih efisien.</p>
                         </div>
                     </div>
                 </div>
@@ -182,7 +181,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-12 wow fadeInUp">
                     <div class="owl-carousel popup-gallery" data-autoplay="true" data-loop="true" data-nav="false" data-dots="true" data-items="3" data-items-laptop="3" data-items-tab="3" data-items-mobile="2" data-items-mobile-sm="1" data-margin="15">
                         <div class="item"><a href="<?= base_url() ?>beranda/images/screenshots/1.png" class="popup-img"><img class="img-responsive" src="<?= base_url() ?>beranda/images/screenshots/1.png" alt="#"></a></div>
                         <div class="item"><a href="<?= base_url() ?>beranda/images/screenshots/2.png" class="popup-img"><img class="img-responsive" src="<?= base_url() ?>beranda/images/screenshots/2.png" alt="#"></a></div>
@@ -203,11 +202,11 @@
                     <h2 class="heading-left iq-tw-6 ">Point Of Sale</h2>
                     <div class="lead iq-tw-6 iq-mb-20">Melakukan transaksi dengan cepat dan mudah bagi staf dan pelanggan dengan antarmuka yang sederhana.</div>
                     <p>Siapkan dan kelola produk Gym Anda dengan mudah. Dengan FeGym melakukan penjualan dengan jumlah dan diskon yang bervariasi, kini lebih mudah dari sebelumnya.</p>
-                    <a class="button iq-mt-15" href="# ">Register</a>
+                    <a class="button iq-mt-15  wow fadeInLeft" href="# ">Register</a>
                 </div>
                 <div class="col-sm-12 col-lg-6 col-md-6 iq-pall-50">
                     <div class="iq-bg about-img">
-                        <img class="img-responsive center-block" src="<?= base_url() ?>beranda/images/pos.png" alt="">
+                        <img class="img-responsive center-block wow fadeInRight" src="<?= base_url() ?>beranda/images/pos.png" alt="">
                     </div>
                 </div>
             </div>
@@ -227,7 +226,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <a class="button button-icon iq-mr-15" href="# ">Register Now</a>
+                    <a class="button button-icon iq-mr-15 wow fadeInUp" href="# ">Register Now</a>
                 </div>
             </div>
         </div>
@@ -245,7 +244,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6 col-md-4">
+                <div class="col-sm-6 col-md-4 wow flipInY">
                     <div class="iq-pricing text-center">
                         <div class="price-title green-bg ">
                             <h1 class="iq-font-white iq-tw-7"><small>$</small>19<small>/Month</small></h1>
@@ -263,7 +262,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4 re7-mt-50">
+                <div class="col-sm-6 col-md-4 re7-mt-50 wow flipInY">
                     <div class="iq-pricing text-center">
                         <div class="price-title green-bg ">
                             <h1 class="iq-font-white iq-tw-7"><small>$</small>29<small>/Month</small></h1>
@@ -310,10 +309,10 @@
     </div>
     <section class="iq-our-touch">
         <div class="container">
-            <div class="iq-get-in iq-pall-40 white-bg">
+            <div class="iq-get-in iq-pall-30 white-bg">
                 <div class="row">
                     <div class="col-sm-4">
-                        <div class="iq-fancy-box-02 iq-mt-10">
+                        <div class="iq-fancy-box-02 iq-mt-20 iq-mb-10">
                             <div class="iq-icon green-bg">
                                 <i aria-hidden="true" class="ion-ios-location-outline"></i>
                             </div>
@@ -324,19 +323,19 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="iq-fancy-box-02 iq-mt-10">
+                        <div class="iq-fancy-box-02 iq-mt-20 iq-mb-10">
                             <div class="iq-icon green-bg">
                                 <i aria-hidden="true" class="ion-ios-telephone-outline"></i>
                             </div>
                             <div class="fancy-content">
                                 <h5 class="iq-tw-6">Telepon</h5>
                                 <span class="lead iq-tw-6">085 786 242 101</span>
-                                <p class="iq-mb-0">Senin-Sabtu 09:00 - 16:00</p>
+                                <p class="iq-mb-0">Senin-Sabtu 09:00-16:00</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="iq-fancy-box-02 iq-mt-10">
+                        <div class="iq-fancy-box-02 iq-mt-20 iq-mb-10">
                             <div class="iq-icon green-bg">
                                 <i aria-hidden="true" class="ion-ios-email-outline"></i>
                             </div>

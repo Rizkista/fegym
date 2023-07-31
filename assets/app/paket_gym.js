@@ -69,7 +69,7 @@
                 return '<sup><font color="#FF0000">Rp</font></sup> '+FormatCurrency(data);
             }},
             { data: "durasi" , render : function ( data, type, row, meta ) {
-                const durasi = [null, 'MINUTE', 'DAY', 'WEEK', 'MONTH', 'YEAR'];
+                const durasi = [null, 'MENIT', 'HARI', 'MINGGU', 'BULAN', 'TAHUN'];
                 return row['lama_durasi']+' '+'<sup><font color="#FF0000">'+durasi[row['durasi_paket']]+'</font></sup>';
             }},
             { data: "status_member" , render : function ( data, type, row, meta ) {

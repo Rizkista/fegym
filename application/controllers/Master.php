@@ -287,7 +287,7 @@ class Master extends CI_Controller {
 	}
 
 	public function durasi_paket(){
-		$durasi = [null, 'minute', 'day', 'week', 'month', 'year'];
+		$durasi = [null, 'menit', 'hari', 'minggu', 'bulan', 'tahun'];
 		$paket_gym = $this->m_main->getRow('db_paket_gym','id_paket_gym',$_POST['id_paket_gym']);
 		$tanggal = date_format(date_create($_POST['tanggal']),"Y-m-d H:i:s");
 		if($paket_gym){

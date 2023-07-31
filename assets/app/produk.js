@@ -220,6 +220,8 @@
         $(".kat-new").removeAttr('required');
         $(".kat-select").removeClass('gone');
         $(".kat-select").attr('required', '');
+        $("#select_kat").addClass('gone');
+        $("#new_kat").removeClass('gone');
 		$('#barcode_produk').val('');
 		$('#nama_produk').val('');
 		$('#harga_beli').val('');
@@ -261,6 +263,13 @@
     
     $('body').on('click','#produk-edit', function(){
         $("#modal-produk").modal();
+        $(".kat-new").addClass('gone');
+        $(".kat-new").removeAttr('required');
+        $(".kat-select").removeClass('gone');
+        $(".kat-select").attr('required', '');
+        $("#select_kat").addClass('gone');
+        $("#new_kat").removeClass('gone');
+        
         $(".lok-edit").addClass('gone');
         $("#id_lokasi").removeAttr('required');
         $('#id_kat_produk').empty().append($('<option>', {

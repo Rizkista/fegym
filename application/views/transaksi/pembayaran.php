@@ -499,11 +499,11 @@
                                                 <td>
                                                     <select class="form-control form-rm" name="durasi_paket" id="durasi_paket" required style="padding: 0.4rem 0.5rem !important;">
                                                         <option value="">Pilih Durasi</option>
-                                                        <option value="1">MINUTE</option>
-                                                        <option value="2">DAY</option>
-                                                        <option value="3">WEEK</option>
-                                                        <option value="4">MONTH</option>
-                                                        <option value="5">YEAR</option>
+                                                        <option value="1">MENIT</option>
+                                                        <option value="2">HARI</option>
+                                                        <option value="3">MINGGU</option>
+                                                        <option value="4">BULAN</option>
+                                                        <option value="5">TAHUN</option>
                                                     </select>
                                                 </td>
                                             </tr>
