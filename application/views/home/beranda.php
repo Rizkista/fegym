@@ -70,7 +70,7 @@
                 <h1 class="iq-font-white iq-tw-8 wow fadeInLeft">
                     <small class="iq-font-white iq-tw-6">Gym Management & Point Of Sales (FeGym)</small>Sistem Gym Terbaik
                 </h1>
-                <a class="button button-icon iq-mr-15 re4-mt-20 wow fadeInRight" href="#">Start A 30-Day Free Trial</a>
+                <a class="button button-icon iq-mr-15 re4-mt-20 wow fadeInRight" href="<?= base_url() ?>register">Start A 30-Day Free Trial</a>
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
                     <h2 class="heading-left iq-tw-6 iq-mt-40">Simple Software</h2>
                     <div class="lead iq-tw-6 iq-mb-20">Sederhanakan Operasi Gym Anda dengan FeGym yang selalu siap berinovasi untuk kebutuhan Gym Anda.</div>
                     <p>Dapatkan wawasan berharga tentang performa gym dengan analitik dan pelaporan real-time, serta buat keputusan berdasarkan data. Dengan perangkat lunak kami yang simple dan memiliki fitur canggih, Anda dapat merampingkan operasi gym Anda dan meningkatkan efisiensi.</p>
-                    <a class="button iq-mt-25 wow fadeInRight" href="#">Free Trial</a>
+                    <a class="button iq-mt-25 wow fadeInRight" href="<?= base_url() ?>register">Free Trial</a>
                 </div>
             </div>
         </div>
@@ -202,7 +202,7 @@
                     <h2 class="heading-left iq-tw-6 ">Point Of Sale</h2>
                     <div class="lead iq-tw-6 iq-mb-20">Melakukan transaksi dengan cepat dan mudah bagi staf dan pelanggan dengan antarmuka yang sederhana.</div>
                     <p>Siapkan dan kelola produk Gym Anda dengan mudah. Dengan FeGym melakukan penjualan dengan jumlah dan diskon yang bervariasi, kini lebih mudah dari sebelumnya.</p>
-                    <a class="button iq-mt-15  wow fadeInLeft" href="# ">Register</a>
+                    <a class="button iq-mt-15  wow fadeInLeft" href="<?= base_url() ?>register">Register</a>
                 </div>
                 <div class="col-sm-12 col-lg-6 col-md-6 iq-pall-50">
                     <div class="iq-bg about-img">
@@ -226,7 +226,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <a class="button button-icon iq-mr-15 wow fadeInUp" href="# ">Register Now</a>
+                    <a class="button button-icon iq-mr-15 wow fadeInUp" href="<?= base_url() ?>register">Register Now</a>
                 </div>
             </div>
         </div>
